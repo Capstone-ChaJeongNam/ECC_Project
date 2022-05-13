@@ -1,4 +1,4 @@
-package com.unittest.ecc_project;
+package com.chajeongnam.ecc_project;
 
 import androidx.appcompat.app.AppCompatActivity;
 
