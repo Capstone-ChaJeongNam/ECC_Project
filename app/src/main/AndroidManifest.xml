@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ECC_Project">
         <activity
-            android:name="com.chajeongnam.ecc_project.HomeActivity"
+            android:name="com.chajeongnam.ecc_project.activity.HomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

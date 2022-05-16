@@ -6,8 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.chajeongnam.ecc_project.CategoryListActivity;
 import com.chajeongnam.ecc_project.R;
+import com.chajeongnam.ecc_project.activity.StudentListActivity;
 import com.chajeongnam.ecc_project.model.Category;
 
 import java.util.List;
