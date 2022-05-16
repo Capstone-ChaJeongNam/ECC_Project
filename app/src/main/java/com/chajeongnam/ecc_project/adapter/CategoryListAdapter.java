@@ -1,6 +1,7 @@
 package com.chajeongnam.ecc_project.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +32,11 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    Context context = view.getContext();
+                    Intent intent = new Intent(context , StudentListActivity.class);
+                    intent.putExtra("category", categoryTextView.getText());
+                    intent.putExtra("area", areaTextView.getText());
+                    context.startActivity(intent);
                 }
             });
         }
