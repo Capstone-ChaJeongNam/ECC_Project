@@ -19,7 +19,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".CategoryListActivity"/>
+        <activity android:name=".activity.CategoryListActivity"/>
+        <activity android:name=".activity.FindStudentActivity"/>
+        <activity android:name=".activity.StudentListActivity"/>
     </application>
 
 </manifest>
