@@ -19,11 +19,11 @@ import androidx.recyclerview.widget.RecyclerView;
 public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapter.ViewHolder> {
 
     private List<Category> categoryList;
-    class ViewHolder extends RecyclerView.ViewHolder{
+    protected class ViewHolder extends RecyclerView.ViewHolder{
         private TextView categoryTextView;
         private TextView areaTextView;
 
-        public ViewHolder(@NonNull View itemView) {
+        private ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             categoryTextView = itemView.findViewById(R.id.categoryTextView);
