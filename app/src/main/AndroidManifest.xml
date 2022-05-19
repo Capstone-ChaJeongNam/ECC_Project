@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ECC_Project">
         <activity
-            android:name="com.chajeongnam.ecc_project.MainActivity"
+            android:name="com.chajeongnam.ecc_project.activity.HomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,6 +18,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".activity.CategoryListActivity"/>
+        <activity android:name=".activity.FindStudentActivity"/>
+        <activity android:name=".activity.StudentListActivity"/>
     </application>
 
 </manifest>

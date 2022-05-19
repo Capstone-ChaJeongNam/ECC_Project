@@ -1,8 +1,10 @@
-package com.chajeongnam.ecc_project;
+package com.chajeongnam.ecc_project.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.chajeongnam.ecc_project.R;
 
 public class MainActivity extends AppCompatActivity {
 
