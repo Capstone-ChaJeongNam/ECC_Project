@@ -60,5 +60,5 @@ public class EvaPreTestAdapter extends RecyclerView.Adapter<EvaPreTestAdapter.Vi
         }
     }
 
-
+//테스트
 }
