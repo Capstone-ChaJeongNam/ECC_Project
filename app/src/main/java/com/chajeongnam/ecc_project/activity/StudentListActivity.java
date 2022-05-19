@@ -6,13 +6,22 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.chajeongnam.ecc_project.R;
+import com.chajeongnam.ecc_project.adapter.CategoryListAdapter;
+import com.chajeongnam.ecc_project.adapter.StudentListAdapter;
+import com.chajeongnam.ecc_project.model.Student;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class StudentListActivity extends AppCompatActivity {
     TextView areaTextView;
-
+    private RecyclerView recyclerView;
+    private StudentListAdapter studentListAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,6 +29,7 @@ public class StudentListActivity extends AppCompatActivity {
         setActionbar();
         setTextView();
 
+        getStudentList();
     }
 
     private void setActionbar(){
@@ -47,7 +57,19 @@ public class StudentListActivity extends AppCompatActivity {
 
         areaTextView = findViewById(R.id.areaTextView);
         areaTextView.setText(area);
+    }
 
+    private void getStudentList(){
+        List<Student> studentList = new ArrayList<>();
+        studentList.add(new Student("홍길동", "3학년", "A반", "2022-04-20"));
+        studentList.add(new Student("고길동", "1학년", "B반", "2022-04-22"));
+        studentList.add(new Student("노길동", "2학년", "C반", "2022-04-30"));
+        studentList.add(new Student("도길동", "3학년", "A반", "2022-04-11"));
+        studentList.add(new Student("로길동", "1학년", "E반", "2022-04-13"));
 
+        recyclerView = findViewById(R.id.studentListRecyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(StudentListActivity.this));
+        studentListAdapter = new StudentListAdapter(studentList);
+        recyclerView.setAdapter(studentListAdapter);
     }
 }
