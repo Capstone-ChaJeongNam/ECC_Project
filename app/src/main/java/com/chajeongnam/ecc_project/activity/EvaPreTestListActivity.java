@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.chajeongnam.ecc_project.R;
 
-public class EvaPreTestList extends AppCompatActivity {
+public class EvaPreTestListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
