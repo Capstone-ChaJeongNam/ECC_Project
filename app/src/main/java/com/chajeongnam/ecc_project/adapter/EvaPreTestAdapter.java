@@ -30,12 +30,15 @@ public class EvaPreTestAdapter extends RecyclerView.Adapter<EvaPreTestAdapter.Vi
         return viewHolder;
     }
 
+    public EvaPreTestAdapter(ArrayList<TempList> tempLists) {
+        this.tempLists = tempLists;
+    }
+
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         TempList tempList = tempLists.get(position);
         holder.bind(tempList);
     }
-
 
 
     @Override
@@ -44,15 +47,17 @@ public class EvaPreTestAdapter extends RecyclerView.Adapter<EvaPreTestAdapter.Vi
     }
 
 
-
-
-
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView content;
 
-        public ViewHolder(@NonNull View itemView) {
+        private ViewHolder(@NonNull View itemView) {
             super(itemView);
             content = itemView.findViewById(R.id.content);
+        }
+
+        @Override
+        public String toString() {
+            return super.toString();
         }
 
         private void bind(TempList tempList) {
