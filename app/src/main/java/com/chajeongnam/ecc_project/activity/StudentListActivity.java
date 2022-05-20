@@ -20,8 +20,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class StudentListActivity extends AppCompatActivity {
     TextView areaTextView;
-    private RecyclerView recyclerView;
-    private StudentListAdapter studentListAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +39,7 @@ public class StudentListActivity extends AppCompatActivity {
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         actionBar.setCustomView(R.layout.layout_actionbar);
         TextView textView = findViewById(R.id.titleTextView);
-        textView.setText("학생 검색");
+        textView.setText("카테고리");
         ImageButton imageButton = findViewById(R.id.backImageButton);
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,9 +65,15 @@ public class StudentListActivity extends AppCompatActivity {
         studentList.add(new Student("도길동", "3학년", "A반", "2022-04-11"));
         studentList.add(new Student("로길동", "1학년", "E반", "2022-04-13"));
 
-        recyclerView = findViewById(R.id.studentListRecyclerView);
+        setRecyclerView(studentList);
+
+
+    }
+
+    private void setRecyclerView(List<Student> studentList) {
+        RecyclerView recyclerView = findViewById(R.id.studentListRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(StudentListActivity.this));
-        studentListAdapter = new StudentListAdapter(studentList);
+        StudentListAdapter studentListAdapter = new StudentListAdapter(studentList);
         recyclerView.setAdapter(studentListAdapter);
     }
 }
