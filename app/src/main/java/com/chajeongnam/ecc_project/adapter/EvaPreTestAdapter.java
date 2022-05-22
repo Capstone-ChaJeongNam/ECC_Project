@@ -13,10 +13,11 @@ import com.chajeongnam.ecc_project.R;
 import com.chajeongnam.ecc_project.model.TempList;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class EvaPreTestAdapter extends RecyclerView.Adapter<EvaPreTestAdapter.ViewHolder> {
 
-    private ArrayList<TempList> tempLists;
+    private List<TempList> tempLists;
 
 
     @NonNull
@@ -25,12 +26,12 @@ public class EvaPreTestAdapter extends RecyclerView.Adapter<EvaPreTestAdapter.Vi
         Context context = parent.getContext();
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View view = inflater.inflate(R.layout.item_category, parent, false);
+        View view = inflater.inflate(R.layout.evaluate_pretest_category, parent, false);
         EvaPreTestAdapter.ViewHolder viewHolder = new EvaPreTestAdapter.ViewHolder(view);
         return viewHolder;
     }
 
-    public EvaPreTestAdapter(ArrayList<TempList> tempLists) {
+    public EvaPreTestAdapter(List<TempList> tempLists) {
         this.tempLists = tempLists;
     }
 
