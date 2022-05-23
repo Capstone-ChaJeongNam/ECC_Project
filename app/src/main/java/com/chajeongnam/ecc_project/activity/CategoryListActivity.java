@@ -2,6 +2,7 @@ package com.chajeongnam.ecc_project.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -10,7 +11,9 @@ import android.widget.ImageButton;
 import com.chajeongnam.ecc_project.R;
 import com.chajeongnam.ecc_project.adapter.CategoryListAdapter;
 import com.chajeongnam.ecc_project.model.Category;
+import com.chajeongnam.ecc_project.model.TempList;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +29,7 @@ public class CategoryListActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private CategoryListAdapter categoryListAdapter;
     private List<Category> categoryList;
+    private List<TempList> tempLists;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +50,13 @@ public class CategoryListActivity extends AppCompatActivity {
         categoryListAdapter = new CategoryListAdapter(categoryList);
         recyclerView.setAdapter(categoryListAdapter);
 //        mumu: create new method that go pretest
+        tempLists = new ArrayList<>();
+        tempLists.add(new TempList("1.초성 자음자와 겹글자를 알고 읽고 쓴다."));
+        tempLists.add(new TempList("2. 기본 모음자를 알고 읽고 쓴다."));
+        tempLists.add(new TempList("3. 수표와 수를 알고 읽고 쓴다."));
+        tempLists.add(new TempList("4. 기본모음자 이외 모음자를 알고 읽고 쓴다. "));
+        tempLists.add(new TempList("5. 기본받침, 쌍받침, 겹받침을 알고 읽고 쓴다."));
+        tempLists.add(new TempList("6. 지팡이의 구조와 용도를 안다."));
         toPretest();
 
     }
@@ -74,7 +85,11 @@ public class CategoryListActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(CategoryListActivity.this, EvaPreTestListActivity.class));
+                Intent intent=new Intent(CategoryListActivity.this, EvaPreTestListActivity.class);
+
+                intent.putExtra("tempLists", (Serializable) tempLists);
+                startActivity(intent);
+
             }
         });
 

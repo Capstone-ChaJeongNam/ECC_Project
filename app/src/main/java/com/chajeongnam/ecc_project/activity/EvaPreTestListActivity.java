@@ -1,5 +1,6 @@
 package com.chajeongnam.ecc_project.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,21 +26,11 @@ public class EvaPreTestListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.acticity_evaluate_pretest);
-        tempLists = new ArrayList<>();
-        tempLists.add(new TempList("첫번째 타이틀"));
-        tempLists.add(new TempList("두번째 타이틀"));
-        tempLists.add(new TempList("세번째 타이틀"));
-        tempLists.add(new TempList("네번째 타이틀"));
-        tempLists.add(new TempList("다서번째 타이틀"));
-        tempLists.add(new TempList("여섯번째타이틀"));
-        tempLists.add(new TempList("일곱번째 타이틀"));
-        tempLists.add(new TempList("여덟뻔째 타이틀"));
-        tempLists.add(new TempList("아홉번째 타이틀"));
-        tempLists.add(new TempList("열번째 타이틀"));
-
+       Intent intent =getIntent();
+tempLists=(ArrayList<TempList>)getIntent().getSerializableExtra("tempLists");
         recyclerView = findViewById(R.id.evaluationRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(EvaPreTestListActivity.this));
-        SetItemDecoration itemDecoration = new SetItemDecoration(-8);
+        SetItemDecoration itemDecoration = new SetItemDecoration(20);
         recyclerView.addItemDecoration(itemDecoration);
         evapreTestAdapter = new EvaPreTestAdapter(tempLists);
         recyclerView.setAdapter(evapreTestAdapter);

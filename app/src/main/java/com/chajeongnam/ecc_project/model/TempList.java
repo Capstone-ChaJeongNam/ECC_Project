@@ -1,6 +1,8 @@
 package com.chajeongnam.ecc_project.model;
 
-public class TempList {
+import java.io.Serializable;
+
+public class TempList implements Serializable {
 String title;
 
     public TempList(String title) {
