@@ -23,6 +23,7 @@
         <activity android:name=".activity.FindStudentActivity"/>
         <activity android:name=".activity.StudentListActivity"/>
         <activity android:name=".activity.EvaPreTestListActivity"/>
+        <activity android:name=".activity.EvaPostTestListActivity"/>
     </application>
 
 </manifest>

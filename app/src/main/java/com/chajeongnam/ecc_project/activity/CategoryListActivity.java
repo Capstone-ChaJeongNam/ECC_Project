@@ -24,7 +24,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class CategoryListActivity extends AppCompatActivity {
-    private Button button;
+
+//    mumu: goto pre and post test
+
+    private Button buttonToPre;
+    private Button buttonToPost;
 
     private RecyclerView recyclerView;
     private CategoryListAdapter categoryListAdapter;
@@ -80,9 +84,11 @@ public class CategoryListActivity extends AppCompatActivity {
 
 //    mumu: new method 22.05.22
     private void toPretest() {
-        button = findViewById(R.id.toPretest);
+        buttonToPre = findViewById(R.id.toPretest);
+        buttonToPost=findViewById(R.id.toPosttest);
 
-        button.setOnClickListener(new View.OnClickListener() {
+
+        buttonToPre.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(CategoryListActivity.this, EvaPreTestListActivity.class);
@@ -92,6 +98,17 @@ public class CategoryListActivity extends AppCompatActivity {
 
             }
         });
+
+        buttonToPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(CategoryListActivity.this,EvaPostTestListActivity.class);
+
+                intent.putExtra("tempLists", (Serializable) tempLists);
+                startActivity(intent);
+            }
+        });
+
 
     }
 }
