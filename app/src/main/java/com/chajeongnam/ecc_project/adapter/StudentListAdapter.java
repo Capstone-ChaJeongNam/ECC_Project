@@ -1,12 +1,15 @@
 package com.chajeongnam.ecc_project.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.chajeongnam.ecc_project.R;
+import com.chajeongnam.ecc_project.activity.StudentInfoActivity;
+import com.chajeongnam.ecc_project.activity.StudentListActivity;
 import com.chajeongnam.ecc_project.model.Student;
 
 import java.util.List;
@@ -37,6 +40,18 @@ public class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.
              * ToDo: set Student recent test Date on Firebase
              */
             testDateTextView.setText(student.getRecent());
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Context context = view.getContext();
+                    Intent intent = new Intent(context , StudentInfoActivity.class);
+                    intent.putExtra("name", studentNameTextView.getText());
+//                    intent.putExtra("recent", student.getRecent());
+                    intent.putExtra("grade", student.getGrade() + " " + student.getAttrClass());
+                    context.startActivity(intent);
+                }
+            });
         }
     }
 

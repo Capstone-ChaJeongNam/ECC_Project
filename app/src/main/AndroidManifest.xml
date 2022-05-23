@@ -22,6 +22,10 @@
         <activity android:name=".activity.CategoryListActivity"/>
         <activity android:name=".activity.FindStudentActivity"/>
         <activity android:name=".activity.StudentListActivity"/>
+        <activity android:name=".activity.StudentInfoActivity"
+            >
+
+        </activity>
     </application>
 
 </manifest>
