@@ -10,10 +10,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ECC_Project">
         <activity
-            android:name=".PreHistoryActivity6_1_1"
-            android:exported="false" />
+            android:name=".activity.HomeActivity"
+            android:exported="false"/>
+
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.PreHistoryActivity6_1_1"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,6 +22,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activity.CategoryListActivity" />
+        <activity android:name=".activity.FindStudentActivity" />
+        <activity android:name=".activity.StudentListActivity" />
     </application>
 
 </manifest>
