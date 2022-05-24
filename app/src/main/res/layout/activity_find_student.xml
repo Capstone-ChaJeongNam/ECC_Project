@@ -20,7 +20,7 @@
             android:layout_height="40dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:background="@drawable/search_edittext"
+            android:background="@drawable/edit_text_search"
             android:elevation="5dp"
             android:ems="10"
             android:maxLines="1"
@@ -108,4 +108,48 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/item_cardview" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:layout_marginEnd="24dp"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/text_message_incoming"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_chat_bubble"
+            android:backgroundTint="@color/blue_200"
+            android:lineSpacingExtra="2dp"
+            android:paddingLeft="20dp"
+            android:paddingTop="4dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="10dp"
+            android:text="학생 추가하기"
+            android:textColor="@color/white"
+            android:textSize="13.5dp"
+            app:elevation="5dp"
+            app:layout_constraintEnd_toStartOf="@+id/addStudentButton"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_max="wrap" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/addStudentButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/blue_200"
+            android:src="@drawable/ic_add"
+            app:borderWidth="0dp"
+            app:elevation="6dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/white" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

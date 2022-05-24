@@ -3,12 +3,15 @@ package com.chajeongnam.ecc_project.activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chajeongnam.ecc_project.R;
 import com.chajeongnam.ecc_project.adapter.CategoryListAdapter;
 import com.chajeongnam.ecc_project.adapter.StudentListAdapter;
 import com.chajeongnam.ecc_project.model.Student;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +57,7 @@ public class StudentListActivity extends AppCompatActivity {
         String area = getIntent().getStringExtra("area");
 
         areaTextView = findViewById(R.id.areaTextView);
+
         areaTextView.setText(area);
     }
 

@@ -14,6 +14,8 @@ import com.chajeongnam.ecc_project.adapter.StudentListAdapter;
 import com.chajeongnam.ecc_project.adapter.StudentSearchResultAdapter;
 import com.chajeongnam.ecc_project.model.Category;
 import com.chajeongnam.ecc_project.model.Student;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,13 +27,25 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class FindStudentActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
+    FloatingActionButton addStudentButton;
 
     private StudentSearchResultAdapter studentSearchResultAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_student);
+        addStudentButton = findViewById(R.id.addStudentButton);
 
+        addStudentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                /*
+                  TODO 학생 추가 화면 추가 및 이동
+                 */
+                Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
         setActionbar();
         getStudentList();
     }
