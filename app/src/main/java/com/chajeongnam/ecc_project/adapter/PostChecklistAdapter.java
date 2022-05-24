@@ -2,16 +2,12 @@ package com.chajeongnam.ecc_project.adapter;
 
 import android.content.Context;
 import android.transition.Fade;
-import android.transition.Slide;
 import android.transition.Transition;
 import android.transition.TransitionManager;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,7 +20,7 @@ import com.chajeongnam.ecc_project.model.TempList;
 
 import java.util.List;
 
-public class EvaPostTestAdapter extends RecyclerView.Adapter<EvaPostTestAdapter.ViewHolder> {
+public class PostChecklistAdapter extends RecyclerView.Adapter<PostChecklistAdapter.ViewHolder> {
     private List<TempList> tempLists;
     private int selectedPosition = -1;
 
@@ -35,18 +31,18 @@ public class EvaPostTestAdapter extends RecyclerView.Adapter<EvaPostTestAdapter.
         Context context = parent.getContext();
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View view = inflater.inflate(R.layout.evaluate_posttest_category, parent, false);
-        EvaPostTestAdapter.ViewHolder viewHolder = new EvaPostTestAdapter.ViewHolder(view);
+        View view = inflater.inflate(R.layout.post_cheklist_category, parent, false);
+        PostChecklistAdapter.ViewHolder viewHolder = new PostChecklistAdapter.ViewHolder(view);
         return viewHolder;
     }
 
 
-    public EvaPostTestAdapter(List<TempList> tempLists) {
+    public PostChecklistAdapter(List<TempList> tempLists) {
         this.tempLists = tempLists;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull EvaPostTestAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull PostChecklistAdapter.ViewHolder holder, int position) {
         TempList tempList = tempLists.get(position);
         holder.bind(tempList);
         holder.content.setOnClickListener(new View.OnClickListener() {

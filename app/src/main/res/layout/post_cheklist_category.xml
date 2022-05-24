@@ -60,6 +60,7 @@
             android:id="@+id/descriptionEditText"
             android:layout_marginTop="20dp"
             android:background="#EAEAEA"
+            android:hint="서술형 평가를 입력해 주세요"
             android:visibility="gone"
             android:layout_gravity="center"/>
     </LinearLayout>

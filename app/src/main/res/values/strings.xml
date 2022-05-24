@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">ECC_Project</string>
     <string name="JBNU_name">전북대학교</string>
+    <string name="pre_test">사전 평가</string>
+    <string name="post_test">사후 평가</string>
+    <string name="pre_test_start">사전 평가 시작</string>
+    <string name="post_test_start">사후 평가 시작</string>
 </resources>

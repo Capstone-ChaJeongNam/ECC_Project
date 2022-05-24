@@ -2,8 +2,6 @@ package com.chajeongnam.ecc_project.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -17,7 +15,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -102,7 +99,7 @@ public class CategoryListActivity extends AppCompatActivity {
         buttonToPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(CategoryListActivity.this,EvaPostTestListActivity.class);
+                Intent intent=new Intent(CategoryListActivity.this, PostChecklistActivity.class);
 
                 intent.putExtra("tempLists", (Serializable) tempLists);
                 startActivity(intent);

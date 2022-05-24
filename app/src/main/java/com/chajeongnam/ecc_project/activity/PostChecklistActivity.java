@@ -8,32 +8,31 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chajeongnam.ecc_project.R;
-import com.chajeongnam.ecc_project.adapter.EvaPostTestAdapter;
-import com.chajeongnam.ecc_project.adapter.EvaPreTestAdapter;
+import com.chajeongnam.ecc_project.adapter.PostChecklistAdapter;
 import com.chajeongnam.ecc_project.decoration.SetItemDecoration;
 import com.chajeongnam.ecc_project.model.TempList;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class EvaPostTestListActivity  extends AppCompatActivity {
+public class PostChecklistActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private List<TempList> tempLists;
-    private EvaPostTestAdapter evapostTestAdapter;
+    private PostChecklistAdapter evapostChecklistAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_evaluate_posttest);
+        setContentView(R.layout.activity_post_cheklist);
         Intent intent =getIntent();
         tempLists=(ArrayList<TempList>)getIntent().getSerializableExtra("tempLists");
         recyclerView = findViewById(R.id.evaluationPostRecyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(EvaPostTestListActivity.this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(PostChecklistActivity.this));
         SetItemDecoration itemDecoration = new SetItemDecoration(20);
         recyclerView.addItemDecoration(itemDecoration);
-        evapostTestAdapter = new EvaPostTestAdapter(tempLists);
-        recyclerView.setAdapter(evapostTestAdapter);
+        evapostChecklistAdapter = new PostChecklistAdapter(tempLists);
+        recyclerView.setAdapter(evapostChecklistAdapter);
 
     }
 
