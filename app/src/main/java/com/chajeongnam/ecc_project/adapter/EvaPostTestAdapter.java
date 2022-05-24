@@ -1,10 +1,16 @@
 package com.chajeongnam.ecc_project.adapter;
 
 import android.content.Context;
+import android.transition.Fade;
+import android.transition.Slide;
+import android.transition.Transition;
+import android.transition.TransitionManager;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -20,7 +26,7 @@ import java.util.List;
 
 public class EvaPostTestAdapter extends RecyclerView.Adapter<EvaPostTestAdapter.ViewHolder> {
     private List<TempList> tempLists;
-    private int selectedPosition=-1;
+    private int selectedPosition = -1;
 
 
     @NonNull
@@ -43,16 +49,37 @@ public class EvaPostTestAdapter extends RecyclerView.Adapter<EvaPostTestAdapter.
     public void onBindViewHolder(@NonNull EvaPostTestAdapter.ViewHolder holder, int position) {
         TempList tempList = tempLists.get(position);
         holder.bind(tempList);
-   holder.radioButton1.setChecked(position==selectedPosition);
-
-   holder.radioButton1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-       @Override
-       public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-           if(b){
-               selectedPosition=holder.getAdapterPosition();
-           }
-       }
-   });
+        holder.content.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Transition transition = new Fade();
+                transition.setDuration(600);
+                transition.addTarget(holder.editText);
+                TransitionManager.beginDelayedTransition(holder.radioGroup, transition);
+                if (holder.editText.getVisibility() == View.GONE) {
+                    holder.editText.setVisibility(View.VISIBLE);
+                } else holder.editText.setVisibility(View.GONE);
+            }
+        });
+        holder.radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                switch (i) {
+                    case R.id.one:
+                        Toast.makeText(radioGroup.getContext(), "짧게 출력 Hello World!", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.two:
+                        Toast.makeText(radioGroup.getContext(), "짧게 출력 Hello World!", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.three:
+                        Toast.makeText(radioGroup.getContext(), "짧게 출력 Hello World!", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.C:
+                        Toast.makeText(radioGroup.getContext(), "짧게 출력 Hello World!", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
+        });
     }
 
 
@@ -65,14 +92,13 @@ public class EvaPostTestAdapter extends RecyclerView.Adapter<EvaPostTestAdapter.
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView content;
         private RadioGroup radioGroup;
-        private RadioButton radioButton1,radioButton2,radioButton3;
+        private EditText editText;
 
         private ViewHolder(@NonNull View itemView) {
             super(itemView);
             content = itemView.findViewById(R.id.content);
-            radioButton1=itemView.findViewById(R.id.one);
-            radioButton2=itemView.findViewById(R.id.two);
-            radioButton3=itemView.findViewById(R.id.three);
+            radioGroup = itemView.findViewById(R.id.evaGroup);
+            editText = itemView.findViewById(R.id.descriptionEditText);
 
         }
 
@@ -86,12 +112,5 @@ public class EvaPostTestAdapter extends RecyclerView.Adapter<EvaPostTestAdapter.
         }
     }
 
-    public void onRadioButtonClicked(View view) {
-        // Is the button now checked?
-        boolean checked = ((RadioButton) view).isChecked();
-
-        // Check which radio button was clicked
-
-    }
 
 }
