@@ -1,11 +1,17 @@
 package com.chajeongnam.ecc_project;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.loader.content.CursorLoader;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,16 +25,25 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+
+import java.io.File;
 
 
 public class SignUpActivity extends AppCompatActivity {
+
+    private static final String TAG = "MyTag";
+    public static final int PICK_FROM_ALBUM = 1;
+    private Uri imageUri;
+    private String pathUri;
+    private File tempFile;
+    private FirebaseStorage mStorage;
 
     private FirebaseAuth mFirebaseAuth;
     private DatabaseReference mDatabaseRef;
     private EditText mEtEmail, mEtPwd, mEtName, mEtBirth, mEtRePwd;
     private ImageView profile;
     private Button mBtnSignUp;
-    private AlertDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,13 +52,22 @@ public class SignUpActivity extends AppCompatActivity {
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("ECC moblie checklist");
+        mStorage = FirebaseStorage.getInstance();
 
+        profile = findViewById(R.id.user_image);
         mEtEmail = findViewById(R.id.et_email);
         mEtPwd = findViewById(R.id.et_pwd);
         mEtName = findViewById(R.id.et_name);
         mEtBirth = findViewById(R.id.et_birth);
         mEtRePwd = findViewById(R.id.et_repwd);
         mBtnSignUp = findViewById(R.id.btn_signup);
+
+        profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gotoAlbum();
+            }
+        });
 
         mBtnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,6 +91,7 @@ public class SignUpActivity extends AppCompatActivity {
                                 account.setBirth(strBirth);
                                 account.setName(strName);
 
+
                                 mDatabaseRef.child("UserAccount").child(firebaseUser.getUid()).setValue(account);
 
                                 Intent intent = new Intent(SignUpActivity.this, StartActivity.class);
@@ -84,5 +109,50 @@ public class SignUpActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void gotoAlbum() {
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+        startActivityForResult(intent, PICK_FROM_ALBUM);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != RESULT_OK) {
+            Toast.makeText(SignUpActivity.this, "취소되었습니다", Toast.LENGTH_LONG).show();
+            if (tempFile != null) {
+                if (tempFile.exists()) {
+                    if (tempFile.delete()) {
+                        Log.e(TAG, tempFile.getAbsolutePath() + " 삭제 성공");
+                        tempFile = null;
+                    }
+                }
+            }
+            return;
+        }
+
+        switch (requestCode) {
+            case PICK_FROM_ALBUM: {
+                imageUri = data.getData();
+                pathUri = getPath(data.getData());
+                Log.d(TAG, "PICK_FROM_ALBUM photoUri : " + imageUri);
+                profile.setImageURI(imageUri);
+                break;
+            }
+        }
+    }
+
+    public String getPath(Uri uri) {
+
+        String[] proj = {MediaStore.Images.Media.DATA};
+        CursorLoader cursorLoader = new CursorLoader(this, uri, proj, null, null, null);
+
+        Cursor cursor = cursorLoader.loadInBackground();
+        int index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+
+        cursor.moveToFirst();
+        return cursor.getString(index);
     }
 }
