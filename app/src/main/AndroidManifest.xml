@@ -19,13 +19,17 @@
             </intent-filter>
         </activity>
 
+<!--ChoYeonJun add-->
         <activity android:name=".activity.CategoryListActivity"/>
         <activity android:name=".activity.FindStudentActivity"/>
         <activity android:name=".activity.StudentListActivity"/>
-        <activity android:name=".activity.StudentInfoActivity"
-            >
+        <activity android:name=".activity.StudentInfoActivity"/>
+        <activity android:name=".activity.CGraphActivity"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".activity.AdvanceGraphActivity"
+            android:screenOrientation="landscape"/>
+<!--ChoYeonJun add end-->
 
-        </activity>
     </application>
 
 </manifest>
