@@ -44,14 +44,14 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class CGraphActivity extends AppCompatActivity {
+public class CGraphActivity extends AppCompatActivity implements View.OnClickListener {
     private LineChart chart;
     List<Integer> results;
     List<String> dates;
     int min = 1000, max = 0;
     int monthMin = 1000, monthMax = 0;
     int yearMin = 1000, yearMax = 0;
-    HashMap<String, Integer> histories;
+
     Map<String, Integer> sortedHistories;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,48 +69,8 @@ public class CGraphActivity extends AppCompatActivity {
         TextView setClassifyButtonTextView = findViewById(R.id.setClassifyButtonTextView);
         chart = findViewById(R.id.cGraphChart);
 
-        setClassifyButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (setClassifyButtonTextView.getText().toString().equals("일 별")) {
-                    setClassifyButtonTextView.setText("월 별");
-                    if(monthLabels.size() != 1)
-                    {
-                        setChart(monthResults, monthLabels, monthMin, monthMax);
-                    }
-                } else if (setClassifyButtonTextView.getText().toString().equals("월 별")) {
-                    setClassifyButtonTextView.setText("연도 별");
-                    if(yearLabels.size()!=1){
-                        setChart(yearResults, yearLabels, yearMin, yearMax);
-                    }
-                } else {
-                    setClassifyButtonTextView.setText("일 별");
-                    setChart(results, dates, min, max);
-                }
-
-
-            }
-        });
-        setClassifyButtonTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (setClassifyButtonTextView.getText().toString().equals("일 별")) {
-                    setClassifyButtonTextView.setText("월 별");
-                    if(monthLabels.size() != 1)
-                    {
-                        setChart(monthResults, monthLabels, monthMin, monthMax);
-                    }
-                } else if (setClassifyButtonTextView.getText().toString().equals("월 별")) {
-                    setClassifyButtonTextView.setText("연도 별");
-                    if(yearLabels.size()!=1){
-                        setChart(yearResults, yearLabels, yearMin, yearMax);
-                    }
-                } else {
-                    setClassifyButtonTextView.setText("일 별");
-                    setChart(results, dates, min, max);
-                }
-            }
-        });
+        setClassifyButton.setOnClickListener(this);
+        setClassifyButtonTextView.setOnClickListener(this);
     }
 
     private void getExtra() {
@@ -127,7 +87,6 @@ public class CGraphActivity extends AppCompatActivity {
         dates.add("2022-05-08");
         dates.add("2022-05-15");
 //        dates.add("2021-05-23");
-        histories = new HashMap<>();
 //        histories.put("2022-04-30", 0);
 //        histories.put("2022-05-03", 0);
 //        histories.put("2022-05-08", 0);
@@ -142,13 +101,7 @@ public class CGraphActivity extends AppCompatActivity {
 
     }
 
-//    private void setChart(){
-//        int min = 1;
-//        int max = 3;
-//        setData(getEntries(results));
-//        setXAxis(dates);
-//        setYAxis(results, min, max);
-//    }
+
     List<Integer> monthResults;
     List<String> monthLabels;
 
@@ -156,9 +109,7 @@ public class CGraphActivity extends AppCompatActivity {
         String month = dates.get(0).split("-")[1];
         monthResults = new ArrayList<>();
         monthLabels = new ArrayList<>();
-        Map<String, Integer> sortedHistories = new TreeMap<>();
         monthLabels.add(month);
-        sortedHistories.put(month, histories.get(dates.get(0)));
         int count = 0;
 
 
@@ -196,8 +147,6 @@ public class CGraphActivity extends AppCompatActivity {
         String year = dates.get(0).split("-")[0];
         yearResults = new ArrayList<>();
         yearLabels = new ArrayList<>();
-        Map<String, Integer> sortedHistories = new TreeMap<>();
-        sortedHistories.put(year, histories.get(dates.get(0)));
         yearLabels.add(year);
         int count = 0;
 
@@ -221,10 +170,7 @@ public class CGraphActivity extends AppCompatActivity {
             yearMin = Math.min(yearMin, count);
             yearMax = Math.max(yearMax, count);
 //            labels.add(dates.get(dates.size()-1).split("-")[0]);
-            count = 0;
         }
-
-
     }
 
     private void setChart(List<Integer> results, List<String> labels, int min, int max){
@@ -267,6 +213,8 @@ public class CGraphActivity extends AppCompatActivity {
         String area = "한글 점자";
 
         results = new ArrayList<>();
+
+        HashMap<String, Integer> histories = new HashMap<>();
         DatabaseReference historyRef = myRef.child(uid).child("post").child(category).child(area);
         for(int i = 0; i < dates.size(); i++){
             String date = dates.get(i);
@@ -276,7 +224,6 @@ public class CGraphActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     Log.d("Firebase Realtime DB", dataSnapshot.getKey());
-//                    String result = dataSnapshot.toString();
                     int count = 0;
 
                     for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
@@ -285,9 +232,7 @@ public class CGraphActivity extends AppCompatActivity {
                         if(result.getScore() == 4){
                             count += 1;
                         }
-//                        for(DataSnapshot dataSnapshot1: postSnapshot.getChildren()){
-//
-//                        }
+
                     }
                     histories.put(date, count);
                     min = Math.min(min, count);
@@ -336,9 +281,6 @@ public class CGraphActivity extends AppCompatActivity {
         LineData lineData = new LineData(dataSet);
         chart.setData(lineData);
         chart.setDescription(null);
-
-
-
     }
 
     private void setXAxis(List<String> labels) {
@@ -398,7 +340,29 @@ public class CGraphActivity extends AppCompatActivity {
         for(int i = 0 ; i < results.size(); i++){
             entries.add(new Entry(i, results.get(i)));
         }
-
         return entries;
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.setClassifyButtonTextView: case R.id.setClassifyButton:
+                TextView setClassifyButtonTextView = findViewById(R.id.setClassifyButtonTextView);
+                if (setClassifyButtonTextView.getText().toString().equals("일 별")) {
+                    setClassifyButtonTextView.setText("월 별");
+                    if(monthLabels.size() != 1)
+                    {
+                        setChart(monthResults, monthLabels, monthMin, monthMax);
+                    }
+                } else if (setClassifyButtonTextView.getText().toString().equals("월 별")) {
+                    setClassifyButtonTextView.setText("연도 별");
+                    if(yearLabels.size()!=1){
+                        setChart(yearResults, yearLabels, yearMin, yearMax);
+                    }
+                } else {
+                    setClassifyButtonTextView.setText("일 별");
+                    setChart(results, dates, min, max);
+                }
+        }
     }
 }
