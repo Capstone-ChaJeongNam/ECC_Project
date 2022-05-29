@@ -24,6 +24,7 @@
         <activity android:name=".activity.StudentListActivity"/>
         <activity android:name=".activity.EvaPreTestListActivity"/>
         <activity android:name=".activity.PostChecklistActivity"/>
+        <activity android:name=".activity.PostHistoryListActivity"/>
     </application>
 
 </manifest>

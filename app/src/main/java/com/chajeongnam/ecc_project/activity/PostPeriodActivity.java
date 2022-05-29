@@ -104,7 +104,15 @@ public class PostPeriodActivity extends AppCompatActivity {
         toButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(PostPeriodActivity.this, PostHistoryActivity.class));
+
+Intent intent=new Intent(PostPeriodActivity.this,PostHistoryListActivity.class);
+          intent.putExtra("startYear",startYear);
+          intent.putExtra("startMonth",startMonth);
+          intent.putExtra("startDay",startDay);
+          intent.putExtra("endYear",endYear);
+          intent.putExtra("endMonth",endMonth);
+          intent.putExtra("endDay",endDay);
+          startActivity(intent);
             }
         });
 

@@ -94,7 +94,6 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="50dp"
         app:cardCornerRadius="4dp"
         app:cardUseCompatPadding="true"
         app:strokeColor="@color/black"
@@ -186,7 +185,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/toButton"
        android:layout_gravity="center"
-        android:layout_marginTop="50dp"
         android:text="확인"/>
 
 
