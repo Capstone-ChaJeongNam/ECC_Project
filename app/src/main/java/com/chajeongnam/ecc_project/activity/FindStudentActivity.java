@@ -17,10 +17,16 @@ import com.chajeongnam.ecc_project.model.Category;
 import com.chajeongnam.ecc_project.model.Student;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -29,6 +35,10 @@ import androidx.recyclerview.widget.RecyclerView;
 public class FindStudentActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     FloatingActionButton addStudentButton;
+    private DatabaseReference mDatabase;
+    List<Student> studentList;
+
+
 
     private StudentSearchResultAdapter studentSearchResultAdapter;
     @Override
@@ -111,11 +121,11 @@ public class FindStudentActivity extends AppCompatActivity {
 
     private void getStudentList(){
         List<Student> studentList = new ArrayList<>();
-        studentList.add(new Student("홍길동", "3학년", "A반", "2022-04-20"));
-        studentList.add(new Student("고길동", "1학년", "B반", "2022-04-22"));
-        studentList.add(new Student("노길동", "2학년", "C반", "2022-04-30"));
-        studentList.add(new Student("도길동", "3학년", "A반", "2022-04-11"));
-        studentList.add(new Student("로길동", "1학년", "E반", "2022-04-13"));
+//        studentList.add(new Student("홍길동", "3학년", "A반", "2022-04-20"));
+//        studentList.add(new Student("고길동", "1학년", "B반", "2022-04-22"));
+//        studentList.add(new Student("노길동", "2학년", "C반", "2022-04-30"));
+//        studentList.add(new Student("도길동", "3학년", "A반", "2022-04-11"));
+//        studentList.add(new Student("로길동", "1학년", "E반", "2022-04-13"));
 
         setSearchButton(studentList);
     }
@@ -125,5 +135,24 @@ public class FindStudentActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(FindStudentActivity.this));
         StudentSearchResultAdapter studentSearchResultAdapter = new StudentSearchResultAdapter(studentList);
         recyclerView.setAdapter(studentSearchResultAdapter);
+    }
+
+    private void getStudent(){
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference Ref = mDatabase.child("students");
+        Ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    studentList.add(dataSnapshot.getValue(Student.class));
+                    Log.d("Student", dataSnapshot.getValue(Student.class).getName());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }
