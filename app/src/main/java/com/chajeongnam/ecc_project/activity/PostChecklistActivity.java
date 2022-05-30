@@ -1,7 +1,9 @@
 package com.chajeongnam.ecc_project.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,19 +15,25 @@ import com.chajeongnam.ecc_project.decoration.SetItemDecoration;
 import com.chajeongnam.ecc_project.model.TempList;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PostChecklistActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private List<TempList> tempLists;
     private PostChecklistAdapter evapostChecklistAdapter;
+    private ArrayList<HashMap> result=new ArrayList<>();
+    private Button saveBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_cheklist);
-        Intent intent =getIntent();
+        saveBtn=findViewById(R.id.savePostTestBtn);
+
+
         tempLists=(ArrayList<TempList>)getIntent().getSerializableExtra("tempLists");
         recyclerView = findViewById(R.id.evaluationPostRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(PostChecklistActivity.this));
@@ -33,6 +41,21 @@ public class PostChecklistActivity extends AppCompatActivity {
         recyclerView.addItemDecoration(itemDecoration);
         evapostChecklistAdapter = new PostChecklistAdapter(tempLists);
         recyclerView.setAdapter(evapostChecklistAdapter);
+
+        saveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+               result.add(evapostChecklistAdapter.getResult());
+
+
+                for (Map.Entry<String, String> entrySet : evapostChecklistAdapter.getResult().entrySet()) {
+                    Log.d("확인", entrySet.getKey() + " : " + entrySet.getValue());
+                }
+
+            }
+        });
 
     }
 

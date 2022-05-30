@@ -21,6 +21,7 @@
     <Button
         android:layout_width="300dp"
         android:layout_height="wrap_content"
+        android:id="@+id/savePostTestBtn"
         android:layout_gravity="center"
         android:text="저장"/>
 

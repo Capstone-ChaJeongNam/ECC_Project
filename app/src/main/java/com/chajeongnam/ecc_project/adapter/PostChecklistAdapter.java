@@ -18,12 +18,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chajeongnam.ecc_project.R;
 import com.chajeongnam.ecc_project.model.TempList;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class PostChecklistAdapter extends RecyclerView.Adapter<PostChecklistAdapter.ViewHolder> {
     private List<TempList> tempLists;
     private int selectedPosition = -1;
 
+    private    HashMap<String,String> result = new HashMap<String,String>();
+
+
+    public HashMap<String, String> getResult() {
+        return result;
+    }
 
     @NonNull
     @Override
@@ -63,19 +71,25 @@ public class PostChecklistAdapter extends RecyclerView.Adapter<PostChecklistAdap
                 switch (i) {
                     case R.id.one:
                         Toast.makeText(radioGroup.getContext(), "짧게 출력 Hello World!", Toast.LENGTH_SHORT).show();
+                        result.put(String.valueOf(holder.getAdapterPosition()), "1");
                         break;
                     case R.id.two:
                         Toast.makeText(radioGroup.getContext(), "짧게 출력 Hello World!", Toast.LENGTH_SHORT).show();
+                        result.put(String.valueOf(holder.getAdapterPosition()), "2");
                         break;
                     case R.id.three:
                         Toast.makeText(radioGroup.getContext(), "짧게 출력 Hello World!", Toast.LENGTH_SHORT).show();
+                        result.put(String.valueOf(holder.getAdapterPosition()), "3");
                         break;
                     case R.id.C:
                         Toast.makeText(radioGroup.getContext(), "짧게 출력 Hello World!", Toast.LENGTH_SHORT).show();
+                        result.put(String.valueOf(holder.getAdapterPosition()), "C");
                         break;
                 }
             }
         });
+
+
     }
 
 
@@ -95,6 +109,7 @@ public class PostChecklistAdapter extends RecyclerView.Adapter<PostChecklistAdap
             content = itemView.findViewById(R.id.content);
             radioGroup = itemView.findViewById(R.id.evaGroup);
             editText = itemView.findViewById(R.id.descriptionEditText);
+
 
         }
 
