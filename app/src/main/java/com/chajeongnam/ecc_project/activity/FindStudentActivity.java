@@ -1,5 +1,6 @@
 package com.chajeongnam.ecc_project.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -42,8 +43,8 @@ public class FindStudentActivity extends AppCompatActivity {
                 /*
                   TODO 학생 추가 화면 추가 및 이동
                  */
-                Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                startActivity(new Intent(FindStudentActivity.this, AddStudentActivity.class));
+
             }
         });
         setActionbar();
