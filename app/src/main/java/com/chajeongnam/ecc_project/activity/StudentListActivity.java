@@ -112,21 +112,6 @@ public class StudentListActivity extends AppCompatActivity {
 
                 }
             });
-//            uidRef.addValueEventListener(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(@NonNull DataSnapshot snapshot) {
-////                    for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-//                        studentList.add(snapshot.getValue(Student.class));
-//                        Log.d("Student", snapshot.getValue(Student.class).getName());
-////                    }
-//                }
-//
-//                @Override
-//                public void onCancelled(@NonNull DatabaseError error) {
-//
-//                }
-//            });
-
 
         }
 
