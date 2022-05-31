@@ -33,6 +33,7 @@ import java.io.File;
 import java.util.HashMap;
 
 public class TempSignUp extends AppCompatActivity {
+
     private FirebaseAuth mAuth;
     private String email;
     private String password;
@@ -70,7 +71,7 @@ public class TempSignUp extends AppCompatActivity {
                 password=editText2.getText().toString().trim();
 
                 mAuth.createUserWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        .addOnCompleteListener(TempSignUp.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
@@ -78,23 +79,15 @@ public class TempSignUp extends AppCompatActivity {
                                         FirebaseUser firebaseUser = mAuth.getCurrentUser();
                                         String email=firebaseUser.getEmail();
                                         String uid= firebaseUser.getUid();
-                                        HashMap<Object, String> hashMap = new HashMap<>();
-
-                                        hashMap.put("uid",uid);
-                                        hashMap.put("email",email);
 
 
 
-
-
-                                        mDatabaseRef.child("UserAccount").child(firebaseUser.getUid()).setValue(account);
-
-                                        Intent intent = new Intent(SignUpActivity.this, StartActivity.class);
+                                        Intent intent = new Intent(TempSignUp.this, PostHistoryListActivity.class);
                                         startActivity(intent);
 
-                                        Toast.makeText(SignUpActivity.this, "회원가입을 성공하였습니다", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(TempSignUp.this, "회원가입을 성공하였습니다", Toast.LENGTH_LONG).show();
                                     } else {
-                                        Toast.makeText(SignUpActivity.this, "회원가입을 실패하였습니다", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(getApplicationContext(), "회원가입을 실패하였습니다", Toast.LENGTH_LONG).show();
                                     }
                                 } else {
                                     // If sign in fails, display a message to the user.
@@ -108,22 +101,7 @@ public class TempSignUp extends AppCompatActivity {
         });
 
 
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(getApplicationContext(), "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+
 
     }
 

@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ECC_Project">
         <activity
-            android:name="com.chajeongnam.ecc_project.activity.HomeActivity"
+            android:name="com.chajeongnam.ecc_project.activity.PostHistoryListActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,7 +24,6 @@
         <activity android:name=".activity.StudentListActivity"/>
         <activity android:name=".activity.EvaPreTestListActivity"/>
         <activity android:name=".activity.PostChecklistActivity"/>
-        <activity android:name=".activity.PostHistoryListActivity"/>
     </application>
 
 </manifest>

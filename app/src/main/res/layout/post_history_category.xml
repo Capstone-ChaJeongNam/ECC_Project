@@ -33,24 +33,29 @@
                     android:id="@+id/historyOne"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:clickable="false"
                     android:text="1" />
 
                 <RadioButton
                     android:id="@+id/historyTwo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:clickable="false"
                     android:text="2" />
 
                 <RadioButton
                     android:id="@+id/historyThree"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:clickable="false"
                     android:text="3" />
 
                 <RadioButton
                     android:id="@+id/historyC"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:clickable="false"
                     android:text="C" />
             </RadioGroup>
         </LinearLayout>

@@ -40,6 +40,13 @@ public class PostHistoryListAdapter extends RecyclerView.Adapter<PostHistoryList
     public void onBindViewHolder(@NonNull PostHistoryListAdapter.ViewHolder holder, int position) {
         PostHistoryDateTempList tempList = tempLists.get(position);
         holder.bind(tempList);
+//        파베에서 갖고 온 날짜를 textview의 text와 비교하면 됨
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                
+            }
+        });
 
     }
 
@@ -56,7 +63,7 @@ public class PostHistoryListAdapter extends RecyclerView.Adapter<PostHistoryList
 
         private ViewHolder(@NonNull View itemView) {
             super(itemView);
-            cardView = itemView.findViewById(R.id.postHistoryListRecyclerView);
+            cardView = itemView.findViewById(R.id.historyList);
             textView = itemView.findViewById(R.id.historyName);
 
         }

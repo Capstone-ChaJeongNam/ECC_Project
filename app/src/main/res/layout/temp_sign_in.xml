@@ -5,13 +5,13 @@
     android:orientation="vertical">
 
     <EditText
-        android:id="@+id/id"
+        android:id="@+id/logInid"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="이메일"/>
 
     <EditText
-        android:id="@+id/password"
+        android:id="@+id/logInpassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
@@ -19,7 +19,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="가입하기"
-        android:id="@+id/signUpBtn"/>
+        android:text="로그인"
+        android:id="@+id/logInBtn"/>
 
 </LinearLayout>
