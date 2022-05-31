@@ -3,10 +3,13 @@ package com.chajeongnam.ecc_project.model;
 public class Result {
     Integer score;
     String description;
+    String content;
 
-    public Result(Integer score, String description) {
+
+    public Result(Integer score, String description, String content) {
         this.score = score;
         this.description = description;
+        this.content = content;
     }
 
     public Result() {
@@ -26,5 +29,13 @@ public class Result {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 }

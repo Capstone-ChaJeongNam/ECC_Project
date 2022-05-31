@@ -57,8 +57,8 @@ public class StudentSearchResultAdapter extends RecyclerView.Adapter<StudentSear
         }
 
         private void bind(Student student){
-            studentGradeTextView.setText(student.getGrade());
-            studentClassTextView.setText(student.getAttrClass());
+            studentGradeTextView.setText(student.getGrade() + "학년");
+            studentClassTextView.setText(student.getAttrClass()+ "반");
             studentNameTextView.setText(student.getName());
 
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -66,9 +66,10 @@ public class StudentSearchResultAdapter extends RecyclerView.Adapter<StudentSear
                 public void onClick(View view) {
                     Context context = view.getContext();
                     Intent intent = new Intent(context , StudentInfoActivity.class);
+                    intent.putExtra("uid", student.getUid());
                     intent.putExtra("name", studentNameTextView.getText());
                     intent.putExtra("recent", student.getRecent());
-                    intent.putExtra("grade", student.getGrade() + " " + student.getAttrClass());
+                    intent.putExtra("grade", student.getGrade() + "학년 " + student.getAttrClass() + "반");
                     context.startActivity(intent);
                 }
             });

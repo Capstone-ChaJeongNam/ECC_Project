@@ -48,6 +48,7 @@ public class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.
                     Intent intent = new Intent(context , StudentInfoActivity.class);
                     intent.putExtra("name", studentNameTextView.getText());
 //                    intent.putExtra("recent", student.getRecent());
+                    intent.putExtra("uid", student.getUid());
                     intent.putExtra("grade", student.getGrade() + " " + student.getAttrClass());
                     context.startActivity(intent);
                 }

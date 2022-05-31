@@ -122,16 +122,16 @@ public class FindStudentActivity extends AppCompatActivity {
         });
     }
 
-    private void getStudentList(){
-        List<Student> studentList = new ArrayList<>();
-//        studentList.add(new Student("홍길동", "3학년", "A반", "2022-04-20"));
-//        studentList.add(new Student("고길동", "1학년", "B반", "2022-04-22"));
-//        studentList.add(new Student("노길동", "2학년", "C반", "2022-04-30"));
-//        studentList.add(new Student("도길동", "3학년", "A반", "2022-04-11"));
-//        studentList.add(new Student("로길동", "1학년", "E반", "2022-04-13"));
-
-        setSearchButton(studentList);
-    }
+//    private void getStudentList(){
+//        List<Student> studentList = new ArrayList<>();
+////        studentList.add(new Student("홍길동", "3학년", "A반", "2022-04-20"));
+////        studentList.add(new Student("고길동", "1학년", "B반", "2022-04-22"));
+////        studentList.add(new Student("노길동", "2학년", "C반", "2022-04-30"));
+////        studentList.add(new Student("도길동", "3학년", "A반", "2022-04-11"));
+////        studentList.add(new Student("로길동", "1학년", "E반", "2022-04-13"));
+//
+//        setSearchButton(studentList);
+//    }
 
     private void setRecyclerView(List<Student> studentList) {
         RecyclerView recyclerView = findViewById(R.id.studentSearchResults);
