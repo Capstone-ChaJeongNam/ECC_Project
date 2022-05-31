@@ -18,6 +18,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -42,20 +43,9 @@ public class CategoryListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category_list);
         setActionbar();
-
-
-//        categoryList = new ArrayList<>();
-//        categoryList.add(new Category("점자","기초 점자"));
-//        categoryList.add(new Category("점자","수학 점자"));
-//        categoryList.add(new Category("점자","한글 점자"));
-//        categoryList.add(new Category("점자","촉각 훈련"));
-//        categoryList.add(new Category("일상생활기술","실생활"));
-//        categoryList.add(new Category("일상생활기술","건강과 안전"));
-
-
+        
         getCategories();
     }
-    Iterable<DataSnapshot> children;
 
     private void getCategories() {
         categoryList = new ArrayList<>();
@@ -69,19 +59,20 @@ public class CategoryListActivity extends AppCompatActivity {
                     Object object = dataSnapshot.getValue(Object.class);
                     String jsonString = new Gson().toJson(object);
                     try {
-                        Map<String, Object> jsonObject = new ObjectMapper().readValue(jsonString, Map.class);
-                        String[] arr = (String[]) jsonObject.keySet().toArray();
-                        JSONObject jObject = new JSONObject(jsonString);
-                        Log.d("Json", jObject.keys().toString());
-                    } catch (JSONException | JsonProcessingException e) {
+                        Map jsonObject = new ObjectMapper().readValue(jsonString, Map.class);
+                        Object[] arr = (Object[]) jsonObject.keySet().toArray();
+                        for(Object area : arr){
+                            categoryList.add(new Category(dataSnapshot.getKey(),  setTextLine(area.toString())));
+                        }
+
+                    } catch (JsonProcessingException e) {
                         e.printStackTrace();
                     }
-//                    categoryList.add(new Category(dataSnapshot.getKey(),  dataSnapshot.getChildren()));
                 }
-//                recyclerView = findViewById(R.id.categoryListRecyclerView);
-//                recyclerView.setLayoutManager(new LinearLayoutManager(CategoryListActivity.this));
-//                categoryListAdapter = new CategoryListAdapter(categoryList);
-//                recyclerView.setAdapter(categoryListAdapter);
+                recyclerView = findViewById(R.id.categoryListRecyclerView);
+                recyclerView.setLayoutManager(new LinearLayoutManager(CategoryListActivity.this));
+                categoryListAdapter = new CategoryListAdapter(categoryList);
+                recyclerView.setAdapter(categoryListAdapter);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -90,6 +81,29 @@ public class CategoryListActivity extends AppCompatActivity {
         });
     }
 
+    private String setTextLine(String area){
+
+        if(area.length() >5){
+            int count = 0;
+
+            List<String> chArray = Arrays.asList(area.split("(?!^)"));
+            List<Integer> locations = new ArrayList<>();
+            for(int i = 0; i< chArray.size(); i++){
+                if(chArray.get(i).equals(" ")){
+                    locations.add(i);
+                    count += 1;
+                }
+            }
+            if(count != 0)
+                return area.substring(0, locations.get(count/2)) + "\n" + area.substring(locations.get(count/2) + 1);
+            else
+                return area;
+
+        }else{
+            return area;
+        }
+
+    }
     private void setActionbar(){
         // calling the action bar
         ActionBar actionBar = getSupportActionBar();
