@@ -53,11 +53,6 @@ public class FindEmailActivity extends AppCompatActivity {
                 String strName = mEtName.getText().toString().trim();
                 String strBirth = mEtBirth.getText().toString().trim();
 
-                    /*String email = user.getEmail();
-
-                    boolean emailVerified = user.isEmailVerified();
-                    String uid = user.getUid();*/
-
                 ValueEventListener mValueEventListener = new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -90,95 +85,7 @@ public class FindEmailActivity extends AppCompatActivity {
                     }
                 };
                 mDatabase.child("ECC moblie checklist").child("UserAccount").addValueEventListener(mValueEventListener);
-
-
-
-
-
-
-
-
-
-
-
-                /*
-                mDatabase.child("ECC moblie checklist").child("UserAccount").child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                        for(DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
-                            UserAccount account = dataSnapshot.getValue(UserAccount.class);
-
-                            emailId = account.getEmailId();
-                            username = account.getName();
-                            userbirth = account.getBirth();
-
-                            if (strName.equals(username) && strBirth.equals(userbirth)) {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(FindEmailActivity.this);
-                                dialog = builder.setMessage(strName + "님의 아이디는 " + emailId + " 입니다").setNegativeButton("확인", null).create();
-                                dialog.show();
-                            } else {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(FindEmailActivity.this);
-                                dialog = builder.setMessage("아이디가 존재하지 않습니다").setNegativeButton("확인", null).create();
-                                dialog.show();
-                            }
-                        }
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-                */
-
-
-
-
-                    /*
-                    mDatabase.child("UserAccount").child(String.valueOf(user)).child("birth").addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            String value = dataSnapshot.getValue(String.class);
-                            userbirth = value;
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
-
-                    if(strName.equals(username) && strBirth.equals(userbirth)) {
-                        mDatabase.child("UserAccount").child(String.valueOf(user)).child("emailId").addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                String value = dataSnapshot.getValue(String.class);
-                                emailId = value;
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-                    */
-
             }
         });
-        /*
-        ValueEventListener postListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Post post = dataSnapshot.getValue(Post.class);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
-            }
-        };
-        mPostReference.addValueEventListener(postListener);*/
     }
 }
