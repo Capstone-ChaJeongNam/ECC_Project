@@ -48,6 +48,13 @@ public class CGraphActivity extends AppCompatActivity implements View.OnClickLis
     private LineChart chart;
     List<Integer> results;
     List<String> dates;
+
+    List<Integer> monthResults;
+    List<String> monthLabels;
+
+    List<Integer> yearResults;
+    List<String> yearLabels;
+
     int min = 1000, max = 0;
     int monthMin = 1000, monthMax = 0;
     int yearMin = 1000, yearMax = 0;
@@ -102,8 +109,6 @@ public class CGraphActivity extends AppCompatActivity implements View.OnClickLis
     }
 
 
-    List<Integer> monthResults;
-    List<String> monthLabels;
 
     private void setValueMonth(){
         String month = dates.get(0).split("-")[1];
@@ -140,8 +145,6 @@ public class CGraphActivity extends AppCompatActivity implements View.OnClickLis
 
     }
 
-    List<Integer> yearResults;
-    List<String> yearLabels;
 
     private void setValueYear(){
         String year = dates.get(0).split("-")[0];

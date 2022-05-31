@@ -57,7 +57,10 @@ public class StudentInfoHistoryAdapter extends RecyclerView.Adapter<StudentInfoH
                         count += 1;
                     }
                 }
-                return area.substring(0, locations.get(count/2)) + "\n" + area.substring(locations.get(count/2) + 1);
+                if(count != 0)
+                    return area.substring(0, locations.get(count/2)) + "\n" + area.substring(locations.get(count/2) + 1);
+                else
+                    return area;
 
             }else{
                 return area;
