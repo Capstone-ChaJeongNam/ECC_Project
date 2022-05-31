@@ -15,6 +15,8 @@ import com.chajeongnam.ecc_project.adapter.StudentListAdapter;
 import com.chajeongnam.ecc_project.adapter.StudentSearchResultAdapter;
 import com.chajeongnam.ecc_project.model.Category;
 import com.chajeongnam.ecc_project.model.Student;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
@@ -37,7 +39,7 @@ public class FindStudentActivity extends AppCompatActivity {
     FloatingActionButton addStudentButton;
     private DatabaseReference mDatabase;
     List<Student> studentList;
-
+    List<String> studentUids;
 
 
     private StudentSearchResultAdapter studentSearchResultAdapter;
@@ -58,7 +60,8 @@ public class FindStudentActivity extends AppCompatActivity {
             }
         });
         setActionbar();
-        getStudentList();
+        getStudents();
+//        getStudentList();
     }
 
     private void setActionbar(){
@@ -137,18 +140,38 @@ public class FindStudentActivity extends AppCompatActivity {
         recyclerView.setAdapter(studentSearchResultAdapter);
     }
 
-    private void getStudent(){
+//    private void getStudent(){
+//        mDatabase = FirebaseDatabase.getInstance().getReference();
+//        DatabaseReference Ref = mDatabase.child("students");
+//        Ref.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+//                    studentList.add(dataSnapshot.getValue(Student.class));
+//                    Log.d("Student", dataSnapshot.getValue(Student.class).getName());
+//                }
+//            }
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+//    }
+
+    private void getStudents() {
+        studentList = new ArrayList<>();
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference Ref = mDatabase.child("students");
-        Ref.addValueEventListener(new ValueEventListener() {
+        DatabaseReference studentRef = mDatabase.child("students");
+
+        studentRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
                     studentList.add(dataSnapshot.getValue(Student.class));
-                    Log.d("Student", dataSnapshot.getValue(Student.class).getName());
                 }
-            }
 
+                setSearchButton(studentList);
+            }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
