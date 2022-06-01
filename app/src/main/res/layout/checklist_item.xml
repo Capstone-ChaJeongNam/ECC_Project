@@ -16,7 +16,7 @@
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="50dp"
         android:text="TEXT"
         android:id="@+id/textView2"
         android:textSize="20sp"
@@ -24,11 +24,13 @@
         android:layout_weight="5" />
 
     <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
         android:id="@+id/checkBox1"
-        android:focusable="false"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:background="@drawable/check_button"
+        android:button="@null"
         android:clickable="false"
-        android:layout_weight="1" />
+        android:focusable="false"
+        android:gravity="center" />
 
 </com.chajeongnam.ecc_project.adapter.checklist_item>

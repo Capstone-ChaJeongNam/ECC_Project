@@ -14,7 +14,7 @@
             android:exported="false"/>
 
         <activity
-            android:name=".activity.PreHistoryActivity6_1_1"
+            android:name=".activity.PreCheckListActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,6 +25,9 @@
         <activity android:name=".activity.CategoryListActivity" />
         <activity android:name=".activity.FindStudentActivity" />
         <activity android:name=".activity.StudentListActivity" />
+        <activity android:name=".activity.PretHistoryListActivity" />
+        <activity android:name=".activity.PretPeriodActivity" />
+        <activity android:name=".activity.PreHistoryActivity" />
     </application>
 
 </manifest>

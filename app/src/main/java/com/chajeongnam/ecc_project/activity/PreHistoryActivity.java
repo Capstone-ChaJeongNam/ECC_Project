@@ -1,22 +1,22 @@
 package com.chajeongnam.ecc_project.activity;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.chajeongnam.ecc_project.R;
 import com.chajeongnam.ecc_project.adapter.PreChecklistAdapter;
 
-public class PreHistoryActivity6_1_1 extends AppCompatActivity {
+public class PreHistoryActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pre_history6_1_1);
+        setContentView(R.layout.activity_pre_history);
         setActionbar();
 
         ListView listview;
@@ -24,7 +24,7 @@ public class PreHistoryActivity6_1_1 extends AppCompatActivity {
 
         adapter = new PreChecklistAdapter();
 
-        listview = (ListView) findViewById(R.id.listview1);
+        listview = (ListView) findViewById(R.id.prehistory1);
         listview.setAdapter(adapter);
 
         adapter.addItem("1","초성의 자음자와 겹글자를 알고 읽고쓴다.");

@@ -16,6 +16,8 @@ public class PreChecklistAdapter extends BaseAdapter {
 
     private ArrayList<PreChecklist> checklistItem = new ArrayList<PreChecklist>();
 
+
+
     @Override
     public int getCount() {
         return checklistItem.size();
@@ -57,5 +59,14 @@ public class PreChecklistAdapter extends BaseAdapter {
         item.setContent(content);
 
         checklistItem.add(item);
+    }
+
+    public void getItem(String id, String content) {
+        PreChecklist item2 = new PreChecklist();
+
+        id= item2.getId();
+        content= item2.getContent();
+
+        checklistItem.add(item2);
     }
 }
