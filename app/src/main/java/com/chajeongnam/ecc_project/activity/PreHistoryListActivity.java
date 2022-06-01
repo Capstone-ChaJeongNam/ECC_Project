@@ -14,7 +14,7 @@ import com.chajeongnam.ecc_project.model.PreHistoryDateTempList;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PretHistoryListActivity extends AppCompatActivity {
+public class PreHistoryListActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private List<PreHistoryDateTempList> tempLists;
     private PreHistoryAdapter postHistoryAdapter;
@@ -30,7 +30,7 @@ public class PretHistoryListActivity extends AppCompatActivity {
         tempLists.add(new PreHistoryDateTempList("2022-08-20"));
         setContentView(R.layout.activity_pre_history_list);
         recyclerView = findViewById(R.id.preHistoryRecyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(PretHistoryListActivity.this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(PreHistoryListActivity.this));
         SetItemDecoration itemDecoration = new SetItemDecoration(20);
         recyclerView.addItemDecoration(itemDecoration);
         postHistoryAdapter = new PreHistoryAdapter(tempLists);

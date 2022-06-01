@@ -55,9 +55,10 @@
         <activity android:name=".activity.EvaPreTestListActivity" />
         <activity android:name=".activity.PostChecklistActivity" />
         <activity android:name=".activity.PostHistoryListActivity" />
-        <activity android:name=".activity.PretHistoryListActivity" />
-        <activity android:name=".activity.PretPeriodActivity" />
+        <activity android:name=".activity.PreHistoryListActivity" />
+        <activity android:name=".activity.PrePeriodActivity" />
         <activity android:name=".activity.PreHistoryActivity" />
+        <activity android:name=".activity.PostPeriodActivity"/>
     </application>
 
 </manifest>

@@ -15,7 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.chajeongnam.ecc_project.R;
 
-public class PretPeriodActivity extends AppCompatActivity {
+public class PrePeriodActivity extends AppCompatActivity {
     private int startYear;
     private int startMonth;
     private int startDay;
@@ -95,7 +95,7 @@ public class PretPeriodActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-Intent intent=new Intent(PretPeriodActivity.this, PretHistoryListActivity.class);
+Intent intent=new Intent(PrePeriodActivity.this, PreHistoryListActivity.class);
           intent.putExtra("startYear",startYear);
           intent.putExtra("startMonth",startMonth);
           intent.putExtra("startDay",startDay);
