@@ -22,6 +22,4 @@ public class History {
     public void setRecent(String recent) {
         this.recent = recent;
     }
-
-
 }

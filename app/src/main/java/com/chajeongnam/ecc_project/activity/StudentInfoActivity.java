@@ -85,7 +85,9 @@ public class StudentInfoActivity extends AppCompatActivity {
         startPreTestButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(StudentInfoActivity.this, PrePeriodActivity.class));
+                Intent intent =  new Intent(StudentInfoActivity.this, PrePeriodActivity.class);
+                intent.putExtra("student", student);
+                startActivity(intent);
             }
         });
 
@@ -93,7 +95,9 @@ public class StudentInfoActivity extends AppCompatActivity {
         startPostTestButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(StudentInfoActivity.this, PostPeriodActivity.class));
+                Intent intent = new Intent(StudentInfoActivity.this, PostPeriodActivity.class);
+                intent.putExtra("student", student);
+                startActivity(intent);
             }
         });
 
