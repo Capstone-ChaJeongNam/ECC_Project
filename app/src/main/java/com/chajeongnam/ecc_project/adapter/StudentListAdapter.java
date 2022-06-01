@@ -49,7 +49,7 @@ public class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.
                     intent.putExtra("name", studentNameTextView.getText());
 //                    intent.putExtra("recent", student.getRecent());
                     intent.putExtra("uid", student.getUid());
-                    intent.putExtra("grade", student.getGrade() + " " + student.getAttrClass());
+                    intent.putExtra("grade", student.getGrade() + "학년 " + student.getAttrClass()+"반");
                     context.startActivity(intent);
                 }
             });

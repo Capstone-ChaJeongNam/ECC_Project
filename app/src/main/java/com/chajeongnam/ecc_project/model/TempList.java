@@ -3,7 +3,7 @@ package com.chajeongnam.ecc_project.model;
 import java.io.Serializable;
 
 public class TempList implements Serializable {
-String title;
+    String title;
 
     public TempList(String title) {
         this.title = title;

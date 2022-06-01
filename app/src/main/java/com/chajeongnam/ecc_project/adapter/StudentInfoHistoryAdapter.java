@@ -1,12 +1,16 @@
 package com.chajeongnam.ecc_project.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.chajeongnam.ecc_project.R;
+import com.chajeongnam.ecc_project.activity.PostChecklistActivity;
+import com.chajeongnam.ecc_project.activity.PreCheckListActivity;
+import com.chajeongnam.ecc_project.activity.StartActivity;
 import com.chajeongnam.ecc_project.model.Category;
 import com.chajeongnam.ecc_project.model.History;
 import com.chajeongnam.ecc_project.model.Student;
@@ -21,9 +25,20 @@ import androidx.recyclerview.widget.RecyclerView;
 public class StudentInfoHistoryAdapter extends RecyclerView.Adapter<StudentInfoHistoryAdapter.ViewHolder> {
 
     private List<History> historyList;
-
-    public StudentInfoHistoryAdapter(List<History> historyList) {
+    private Student student;
+    private boolean isPost;
+    public StudentInfoHistoryAdapter(List<History> historyList, Student student, boolean isPost) {
         this.historyList = historyList;
+        this.student = student;
+        this.isPost = isPost;
+    }
+
+    public void setIsPost(boolean isPost){
+        this.isPost = isPost;
+    }
+
+    public boolean getIsPost(){
+        return isPost;
     }
 
     protected class ViewHolder extends RecyclerView.ViewHolder{
@@ -42,6 +57,22 @@ public class StudentInfoHistoryAdapter extends RecyclerView.Adapter<StudentInfoH
 
             historyAreaTextView.setText(setTextLine(area));
             historyRecentTextView.setText(history.getRecent());
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent;
+                    if (!getIsPost()) {
+                        intent = new Intent(view.getContext(), PreCheckListActivity.class);
+                    } else {
+                        intent = new Intent(view.getContext(), PostChecklistActivity.class);
+                    }
+                    intent.putExtra("student", student);
+                    intent.putExtra("category", historyCategoryTextView.getText());
+                    intent.putExtra("area", historyAreaTextView.getText() );
+                    view.getContext().startActivity(intent);
+                }
+            });
         }
 
         private String setTextLine(String area){

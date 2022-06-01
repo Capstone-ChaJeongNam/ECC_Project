@@ -1,10 +1,10 @@
-package com.chajeongnam.ecc_project;
+package com.chajeongnam.ecc_project.model;
 
 public class UserAccount {
 
     private String idToken;
     private String emailId;
-    private String password;
+//    private String password;
     private String name;
     private String birth;
 
@@ -26,13 +26,13 @@ public class UserAccount {
         this.emailId = emailId;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
+//    public String getPassword() {
+//        return password;
+//    }
+//
+//    public void setPassword(String password) {
+//        this.password = password;
+//    }
 
     public String getName() {
         return name;
@@ -50,10 +50,10 @@ public class UserAccount {
         this.birth = birth;
     }
 
-    public UserAccount(String idToken, String emailId, String password, String name, String birth){
+    public UserAccount(String idToken, String emailId, String name, String birth){
         this.idToken = idToken;
         this.emailId = emailId;
-        this.password = password;
+//        this.password = password;
         this.name = name;
         this.birth = birth;
     }

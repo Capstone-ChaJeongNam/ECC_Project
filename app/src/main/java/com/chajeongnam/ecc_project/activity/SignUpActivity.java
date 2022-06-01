@@ -1,9 +1,8 @@
-package com.chajeongnam.ecc_project;
+package com.chajeongnam.ecc_project.activity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.loader.content.CursorLoader;
 
@@ -21,6 +20,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.chajeongnam.ecc_project.R;
+import com.chajeongnam.ecc_project.model.UserAccount;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -54,7 +55,7 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up);
 
         mFirebaseAuth = FirebaseAuth.getInstance();
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference("ECC moblie checklist");
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference();
         mStorage = FirebaseStorage.getInstance();
 
         profile = findViewById(R.id.user_image);
@@ -90,7 +91,7 @@ public class SignUpActivity extends AppCompatActivity {
                                 UserAccount account = new UserAccount();
                                 account.setIdToken(firebaseUser.getUid());
                                 account.setEmailId(firebaseUser.getEmail());
-                                account.setPassword(strPwd);
+//                                account.setPassword(strPwd);
                                 account.setBirth(strBirth);
                                 account.setName(strName);
 
@@ -112,6 +113,8 @@ public class SignUpActivity extends AppCompatActivity {
                 }
             }
         });
+
+        setActionbar();
     }
 
     private void setActionbar() {
@@ -123,7 +126,7 @@ public class SignUpActivity extends AppCompatActivity {
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         actionBar.setCustomView(R.layout.layout_actionbar);
         TextView textView = findViewById(R.id.titleTextView);
-        textView.setText("카테고리");
+        textView.setText("회원가입");
         ImageButton imageButton = findViewById(R.id.backImageButton);
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override

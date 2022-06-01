@@ -1,10 +1,12 @@
-package com.chajeongnam.ecc_project;
+package com.chajeongnam.ecc_project.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+
+import com.chajeongnam.ecc_project.R;
 
 public class SplashActivity extends AppCompatActivity {
 

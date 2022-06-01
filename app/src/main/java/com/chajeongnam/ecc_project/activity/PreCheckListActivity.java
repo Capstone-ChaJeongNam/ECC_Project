@@ -35,7 +35,7 @@ public class PreCheckListActivity extends AppCompatActivity {
         listview.setAdapter(adapter);
 
         //파이어베이스 데이터 로딩//
-        adapter.getItem();
+//        adapter.getItem();
 
 
 

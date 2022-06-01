@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ECC_Project">
         <activity
-            android:name=".SplashActivity"
+            android:name=".activity.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,6 +23,7 @@
 
 
         <!--ChoYeonJun add-->
+        <activity android:name=".activity.MainActivity"/>
         <activity android:name=".activity.CategoryListActivity" />
         <activity android:name=".activity.FindStudentActivity" />
         <activity android:name=".activity.StudentListActivity" />
@@ -36,19 +37,19 @@
         <!--ChoYeonJun add end-->
         <activity android:name=".activity.AddStudentActivity" />
         <activity
-            android:name=".FindPasswordActivity"
+            android:name=".activity.FindPasswordActivity"
             android:exported="false" />
         <activity
-            android:name=".StartActivity"
+            android:name=".activity.StartActivity"
             android:exported="false" />
         <activity
-            android:name=".FindEmailActivity"
+            android:name=".activity.FindEmailActivity"
             android:exported="false" />
         <activity
-            android:name=".SignInActivity"
+            android:name=".activity.SignInActivity"
             android:exported="false" />
         <activity
-            android:name=".SignUpActivity"
+            android:name=".activity.SignUpActivity"
             android:exported="false" />
 
         <activity android:name=".activity.EvaPreTestListActivity" />

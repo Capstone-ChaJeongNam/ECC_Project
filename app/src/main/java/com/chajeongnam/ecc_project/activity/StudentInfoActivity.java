@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -11,6 +12,9 @@ import com.chajeongnam.ecc_project.R;
 import com.chajeongnam.ecc_project.adapter.StudentInfoHistoryAdapter;
 import com.chajeongnam.ecc_project.model.Category;
 import com.chajeongnam.ecc_project.model.History;
+import com.chajeongnam.ecc_project.model.Student;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -34,8 +38,11 @@ public class StudentInfoActivity extends AppCompatActivity {
     List<History> preHistoryList, postHistoryList, historyList;
     RecyclerView recentHistoryRecyclerView;
     StudentInfoHistoryAdapter studentInfoHistoryAdapter;
+    Student student;
+//    boolean isPost;
     MaterialCardView viewPreTestButton, viewPostTestButton;
     TextView studentProfileClassTextView, studentProfileNameTextView, viewPreTestButtonText, viewPostTestButtonText;
+    Button startPreTestButton, startPostTestButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,8 +51,7 @@ public class StudentInfoActivity extends AppCompatActivity {
         setActionbar();
         setDefaultUI();
 //        getData();
-        getPreHistories();
-        getPostHistories();
+
 
     }
 
@@ -75,11 +81,34 @@ public class StudentInfoActivity extends AppCompatActivity {
             }
         });
 
+        startPreTestButton = findViewById(R.id.startPreTestButton);
+        startPreTestButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(StudentInfoActivity.this, PreCheckListActivity.class));
+            }
+        });
+
+        startPostTestButton = findViewById(R.id.startPostTestButton);
+        startPostTestButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(StudentInfoActivity.this, PostChecklistActivity.class));
+            }
+        });
 
         Intent intent = getIntent();
 
+        String studentUid = intent.getStringExtra("uid");
+        FirebaseDatabase.getInstance().getReference().child("students").child(studentUid).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                student = task.getResult().getValue(Student.class);
+                getPreHistories();
+                getPostHistories();
+            }
+        });
         studentProfileClassTextView.setText(intent.getStringExtra("grade") );
-
         studentProfileNameTextView.setText(intent.getStringExtra("name") );
 
     }
@@ -120,7 +149,7 @@ public class StudentInfoActivity extends AppCompatActivity {
         historyList.addAll(preHistoryList);
         recentHistoryRecyclerView = findViewById(R.id.recentHistoryRecyclerView);
         recentHistoryRecyclerView.setLayoutManager(new LinearLayoutManager(StudentInfoActivity.this));
-        studentInfoHistoryAdapter = new StudentInfoHistoryAdapter(historyList);
+        studentInfoHistoryAdapter = new StudentInfoHistoryAdapter(historyList, student, true);
         recentHistoryRecyclerView.setAdapter(studentInfoHistoryAdapter);
     }
 
@@ -171,8 +200,8 @@ public class StudentInfoActivity extends AppCompatActivity {
 //                    String content = (String) mapss.get("content");
                     preHistoryList.add(new History(new Category(category, area), date));
                 }
-                setRecyclerView();
-
+//                setRecyclerView();
+                toPreRecyclerViewList();
             }
 
             @Override
@@ -212,15 +241,29 @@ public class StudentInfoActivity extends AppCompatActivity {
     }
 
     private void toPostRecyclerViewList(){
-        historyList.clear();
+        historyList = new ArrayList<>();
         historyList.addAll(postHistoryList);
-        studentInfoHistoryAdapter.notifyDataSetChanged();
+        recentHistoryRecyclerView = findViewById(R.id.recentHistoryRecyclerView);
+        recentHistoryRecyclerView.setLayoutManager(new LinearLayoutManager(StudentInfoActivity.this));
+        studentInfoHistoryAdapter = new StudentInfoHistoryAdapter(historyList, student, true);
+        recentHistoryRecyclerView.setAdapter(studentInfoHistoryAdapter);
+//        historyList.clear();
+//        historyList.addAll(postHistoryList);
+//        studentInfoHistoryAdapter.setIsPost(true);
+//        studentInfoHistoryAdapter.notifyDataSetChanged();
     }
 
     private void toPreRecyclerViewList(){
-        historyList.clear();
+        historyList = new ArrayList<>();
         historyList.addAll(preHistoryList);
-        studentInfoHistoryAdapter.notifyDataSetChanged();
+        recentHistoryRecyclerView = findViewById(R.id.recentHistoryRecyclerView);
+        recentHistoryRecyclerView.setLayoutManager(new LinearLayoutManager(StudentInfoActivity.this));
+        studentInfoHistoryAdapter = new StudentInfoHistoryAdapter(historyList, student, false);
+        recentHistoryRecyclerView.setAdapter(studentInfoHistoryAdapter);
+//        historyList.clear();
+//        historyList.addAll(preHistoryList);
+//        studentInfoHistoryAdapter.setIsPost(false);
+//        studentInfoHistoryAdapter.notifyDataSetChanged();
     }
 
     private void setOnClick(){

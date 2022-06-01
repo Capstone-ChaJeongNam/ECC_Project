@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FindEmailActivity">
+    tools:context=".activity.FindEmailActivity">
 
     <ImageView
         android:id="@+id/imageView2"
@@ -53,8 +53,8 @@
 
     <TextView
         android:id="@+id/view_name"
-        android:layout_width="52dp"
-        android:layout_height="35dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
         android:layout_marginEnd="8dp"
         android:text="이름 :"
@@ -66,8 +66,8 @@
 
     <TextView
         android:id="@+id/view_birth"
-        android:layout_width="95dp"
-        android:layout_height="35dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="8dp"
         android:text="생년월일 :"

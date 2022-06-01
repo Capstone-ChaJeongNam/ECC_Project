@@ -1,4 +1,4 @@
-package com.chajeongnam.ecc_project;
+package com.chajeongnam.ecc_project.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import com.chajeongnam.ecc_project.R;
 
 public class StartActivity extends AppCompatActivity {
 

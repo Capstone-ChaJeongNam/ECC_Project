@@ -1,16 +1,15 @@
-package com.chajeongnam.ecc_project;
+package com.chajeongnam.ecc_project.activity;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.chajeongnam.ecc_project.R;
+import com.chajeongnam.ecc_project.model.UserAccount;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -64,19 +63,20 @@ public class FindEmailActivity extends AppCompatActivity {
                             emailId = account.getEmailId();
                             username = account.getName();
                             userbirth = account.getBirth();
-
+                            if (strName.equals(username) && strBirth.equals(userbirth)) {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(FindEmailActivity.this);
+                                dialog = builder.setMessage(strName + "님의 아이디는 " + emailId + " 입니다").setNegativeButton("확인", null).create();
+                                dialog.show();
+                            }
+//                            else{
+//                                AlertDialog.Builder builder = new AlertDialog.Builder(FindEmailActivity.this);
+//                                dialog = builder.setMessage("아이디가 존재하지 않습니다").setNegativeButton("확인", null).create();
+//                                dialog.show();
+//
+//                            }
 
                         }
-                        if (strName.equals(username) && strBirth.equals(userbirth)) {
-                            AlertDialog.Builder builder = new AlertDialog.Builder(FindEmailActivity.this);
-                            dialog = builder.setMessage(strName + "님의 아이디는 " + emailId + " 입니다").setNegativeButton("확인", null).create();
-                            dialog.show();
-                        }else{
-                            AlertDialog.Builder builder = new AlertDialog.Builder(FindEmailActivity.this);
-                            dialog = builder.setMessage("아이디가 존재하지 않습니다").setNegativeButton("확인", null).create();
-                            dialog.show();
 
-                        }
                     }
 
                     @Override
@@ -84,7 +84,7 @@ public class FindEmailActivity extends AppCompatActivity {
 
                     }
                 };
-                mDatabase.child("ECC moblie checklist").child("UserAccount").addValueEventListener(mValueEventListener);
+                mDatabase.child("UserAccount").addValueEventListener(mValueEventListener);
             }
         });
     }
