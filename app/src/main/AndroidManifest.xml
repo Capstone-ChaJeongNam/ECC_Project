@@ -10,7 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ECC_Project">
         <activity
-            android:name="com.chajeongnam.ecc_project.activity.HomeActivity"
             android:name=".SplashActivity"
             android:exported="true">
             <intent-filter>
@@ -31,7 +30,6 @@
             android:screenOrientation="landscape"/>
 <!--ChoYeonJun add end-->
         <activity android:name=".activity.AddStudentActivity"/>
-=======
         <activity
             android:name=".FindPasswordActivity"
             android:exported="false" />
@@ -47,10 +45,10 @@
         <activity
             android:name=".SignUpActivity"
             android:exported="false" />
-        <activity
-            android:name=".MainActivity"
-            android:exported="false" />
->>>>>>> ParkJuYoung
+
+        <activity android:name=".activity.EvaPreTestListActivity"/>
+        <activity android:name=".activity.PostChecklistActivity"/>
+        <activity android:name="com.chajeongnam.ecc_project.activity.PostHistoryListActivity" />
     </application>
 
 </manifest>

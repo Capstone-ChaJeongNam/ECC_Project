@@ -52,6 +52,7 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
         }
     }
 
+
     public CategoryListAdapter(List<Category> categoryList) {
         this.categoryList = categoryList;
     }
