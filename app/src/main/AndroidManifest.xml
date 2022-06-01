@@ -19,23 +19,28 @@
             </intent-filter>
         </activity>
 
-<!--ChoYeonJun add-->
-        <activity android:name=".activity.CategoryListActivity"/>
-        <activity android:name=".activity.FindStudentActivity"/>
-        <activity android:name=".activity.StudentListActivity"/>
-        <activity android:name=".activity.StudentInfoActivity"/>
-        <activity android:name=".activity.CGraphActivity"
-            android:screenOrientation="landscape"/>
-        <activity android:name=".activity.AdvanceGraphActivity"
-            android:screenOrientation="landscape"/>
-<!--ChoYeonJun add end-->
-        <activity android:name=".activity.AddStudentActivity"/>
+        <activity android:name=".activity.PreCheckListActivity" />
+
+
+        <!--ChoYeonJun add-->
+        <activity android:name=".activity.CategoryListActivity" />
+        <activity android:name=".activity.FindStudentActivity" />
+        <activity android:name=".activity.StudentListActivity" />
+        <activity android:name=".activity.StudentInfoActivity" />
+        <activity
+            android:name=".activity.CGraphActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".activity.AdvanceGraphActivity"
+            android:screenOrientation="landscape" />
+        <!--ChoYeonJun add end-->
+        <activity android:name=".activity.AddStudentActivity" />
         <activity
             android:name=".FindPasswordActivity"
             android:exported="false" />
         <activity
             android:name=".StartActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".FindEmailActivity"
             android:exported="false" />
@@ -46,9 +51,12 @@
             android:name=".SignUpActivity"
             android:exported="false" />
 
-        <activity android:name=".activity.EvaPreTestListActivity"/>
-        <activity android:name=".activity.PostChecklistActivity"/>
-        <activity android:name="com.chajeongnam.ecc_project.activity.PostHistoryListActivity" />
+        <activity android:name=".activity.EvaPreTestListActivity" />
+        <activity android:name=".activity.PostChecklistActivity" />
+        <activity android:name=".activity.PostHistoryListActivity" />
+        <activity android:name=".activity.PretHistoryListActivity" />
+        <activity android:name=".activity.PretPeriodActivity" />
+        <activity android:name=".activity.PreHistoryActivity" />
     </application>
 
 </manifest>
