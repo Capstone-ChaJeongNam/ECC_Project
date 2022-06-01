@@ -11,6 +11,7 @@
         android:theme="@style/Theme.ECC_Project">
         <activity
             android:name="com.chajeongnam.ecc_project.activity.HomeActivity"
+            android:name=".SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,6 +31,26 @@
             android:screenOrientation="landscape"/>
 <!--ChoYeonJun add end-->
         <activity android:name=".activity.AddStudentActivity"/>
+=======
+        <activity
+            android:name=".FindPasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".StartActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".FindEmailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SignInActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SignUpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
+>>>>>>> ParkJuYoung
     </application>
 
 </manifest>
