@@ -1,6 +1,7 @@
 package com.chajeongnam.ecc_project;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,6 +11,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -36,6 +39,7 @@ public class FindEmailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_email);
+        setActionbar();
 
         mEtName = findViewById(R.id.et_name);
         mEtBirth = findViewById(R.id.et_birth);
@@ -85,6 +89,25 @@ public class FindEmailActivity extends AppCompatActivity {
                     }
                 };
                 mDatabase.child("ECC moblie checklist").child("UserAccount").addValueEventListener(mValueEventListener);
+            }
+        });
+    }
+
+    private void setActionbar() {
+        // calling the action bar
+        ActionBar actionBar = getSupportActionBar();
+        // showing the back button in action bar
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        actionBar.setCustomView(R.layout.layout_actionbar);
+        TextView textView = findViewById(R.id.titleTextView);
+        textView.setText("아이디 찾기");
+        ImageButton imageButton = findViewById(R.id.backImageButton);
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
             }
         });
     }

@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".FindPasswordActivity"
+            android:name=".ResetPasswordActivity"
             android:exported="false" />
         <activity
             android:name=".StartActivity"

@@ -52,6 +52,7 @@ public class SignUpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+        setActionbar();
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("ECC moblie checklist");
@@ -123,7 +124,7 @@ public class SignUpActivity extends AppCompatActivity {
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         actionBar.setCustomView(R.layout.layout_actionbar);
         TextView textView = findViewById(R.id.titleTextView);
-        textView.setText("카테고리");
+        textView.setText("회원가입");
         ImageButton imageButton = findViewById(R.id.backImageButton);
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
