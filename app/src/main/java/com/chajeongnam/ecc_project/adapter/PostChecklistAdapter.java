@@ -4,6 +4,7 @@ import android.content.Context;
 import android.transition.Fade;
 import android.transition.Transition;
 import android.transition.TransitionManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chajeongnam.ecc_project.R;
 import com.chajeongnam.ecc_project.model.TempList;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,6 +31,9 @@ import java.util.List;
 
 public class PostChecklistAdapter extends RecyclerView.Adapter<PostChecklistAdapter.ViewHolder> {
     private List<TempList> tempLists;
+    private DatabaseReference mDatabase;
+
+
     private int selectedPosition = -1;
 
     private    HashMap<String,String> result = new HashMap<String,String>();
