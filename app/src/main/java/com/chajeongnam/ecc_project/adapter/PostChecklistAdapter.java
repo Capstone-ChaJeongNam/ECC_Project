@@ -76,24 +76,25 @@ public class PostChecklistAdapter extends RecyclerView.Adapter<PostChecklistAdap
             }
         });
         holder.radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+          String  firebaseEccKey=String.valueOf(holder.content.getText());
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 switch (i) {
                     case R.id.one:
                         Toast.makeText(radioGroup.getContext(), "짧게 출력 Hello World!", Toast.LENGTH_SHORT).show();
-                        result.put(String.valueOf(holder.getAdapterPosition()), "1");
+                        result.put(firebaseEccKey.replace(".",""), "1");
                         break;
                     case R.id.two:
                         Toast.makeText(radioGroup.getContext(), "짧게 출력 Hello World!", Toast.LENGTH_SHORT).show();
-                        result.put(String.valueOf(holder.getAdapterPosition()), "2");
+                        result.put(firebaseEccKey.replace(".",""), "2");
                         break;
                     case R.id.three:
                         Toast.makeText(radioGroup.getContext(), "짧게 출력 Hello World!", Toast.LENGTH_SHORT).show();
-                        result.put(String.valueOf(holder.getAdapterPosition()), "3");
+                        result.put(firebaseEccKey.replace(".",""), "3");
                         break;
                     case R.id.C:
                         Toast.makeText(radioGroup.getContext(), "짧게 출력 Hello World!", Toast.LENGTH_SHORT).show();
-                        result.put(String.valueOf(holder.getAdapterPosition()), "C");
+                        result.put(firebaseEccKey.replace(".",""), "C");
                         break;
                 }
             }
@@ -105,7 +106,7 @@ public class PostChecklistAdapter extends RecyclerView.Adapter<PostChecklistAdap
 
     @Override
     public int getItemCount() {
-        return tempLists.size();
+        return  (null != tempLists ? tempLists.size() : 0);
     }
 
 
@@ -129,7 +130,7 @@ public class PostChecklistAdapter extends RecyclerView.Adapter<PostChecklistAdap
         }
 
         private void bind(TempList tempList) {
-            content.setText(tempList.getTitle());
+            content.setText(getAdapterPosition()+tempList.getContent());
         }
     }
 

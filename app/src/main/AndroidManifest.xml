@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ECC_Project">
         <activity
-            android:name=".activity.SplashActivity"
+            android:name=".activity.PostChecklistActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -53,7 +53,7 @@
             android:exported="false" />
 
         <activity android:name=".activity.EvaPreTestListActivity" />
-        <activity android:name=".activity.PostChecklistActivity" />
+
         <activity android:name=".activity.PostHistoryListActivity" />
         <activity android:name=".activity.PreHistoryListActivity" />
         <activity android:name=".activity.PrePeriodActivity" />

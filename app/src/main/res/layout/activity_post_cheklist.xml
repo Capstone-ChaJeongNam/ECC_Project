@@ -8,7 +8,12 @@
         <androidx.appcompat.widget.AppCompatButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="10dp" android:background="@drawable/radius" android:layout_weight="1" android:text="선택" android:textColor="@color/black" android:drawableRight="@drawable/ic_baseline_arrow_drop_down_24"/>
         <androidx.appcompat.widget.AppCompatButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="10dp" android:background="@drawable/radius" android:layout_weight="1" android:text="선택" android:textColor="@color/black" android:drawableRight="@drawable/ic_baseline_arrow_drop_down_24"/>
     </LinearLayout>
-
+<Button
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/getListBtn"
+    android:text="리스트 불러오기"
+    android:layout_gravity="center"/>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/evaluationPostRecyclerView"
         android:layout_width="match_parent"

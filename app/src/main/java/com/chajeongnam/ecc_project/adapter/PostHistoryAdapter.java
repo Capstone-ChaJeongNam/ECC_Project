@@ -79,7 +79,7 @@ public class PostHistoryAdapter extends RecyclerView.Adapter<PostHistoryAdapter.
         }
 
         private void bind(TempList tempLists) {
-            content.setText(tempLists.getTitle());
+            content.setText(tempLists.getContent());
         }
     }
 }
