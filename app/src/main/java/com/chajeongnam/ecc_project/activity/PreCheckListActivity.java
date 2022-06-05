@@ -1,5 +1,6 @@
 package com.chajeongnam.ecc_project.activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,13 +13,28 @@ import android.widget.ListView;
 
 import com.chajeongnam.ecc_project.R;
 import com.chajeongnam.ecc_project.adapter.PreChecklistAdapter;
+import com.chajeongnam.ecc_project.model.Category;
+import com.chajeongnam.ecc_project.model.PreChecklist;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import androidx.appcompat.app.ActionBar;
+
 
 public class PreCheckListActivity extends AppCompatActivity {
     private Button saveBtn;
     private ListView listview;
     private PreChecklistAdapter adapter;
+    private DatabaseReference mDatabase;
+    private ArrayList<PreChecklist> checklist;
+
+
 
 
     @Override
@@ -29,14 +45,9 @@ public class PreCheckListActivity extends AppCompatActivity {
         saveBtn=findViewById(R.id.savePreTestBtn);
 
 
-        adapter = new PreChecklistAdapter();
-
         listview = (ListView) findViewById(R.id.listview1);
-        listview.setAdapter(adapter);
 
-        //파이어베이스 데이터 로딩//
-//        adapter.getItem();
-
+        getPrechecklist();
 
 
         //파이어베이스 데이터 저장//
@@ -48,10 +59,37 @@ public class PreCheckListActivity extends AppCompatActivity {
 
             }
         });
-
-
-
     }
+
+    String category = "보조공학";
+    String area = "OCR";
+
+    //파이어베이스 데이터 로드//
+    private void getPrechecklist() {
+        checklist = new ArrayList<>();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference myRef = mDatabase.child("ECC");
+        DatabaseReference ChecklistRef = myRef.child(category).child(area);
+        ChecklistRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                checklist.clear();
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    PreChecklist pre = dataSnapshot.getValue(PreChecklist.class);
+                    checklist.add(pre);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+
+            }
+        });
+        adapter= new PreChecklistAdapter(checklist, this);
+        listview.setAdapter(adapter);
+
+        }
     private void setActionbar() {
         // calling the action bar
         ActionBar actionBar = getSupportActionBar();

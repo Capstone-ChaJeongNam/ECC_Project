@@ -14,7 +14,13 @@ import java.util.ArrayList;
 
 public class PreChecklistAdapter extends BaseAdapter {
 
-    private ArrayList<PreChecklist> checklistItem = new ArrayList<PreChecklist>();
+    private  Context context;
+    private ArrayList<PreChecklist> checklistItem;
+
+    public PreChecklistAdapter(ArrayList<PreChecklist> checklistItem, Context context){
+        this.checklistItem = checklistItem;
+        this.context = context;
+    }
 
 
 
