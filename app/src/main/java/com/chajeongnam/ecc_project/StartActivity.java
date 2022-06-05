@@ -1,5 +1,6 @@
 package com.chajeongnam.ecc_project;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
@@ -15,6 +16,9 @@ public class StartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         setContentView(R.layout.activity_start);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
 
         Button btn_signUp = findViewById(R.id.btn_signup);
         btn_signUp.setOnClickListener(new View.OnClickListener() {

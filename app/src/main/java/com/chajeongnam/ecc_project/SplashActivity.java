@@ -1,5 +1,6 @@
 package com.chajeongnam.ecc_project;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
@@ -14,6 +15,10 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         setContentView(R.layout.activity_splash);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
+
 
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {

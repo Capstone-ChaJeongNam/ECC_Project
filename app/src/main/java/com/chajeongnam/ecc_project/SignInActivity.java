@@ -4,7 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -24,7 +26,9 @@ public class SignInActivity extends AppCompatActivity {
 
     private FirebaseAuth mFirebaseAuth;
     private DatabaseReference mDatabaseRef;
-    private EditText mEtEmail, mEtPwd, mEtName, mEtBirth, mEtRepwd;
+    private EditText mEtEmail, mEtPwd;
+
+    private String loginId, loginPwd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,28 +42,60 @@ public class SignInActivity extends AppCompatActivity {
         mEtEmail = findViewById(R.id.et_email);
         mEtPwd = findViewById(R.id.et_pwd);
 
-        Button btn_signIn = findViewById(R.id.btn_login);
-        btn_signIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        /*SharedPreferences sharedPreferences = getSharedPreferences("sharedPreferences", Activity.MODE_PRIVATE);
 
-                String strEmail = mEtEmail.getText().toString().trim();
-                String strPwd = mEtPwd.getText().toString().trim();
+        loginId = sharedPreferences.getString("inputId", null);
+        loginPwd = sharedPreferences.getString("inputPwd", null);
 
-                mFirebaseAuth.signInWithEmailAndPassword(strEmail, strPwd).addOnCompleteListener(SignInActivity.this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()) {
-                            Intent intent = new Intent(SignInActivity.this, MainActivity.class);
-                            startActivity(intent);
-                            finish();
-                        } else {
-                            Toast.makeText(SignInActivity.this, "아이디와 비밀번호를 확인해주세요", Toast.LENGTH_LONG).show();
-                        }
-                    }
-                });
+        if(loginId != null && loginPwd != null) {
+            if(loginId.equals("hj") && loginPwd.equals("xxxx")) {
+                Toast.makeText(getApplicationContext(), loginId + "님 자동로그인 입니다!", Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.putExtra("id", loginId);
+                startActivity( intent);
+                finish();
             }
-        });
+        }else if(loginId == null && loginPwd == null) {*/
+            Button btn_signIn = findViewById(R.id.btn_login);
+            btn_signIn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    /*if (mEtEmail.getText().toString().equals("hj") && mEtPwd.getText().toString().equals("xxxx")) {
+                        SharedPreferences sharedPreferences = getSharedPreferences("sharedPreferences", Activity.MODE_PRIVATE);
+
+                        SharedPreferences.Editor autoLogin = sharedPreferences.edit();
+
+                        autoLogin.putString("inputId", mEtEmail.getText().toString());
+                        autoLogin.putString("inputPwd", mEtPwd.getText().toString());
+
+                        autoLogin.commit();
+                        Toast.makeText(getApplicationContext(), mEtEmail.getText().toString()+"님 환영합니다.", Toast.LENGTH_SHORT).show();
+
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }*/
+
+                    String strEmail = mEtEmail.getText().toString().trim();
+                    String strPwd = mEtPwd.getText().toString().trim();
+
+                    mFirebaseAuth.signInWithEmailAndPassword(strEmail, strPwd).addOnCompleteListener(SignInActivity.this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                Toast.makeText(SignInActivity.this, "아이디와 비밀번호를 확인해주세요", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    });
+                }
+            });
+        //}
 
         TextView et_findId = findViewById(R.id.et_findId);
         et_findId.setOnClickListener(new View.OnClickListener()
