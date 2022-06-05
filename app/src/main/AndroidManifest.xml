@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ECC_Project">
         <activity
-            android:name="com.chajeongnam.ecc_project.activity.PostHistoryListActivity"
+            android:name=".activity.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,11 +19,46 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activity.CategoryListActivity"/>
-        <activity android:name=".activity.FindStudentActivity"/>
-        <activity android:name=".activity.StudentListActivity"/>
-        <activity android:name=".activity.EvaPreTestListActivity"/>
-        <activity android:name=".activity.PostChecklistActivity"/>
+        <activity android:name=".activity.PreCheckListActivity" />
+
+
+        <!--ChoYeonJun add-->
+        <activity android:name=".activity.MainActivity"/>
+        <activity android:name=".activity.CategoryListActivity" />
+        <activity android:name=".activity.FindStudentActivity" />
+        <activity android:name=".activity.StudentListActivity" />
+        <activity android:name=".activity.StudentInfoActivity" />
+        <activity
+            android:name=".activity.CGraphActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".activity.AdvanceGraphActivity"
+            android:screenOrientation="landscape" />
+        <!--ChoYeonJun add end-->
+        <activity android:name=".activity.AddStudentActivity" />
+        <activity
+            android:name=".activity.FindPasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.StartActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.FindEmailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.SignInActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.SignUpActivity"
+            android:exported="false" />
+
+        <activity android:name=".activity.EvaPreTestListActivity" />
+        <activity android:name=".activity.PostChecklistActivity" />
+        <activity android:name=".activity.PostHistoryListActivity" />
+        <activity android:name=".activity.PreHistoryListActivity" />
+        <activity android:name=".activity.PrePeriodActivity" />
+        <activity android:name=".activity.PreHistoryActivity" />
+        <activity android:name=".activity.PostPeriodActivity"/>
     </application>
 
 </manifest>

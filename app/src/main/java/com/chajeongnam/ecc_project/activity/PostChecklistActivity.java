@@ -33,8 +33,10 @@ public class PostChecklistActivity extends AppCompatActivity {
         setContentView(R.layout.activity_post_cheklist);
         saveBtn=findViewById(R.id.savePostTestBtn);
 
-
-        tempLists=(ArrayList<TempList>)getIntent().getSerializableExtra("tempLists");
+        tempLists = new ArrayList<>();
+        tempLists.add(new TempList("한글점자"));
+        tempLists.add(new TempList("기호점자"));
+//        tempLists=(ArrayList<TempList>)getIntent().getSerializableExtra("tempLists");
         recyclerView = findViewById(R.id.evaluationPostRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(PostChecklistActivity.this));
         SetItemDecoration itemDecoration = new SetItemDecoration(20);
@@ -45,14 +47,11 @@ public class PostChecklistActivity extends AppCompatActivity {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
                result.add(evapostChecklistAdapter.getResult());
 
-
-                for (Map.Entry<String, String> entrySet : evapostChecklistAdapter.getResult().entrySet()) {
-                    Log.d("확인", entrySet.getKey() + " : " + entrySet.getValue());
-                }
+               for (Map.Entry<String, String> entrySet : evapostChecklistAdapter.getResult().entrySet()) {
+                   Log.d("확인", entrySet.getKey() + " : " + entrySet.getValue());
+               }
 
             }
         });
