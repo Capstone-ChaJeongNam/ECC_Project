@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -22,6 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import androidx.appcompat.app.ActionBar;
@@ -32,7 +34,8 @@ public class PreCheckListActivity extends AppCompatActivity {
     private ListView listview;
     private PreChecklistAdapter adapter;
     private DatabaseReference mDatabase;
-    private ArrayList<PreChecklist> checklist;
+    private ArrayList<PreChecklist> checklist= new ArrayList<>();
+    private HashMap<String,String> result = new HashMap<String,String>();
 
 
 
@@ -43,41 +46,69 @@ public class PreCheckListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pre_checklist);
         setActionbar();
         saveBtn=findViewById(R.id.savePreTestBtn);
-
-
         listview = (ListView) findViewById(R.id.listview1);
 
-        getPrechecklist();
 
+        getPrechecklist();
+        SparseBooleanArray checkedItems = listview.getCheckedItemPositions();
 
         //파이어베이스 데이터 저장//
         saveBtn.setOnClickListener(new View.OnClickListener() {
+            String key = "-N3J6Cm3A_4feS07jZmi";
+            String category = "보조공학";
+            String area = "데이지플레이어";
+
             @Override
             public void onClick(View view) {
-                adapter.addItem("4","기본모음자 이외 모음자를 알고 읽고 쓴다.");
+                mDatabase = FirebaseDatabase.getInstance().getReference();
+                DatabaseReference myRef = mDatabase.child("histories");
+                DatabaseReference ChecklistRef = myRef.child(key).child("pre").child(category).child(area);
+                ChecklistRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for(int i =0; i<= adapter.getCount(); i++){
+                            ChecklistRef.child("2022-04-13").child(String.valueOf(i)).child("result").setValue(checkedItems.get(i));
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+
 
 
             }
         });
     }
 
-    String category = "보조공학";
-    String area = "OCR";
+
 
     //파이어베이스 데이터 로드//
-    private void getPrechecklist() {
-        checklist = new ArrayList<>();
+    public void getPrechecklist() {
+        String category = "보조공학";
+        String area = "OCR";
+
         mDatabase = FirebaseDatabase.getInstance().getReference();
         DatabaseReference myRef = mDatabase.child("ECC");
         DatabaseReference ChecklistRef = myRef.child(category).child(area);
-        ChecklistRef.addValueEventListener(new ValueEventListener() {
+        ChecklistRef.addListenerForSingleValueEvent (new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 checklist.clear();
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
                     PreChecklist pre = dataSnapshot.getValue(PreChecklist.class);
                     checklist.add(pre);
+                    PreChecklist item = new PreChecklist();
+                    int id= item.getId();
+                    String content = item.getContent();
+
+
                 }
+                adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -86,10 +117,11 @@ public class PreCheckListActivity extends AppCompatActivity {
 
             }
         });
-        adapter= new PreChecklistAdapter(checklist, this);
+        adapter= new PreChecklistAdapter(this,checklist);
         listview.setAdapter(adapter);
 
-        }
+
+    }
     private void setActionbar() {
         // calling the action bar
         ActionBar actionBar = getSupportActionBar();

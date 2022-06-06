@@ -28,15 +28,10 @@ public class PreHistoryActivity extends AppCompatActivity {
         ListView listview;
         PreChecklistAdapter adapter;
 
-        adapter = new PreChecklistAdapter(checklist, this);
+        adapter = new PreChecklistAdapter(this,checklist);
 
         listview = (ListView) findViewById(R.id.prehistory1);
         listview.setAdapter(adapter);
-
-        adapter.addItem("1","초성의 자음자와 겹글자를 알고 읽고쓴다.");
-        adapter.addItem("2","기본 모음자를 알고 읽고 쓴다.");
-        adapter.addItem("3","수표와 수를 알고 읽고 쓴다.");
-        adapter.addItem("4","기본모음자 이외 모음자를 알고 읽고 쓴다.");
 
     }
     private void setActionbar() {

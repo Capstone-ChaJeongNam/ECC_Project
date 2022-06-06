@@ -49,7 +49,7 @@
     <LinearLayout
         android:id="@+id/listviewgroup"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_weight="1"
 
@@ -60,8 +60,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:choiceMode="multipleChoice"
-            android:layout_weight="100"
-            tools:listitem="exam" />
+            android:layout_weight="100" />
 
         <Button
             android:id="@+id/savePreTestBtn"
