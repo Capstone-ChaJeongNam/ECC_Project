@@ -35,7 +35,7 @@ public class PreCheckListActivity extends AppCompatActivity {
     private PreChecklistAdapter adapter;
     private DatabaseReference mDatabase;
     private ArrayList<PreChecklist> checklist= new ArrayList<>();
-    private HashMap<String,String> result = new HashMap<String,String>();
+    private ArrayList<String> contentlist= new ArrayList<String>();
 
 
 
@@ -66,10 +66,10 @@ public class PreCheckListActivity extends AppCompatActivity {
                 ChecklistRef.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for(int i =0; i<= adapter.getCount(); i++){
+                        for(int i =0; i< adapter.getCount(); i++){
                             ChecklistRef.child("2022-04-13").child(String.valueOf(i)).child("result").setValue(checkedItems.get(i));
+                            ChecklistRef.child("2022-04-13").child(String.valueOf(i)).child("content").setValue(contentlist.get(i));
                         }
-
                     }
 
                     @Override
@@ -102,11 +102,8 @@ public class PreCheckListActivity extends AppCompatActivity {
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
                     PreChecklist pre = dataSnapshot.getValue(PreChecklist.class);
                     checklist.add(pre);
-                    PreChecklist item = new PreChecklist();
-                    int id= item.getId();
-                    String content = item.getContent();
-
-
+                    String content = pre.getContent();
+                    contentlist.add(content);
                 }
                 adapter.notifyDataSetChanged();
             }
