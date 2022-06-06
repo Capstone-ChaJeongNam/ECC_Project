@@ -18,10 +18,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chajeongnam.ecc_project.R;
+import com.chajeongnam.ecc_project.Util.FirebaseData;
 import com.chajeongnam.ecc_project.adapter.PostChecklistAdapter;
 import com.chajeongnam.ecc_project.decoration.SetItemDecoration;
 import com.chajeongnam.ecc_project.model.TempList;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +37,7 @@ public class PostPeriodActivity extends AppCompatActivity {
 
     private int endMonth;
     private int endDay;
+    private FirebaseData firebaseData = new FirebaseData();
 
 
     @Override
@@ -47,8 +50,8 @@ public class PostPeriodActivity extends AppCompatActivity {
         TextView editText2 = (TextView) findViewById(R.id.setEndDate);
         DatePicker datePicker = (DatePicker) findViewById(R.id.dataPicker);
         Button button = (Button) findViewById(R.id.dateBtn);
-        Button toButton=(Button) findViewById(R.id.toButton);
-
+        Button toButton = (Button) findViewById(R.id.toButton);
+        firebaseData.setPostHistoryDataFromFirebase();
         editText1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,12 +60,13 @@ public class PostPeriodActivity extends AppCompatActivity {
                 transition.addTarget(datePicker);
                 datePicker.setVisibility(View.VISIBLE);
                 button.setVisibility(View.VISIBLE);
-                setStartYear(datePicker.getYear());
-                setStartMonth(datePicker.getMonth());
-                setStartDay(datePicker.getDayOfMonth());
+
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        setStartYear(datePicker.getYear());
+                        setStartMonth(datePicker.getMonth() + 1);
+                        setStartDay(datePicker.getDayOfMonth());
                         editText1.setText(getStartYear() + "년" + getStartMonth() + "월" + getStartDay());
                         datePicker.setVisibility(View.INVISIBLE);
                         button.setVisibility(View.INVISIBLE);
@@ -84,13 +88,13 @@ public class PostPeriodActivity extends AppCompatActivity {
                 } else {
                     datePicker.setVisibility(View.VISIBLE);
                     button.setVisibility(View.VISIBLE);
-                    setEndYear(datePicker.getYear());
-                    setEndMonth(datePicker.getMonth());
-                    setEndDay(datePicker.getDayOfMonth());
+
                     button.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-
+                            setEndYear(datePicker.getYear());
+                            setEndMonth(datePicker.getMonth() + 1);
+                            setEndDay(datePicker.getDayOfMonth());
                             editText2.setText(getEndYear() + "년" + getEndMonth() + "월" + getEndDay());
                             datePicker.setVisibility(View.INVISIBLE);
                             button.setVisibility(View.INVISIBLE);
@@ -105,18 +109,21 @@ public class PostPeriodActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-Intent intent=new Intent(PostPeriodActivity.this,PostHistoryListActivity.class);
-          intent.putExtra("startYear",startYear);
-          intent.putExtra("startMonth",startMonth);
-          intent.putExtra("startDay",startDay);
-          intent.putExtra("endYear",endYear);
-          intent.putExtra("endMonth",endMonth);
-          intent.putExtra("endDay",endDay);
-          startActivity(intent);
+                Intent intent = new Intent(PostPeriodActivity.this, PostHistoryListActivity.class);
+               intent.putExtra("date", (Serializable) firebaseData.getEvaluationDate());
+                intent.putExtra("startYear", startYear);
+                intent.putExtra("startMonth", startMonth);
+                intent.putExtra("startDay", startDay);
+                intent.putExtra("endYear", endYear);
+                intent.putExtra("endMonth", endMonth);
+                intent.putExtra("endDay", endDay);
+                startActivity(intent);
+
             }
         });
 
     }
+
     public int getStartYear() {
         return startYear;
     }

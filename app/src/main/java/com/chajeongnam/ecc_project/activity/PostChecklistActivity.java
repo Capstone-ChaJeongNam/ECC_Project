@@ -98,8 +98,7 @@ public class PostChecklistActivity extends AppCompatActivity {
                 mdDate = new Date(now);
                 recent = mFormat.format(mdDate);
 
-                FirebaseDatabase.getInstance().getReference("histories").child("-N3J6Cm3A_4feS07jZmi").child("post").child("보조공학").child("OCR").child("recent").child("date").setValue(recent);
-                FirebaseDatabase.getInstance().getReference("histories").child("-N3J6Cm3A_4feS07jZmi").child("post").child("보조공학").child("OCR").child("recent").child("resultData").setValue(evapostChecklistAdapter.getResult());
+                FirebaseDatabase.getInstance().getReference("histories").child("-N3J6Cm3A_4feS07jZmi").child("post").child("보조공학").child("OCR").child(recent).setValue(evapostChecklistAdapter.getResult());
 
 
 //                for (Map.Entry<String, String> entrySet : evapostChecklistAdapter.getResult().entrySet()) {
