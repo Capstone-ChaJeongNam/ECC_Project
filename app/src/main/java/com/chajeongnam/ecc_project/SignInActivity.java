@@ -52,7 +52,7 @@ public class SignInActivity extends AppCompatActivity {
         mEtPwd = findViewById(R.id.et_pwd);
         autoLogin = (CheckBox) findViewById(R.id.checkBox);
 
-
+        /*
         // 설정값 불러오기
         appData = getSharedPreferences("appData", MODE_PRIVATE);
         load();
@@ -63,7 +63,7 @@ public class SignInActivity extends AppCompatActivity {
             mEtPwd.setText(pwd);
             autoLogin.setChecked(saveLoginData);
         }
-
+        */
 
         /*SharedPreferences sharedPreferences = getSharedPreferences("sharedPreferences", Activity.MODE_PRIVATE);
 
@@ -134,7 +134,7 @@ public class SignInActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
 
-                    save();
+                    //save();
 
                     /*if (mEtEmail.getText().toString().equals("hj") && mEtPwd.getText().toString().equals("xxxx")) {
                         SharedPreferences sharedPreferences = getSharedPreferences("sharedPreferences", Activity.MODE_PRIVATE);
@@ -227,6 +227,7 @@ public class SignInActivity extends AppCompatActivity {
         }
     }*/
 
+    /*
     // 설정값을 저장하는 함수
     private void save() {
         // SharedPreferences 객체만으론 저장 불가능 Editor 사용
@@ -250,5 +251,7 @@ public class SignInActivity extends AppCompatActivity {
         id = appData.getString("ID", "");
         pwd = appData.getString("PWD", "");
     }
+    
+     */
 
 }
