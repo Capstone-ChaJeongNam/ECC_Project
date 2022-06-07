@@ -44,6 +44,7 @@ public class SignInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
         setActionbar();
+        Button btn_signIn = findViewById(R.id.btn_login);
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("ECC moblie checklist");
@@ -52,18 +53,7 @@ public class SignInActivity extends AppCompatActivity {
         mEtPwd = findViewById(R.id.et_pwd);
         autoLogin = (CheckBox) findViewById(R.id.checkBox);
 
-        /*
-        // 설정값 불러오기
-        appData = getSharedPreferences("appData", MODE_PRIVATE);
-        load();
 
-        // 이전에 로그인 정보를 저장시킨 기록이 있다면
-        if (saveLoginData) {
-            mEtEmail.setText(id);
-            mEtPwd.setText(pwd);
-            autoLogin.setChecked(saveLoginData);
-        }
-        */
 
         /*SharedPreferences sharedPreferences = getSharedPreferences("sharedPreferences", Activity.MODE_PRIVATE);
 
@@ -118,6 +108,18 @@ public class SignInActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked) {
                     loginChecked = true;
+                    // 설정값 불러오기
+                    appData = getSharedPreferences("appData", MODE_PRIVATE);
+                    load();
+                    // 강제 버튼 클릭
+                    // btn_signIn.performClick();
+
+                    // 이전에 로그인 정보를 저장시킨 기록이 있다면
+                    if (saveLoginData) {
+                        mEtEmail.setText(id);
+                        mEtPwd.setText(pwd);
+                        autoLogin.setChecked(saveLoginData);
+                    }
                 } else {
                     // if unChecked, removeAll
                     loginChecked = false;
@@ -129,7 +131,7 @@ public class SignInActivity extends AppCompatActivity {
         */
 
 
-            Button btn_signIn = findViewById(R.id.btn_login);
+
             btn_signIn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -227,7 +229,7 @@ public class SignInActivity extends AppCompatActivity {
         }
     }*/
 
-    /*
+
     // 설정값을 저장하는 함수
     private void save() {
         // SharedPreferences 객체만으론 저장 불가능 Editor 사용
@@ -251,7 +253,7 @@ public class SignInActivity extends AppCompatActivity {
         id = appData.getString("ID", "");
         pwd = appData.getString("PWD", "");
     }
-    
-     */
+
+
 
 }
