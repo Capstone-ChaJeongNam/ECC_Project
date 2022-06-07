@@ -26,8 +26,8 @@ public class PreHistoryListActivity extends AppCompatActivity {
         tempLists=new ArrayList<>();
         tempLists.add(new PreHistoryDateTempList("2022-05-20"));
         tempLists.add(new PreHistoryDateTempList("2022-05-25"));
-        tempLists.add(new PreHistoryDateTempList("2022-06-30"));
-        tempLists.add(new PreHistoryDateTempList("2022-08-20"));
+        tempLists.add(new PreHistoryDateTempList("2022-05-30"));
+        tempLists.add(new PreHistoryDateTempList("2022-06-02"));
         setContentView(R.layout.activity_pre_history_list);
         recyclerView = findViewById(R.id.preHistoryRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(PreHistoryListActivity.this));

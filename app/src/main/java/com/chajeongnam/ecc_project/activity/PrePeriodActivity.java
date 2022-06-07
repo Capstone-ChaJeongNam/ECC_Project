@@ -15,6 +15,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.chajeongnam.ecc_project.R;
 
+import java.util.Calendar;
+
 public class PrePeriodActivity extends AppCompatActivity {
     private int startYear;
     private int startMonth;
@@ -39,6 +41,7 @@ public class PrePeriodActivity extends AppCompatActivity {
         Button button = (Button) findViewById(R.id.dateBtn);
         Button toButton=(Button) findViewById(R.id.toButton);
 
+
         editText1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -53,6 +56,9 @@ public class PrePeriodActivity extends AppCompatActivity {
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        setStartYear(datePicker.getYear());
+                        setStartMonth(datePicker.getMonth() + 1);
+                        setStartDay(datePicker.getDayOfMonth());
                         editText1.setText(getStartYear() + "년" + getStartMonth() + "월" + getStartDay());
                         datePicker.setVisibility(View.INVISIBLE);
                         button.setVisibility(View.INVISIBLE);
@@ -80,7 +86,9 @@ public class PrePeriodActivity extends AppCompatActivity {
                     button.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-
+                            setEndYear(datePicker.getYear());
+                            setEndMonth(datePicker.getMonth() + 1);
+                            setEndDay(datePicker.getDayOfMonth());
                             editText2.setText(getEndYear() + "년" + getEndMonth() + "월" + getEndDay());
                             datePicker.setVisibility(View.INVISIBLE);
                             button.setVisibility(View.INVISIBLE);
