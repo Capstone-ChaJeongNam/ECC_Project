@@ -54,7 +54,7 @@ public class PreChecklistAdapter extends BaseAdapter {
         TextView id = (TextView) view.findViewById(R.id.textView1);
         TextView content = (TextView) view.findViewById(R.id.textView2);
 
-        id.setText(String.valueOf(preChecklist.getId())) ;
+        id.setText(String.valueOf(preChecklist.getId()+1)) ;
         content.setText(preChecklist.getContent());
 
 

@@ -22,6 +22,7 @@ public class StartActivity extends AppCompatActivity {
         if(FirebaseAuth.getInstance().getCurrentUser()!= null){
             Intent intent = new Intent(StartActivity.this, MainActivity.class);
             startActivity(intent);
+            finish();
         }
         Button btn_signUp = findViewById(R.id.btn_signup);
         btn_signUp.setOnClickListener(new View.OnClickListener() {
@@ -29,6 +30,7 @@ public class StartActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(StartActivity.this, SignUpActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -38,6 +40,7 @@ public class StartActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(StartActivity.this, SignInActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
     }
