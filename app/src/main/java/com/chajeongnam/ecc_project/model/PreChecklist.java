@@ -1,14 +1,23 @@
 package com.chajeongnam.ecc_project.model;
 
 public class PreChecklist {
-    private String id;
+    private int id;
     private String content;
+    private String title_id;
 
-    public String getId() {
-        return this.id;
+    public PreChecklist() {}
+
+    public PreChecklist(int id, String content,String title_id){
+        this.id = id;
+        this.content =content;
+        this.title_id = title_id;
     }
 
-    public void setId(String id) {
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -19,4 +28,11 @@ public class PreChecklist {
     public void setContent(String content) {
         this.content = content;
     }
+
+    public String getTitle_id() {
+        return this.title_id;
+    }
+
+    public void setTitle_id(String title_id) { this.title_id = title_id; }
+
 }

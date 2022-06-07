@@ -1,5 +1,6 @@
 package com.chajeongnam.ecc_project.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,10 +12,16 @@ import com.chajeongnam.ecc_project.R;
 import com.chajeongnam.ecc_project.model.PreChecklist;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PreChecklistAdapter extends BaseAdapter {
 
-    private ArrayList<PreChecklist> checklistItem = new ArrayList<PreChecklist>();
+    private  Context context;
+    private List<PreChecklist> checklistItem;
+
+    public PreChecklistAdapter(Activity context, List<PreChecklist> checklistItem){
+        this.checklistItem = checklistItem;
+    }
 
 
 
@@ -24,8 +31,8 @@ public class PreChecklistAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int i) {
-        return checklistItem.get(i);
+    public Object getItem(int location) {
+        return checklistItem.get(location);
     }
 
     @Override
@@ -35,25 +42,27 @@ public class PreChecklistAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        final int pos = i;
         final Context context = viewGroup.getContext();
 
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.checklist_item, viewGroup, false);
         }
+        PreChecklist preChecklist = checklistItem.get(i);
+
+
         TextView id = (TextView) view.findViewById(R.id.textView1);
         TextView content = (TextView) view.findViewById(R.id.textView2);
 
-        PreChecklist preChecklist = checklistItem.get(i);
-
-        id.setText(preChecklist.getId());
+        id.setText(String.valueOf(preChecklist.getId())) ;
         content.setText(preChecklist.getContent());
+
+
         return view;
     }
 
-    public void addItem(String id, String content) {
-        PreChecklist item = new PreChecklist();
+    public void addItem(int id, String content, String title_id) {
+        PreChecklist item = new PreChecklist(id, content, title_id);
 
         item.setId(id);
         item.setContent(content);
@@ -61,12 +70,8 @@ public class PreChecklistAdapter extends BaseAdapter {
         checklistItem.add(item);
     }
 
-    public void getItem(String id, String content) {
-        PreChecklist item2 = new PreChecklist();
+    public void check(){
 
-        id= item2.getId();
-        content= item2.getContent();
-
-        checklistItem.add(item2);
     }
+
 }

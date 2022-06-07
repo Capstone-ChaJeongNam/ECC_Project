@@ -16,6 +16,7 @@ public class checklist_item extends LinearLayout implements Checkable {
 
     }
 
+
     @Override
     public boolean isChecked() {
         CheckBox cb = (CheckBox) findViewById(R.id.checkBox1) ;

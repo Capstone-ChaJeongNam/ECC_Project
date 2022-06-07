@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class PostChecklistAdapter extends RecyclerView.Adapter<PostChecklistAdapter.ViewHolder> {
+public class    PostChecklistAdapter extends RecyclerView.Adapter<PostChecklistAdapter.ViewHolder> {
     private List<TempList> tempLists;
     private DatabaseReference mDatabase;
 
