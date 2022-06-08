@@ -20,6 +20,8 @@ import com.chajeongnam.ecc_project.R;
 import com.chajeongnam.ecc_project.model.TempList;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
@@ -29,14 +31,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class    PostChecklistAdapter extends RecyclerView.Adapter<PostChecklistAdapter.ViewHolder> {
+public class PostChecklistAdapter extends RecyclerView.Adapter<PostChecklistAdapter.ViewHolder> {
     private List<TempList> tempLists;
     private DatabaseReference mDatabase;
 
 
     private int selectedPosition = -1;
 
-    private    HashMap<String,String> result = new HashMap<String,String>();
+    private HashMap<String, String> result = new HashMap<String, String>();
 
 
     public HashMap<String, String> getResult() {
@@ -76,25 +78,26 @@ public class    PostChecklistAdapter extends RecyclerView.Adapter<PostChecklistA
             }
         });
         holder.radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-          String  firebaseEccKey=String.valueOf(holder.content.getText());
+            String firebaseEccKey = String.valueOf(holder.content.getText());
+
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 switch (i) {
                     case R.id.one:
                         Toast.makeText(radioGroup.getContext(), "짧게 출력 Hello World!", Toast.LENGTH_SHORT).show();
-                        result.put(firebaseEccKey.replace(".",""), "1");
+                        result.put(firebaseEccKey.replace(".", ""), "1");
                         break;
                     case R.id.two:
                         Toast.makeText(radioGroup.getContext(), "짧게 출력 Hello World!", Toast.LENGTH_SHORT).show();
-                        result.put(firebaseEccKey.replace(".",""), "2");
+                        result.put(firebaseEccKey.replace(".", ""), "2");
                         break;
                     case R.id.three:
                         Toast.makeText(radioGroup.getContext(), "짧게 출력 Hello World!", Toast.LENGTH_SHORT).show();
-                        result.put(firebaseEccKey.replace(".",""), "3");
+                        result.put(firebaseEccKey.replace(".", ""), "3");
                         break;
                     case R.id.C:
                         Toast.makeText(radioGroup.getContext(), "짧게 출력 Hello World!", Toast.LENGTH_SHORT).show();
-                        result.put(firebaseEccKey.replace(".",""), "C");
+                        result.put(firebaseEccKey.replace(".", ""), "C");
                         break;
                 }
             }
@@ -106,14 +109,14 @@ public class    PostChecklistAdapter extends RecyclerView.Adapter<PostChecklistA
 
     @Override
     public int getItemCount() {
-        return  (null != tempLists ? tempLists.size() : 0);
+        return (null != tempLists ? tempLists.size() : 0);
     }
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView content;
         private RadioGroup radioGroup;
-        private EditText editText;
+        private TextInputLayout editText;
 
         private ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -130,7 +133,8 @@ public class    PostChecklistAdapter extends RecyclerView.Adapter<PostChecklistA
         }
 
         private void bind(TempList tempList) {
-            content.setText(getAdapterPosition()+tempList.getContent());
+            int index = getAdapterPosition() + 1;
+            content.setText(index + "." + tempList.getContent());
         }
     }
 

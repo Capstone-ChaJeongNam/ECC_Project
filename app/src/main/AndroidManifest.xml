@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ECC_Project">
-        <activity android:name=".activity.SplashActivity"
+        <activity android:name=".activity.PostChecklistActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,7 +25,7 @@
 
         <activity android:name=".activity.PreCheckListActivity" />
 
-        <activity android:name=".activity.PostChecklistActivity"/>
+<!--        <activity android:name=".activity.PostChecklistActivity"/>-->
         <!--ChoYeonJun add-->
         <activity android:name=".activity.MainActivity"/>
         <activity android:name=".activity.CategoryListActivity" />
