@@ -39,6 +39,7 @@ public class StudentInfoActivity extends AppCompatActivity {
     RecyclerView recentHistoryRecyclerView;
     StudentInfoHistoryAdapter studentInfoHistoryAdapter;
     Student student;
+    Category category;
 //    boolean isPost;
     MaterialCardView viewPreTestButton, viewPostTestButton;
     TextView studentProfileClassTextView, studentProfileNameTextView, viewPreTestButtonText, viewPostTestButtonText;
