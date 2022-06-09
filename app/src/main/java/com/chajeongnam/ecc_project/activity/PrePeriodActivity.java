@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.chajeongnam.ecc_project.R;
+import com.chajeongnam.ecc_project.model.Student;
 
 import java.util.Calendar;
 
@@ -40,6 +41,21 @@ public class PrePeriodActivity extends AppCompatActivity {
         DatePicker datePicker = (DatePicker) findViewById(R.id.dataPicker);
         Button button = (Button) findViewById(R.id.dateBtn);
         Button toButton=(Button) findViewById(R.id.toButton);
+
+        TextView sclass = (TextView) findViewById(R.id.studentclass);
+        TextView name = (TextView) findViewById(R.id.studentname);
+
+        Intent intent = getIntent();
+        Student student = (Student) intent.getParcelableExtra("student");
+        String studentclass= student.getAttrClass();
+
+        name.setText(getIntent().getStringExtra("name"));
+        sclass.setText(studentclass);
+
+
+
+
+
 
 
         editText1.setOnClickListener(new View.OnClickListener() {
