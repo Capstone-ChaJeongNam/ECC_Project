@@ -3,8 +3,12 @@ package com.chajeongnam.ecc_project.activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -32,14 +36,18 @@ import java.util.Map;
 public class PostChecklistActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    private List<TempList> tempLists = new ArrayList<>();
     private PostChecklistAdapter evapostChecklistAdapter;
     private ArrayList<HashMap> result = new ArrayList<>();
-    private Button saveBtn, getBtn;
-    private History history;
+    private List<TempList> tempLists = new ArrayList<>();
+    private HashMap<String, Object> mediumCategoryList = new HashMap<>();
+    private Button saveBtn;
+    private int bigId;
+    private Spinner spinner1, spinner2;
     private FirebaseData firebaseData = new FirebaseData();
+    private String selectedItem;
+    private List<String> bigCategory, mediumCategory;
+
     DatabaseReference database = FirebaseDatabase.getInstance().getReference("ECC");
-    DatabaseReference myRef = database.child("보조공학");
 
 
     @Override
@@ -47,22 +55,118 @@ public class PostChecklistActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_cheklist);
         saveBtn = findViewById(R.id.savePostTestBtn);
-        getBtn = findViewById(R.id.getListBtn);
 
-        firebaseData.setDAtaFromFirebase();
+        spinner1 = (Spinner) findViewById(R.id.bigCategory);
+        spinner2 = (Spinner) findViewById(R.id.mediumCategory);
 
-        getBtn.setOnClickListener(new View.OnClickListener() {
+        DatabaseReference database = FirebaseDatabase.getInstance().getReference("ECC");
+        DatabaseReference myRef = database.child("보조공학");
+        DatabaseReference myRef2 = database.child("점자");
+        bigCategory = new ArrayList<>();
+        mediumCategory = new ArrayList<>();
+
+
+        database.addListenerForSingleValueEvent(new ValueEventListener() {
+            String tempBigCategory;
+
             @Override
-            public void onClick(View view) {
-                getBtn.setVisibility(View.GONE);
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    tempBigCategory = dataSnapshot.getKey();
+                    bigCategory.add(tempBigCategory);
+
+
+                }
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(PostChecklistActivity.this, android.R.layout.simple_spinner_item, bigCategory);
+                spinner1.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            List<String> tempMediumCategory = new ArrayList<>();
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    tempMediumCategory.add(dataSnapshot.getKey());
+
+
+                }
+                mediumCategoryList.put("보조공학", tempMediumCategory);
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        myRef2.addListenerForSingleValueEvent(new ValueEventListener() {
+            List<String> tempMediumCategory = new ArrayList<>();
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    tempMediumCategory.add(dataSnapshot.getKey());
+
+                }
+                mediumCategoryList.put("점자", tempMediumCategory);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+       spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+           @Override
+           public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+               selectedItem = adapterView.getItemAtPosition(i).toString();
+         if(selectedItem.equals("보조공학")){
+             bigId=1;
+         }else if(selectedItem.equals("점자")){
+             bigId=2;
+         }
+           }
+
+           @Override
+           public void onNothingSelected(AdapterView<?> adapterView) {
+
+           }
+       });
+
+        myRef.child("OCR").addListenerForSingleValueEvent(new ValueEventListener() {
+            TempList getDataFromFireBasetempList;
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    getDataFromFireBasetempList = snapshot.getValue(TempList.class);
+                    tempLists.add(getDataFromFireBasetempList); //어레이리스트에 데이터 넣은 상태}
+
+                }
+
                 recyclerView = findViewById(R.id.evaluationPostRecyclerView);
                 recyclerView.setLayoutManager(new LinearLayoutManager(PostChecklistActivity.this));
                 SetItemDecoration itemDecoration = new SetItemDecoration(20);
                 recyclerView.addItemDecoration(itemDecoration);
-                evapostChecklistAdapter = new PostChecklistAdapter(firebaseData.getDatas());
+                evapostChecklistAdapter = new PostChecklistAdapter(tempLists);
                 recyclerView.setAdapter(evapostChecklistAdapter);
-
             }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+
         });
 //        tempLists=(ArrayList<TempList>)getIntent().getSerializableExtra("tempLists");
 
@@ -80,6 +184,7 @@ public class PostChecklistActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         student = dataSnapshot.getValue(Student.class);
+
 
 
                     }
