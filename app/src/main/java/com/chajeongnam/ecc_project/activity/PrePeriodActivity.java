@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.chajeongnam.ecc_project.R;
+import com.chajeongnam.ecc_project.model.Student;
 
 public class PrePeriodActivity extends AppCompatActivity {
     private int startYear;
@@ -38,6 +39,15 @@ public class PrePeriodActivity extends AppCompatActivity {
         DatePicker datePicker = (DatePicker) findViewById(R.id.dataPicker);
         Button button = (Button) findViewById(R.id.dateBtn);
         Button toButton=(Button) findViewById(R.id.toButton);
+
+        TextView sclass = (TextView) findViewById();
+        TextView name = (TextView) findViewById();
+
+
+        Student student = (Student) getIntent().getParcelableExtra("student");
+        String studentclass = student.getAttrClass();
+
+
 
         editText1.setOnClickListener(new View.OnClickListener() {
             @Override
