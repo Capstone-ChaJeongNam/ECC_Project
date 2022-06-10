@@ -13,6 +13,8 @@ import com.chajeongnam.ecc_project.Util.FirebaseData;
 import com.chajeongnam.ecc_project.adapter.PostHistoryListAdapter;
 import com.chajeongnam.ecc_project.decoration.SetItemDecoration;
 import com.chajeongnam.ecc_project.model.PostHistoryDateTempList;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +27,8 @@ public class PostHistoryListActivity extends AppCompatActivity {
     private int endMonth;
     private int endDay;
 
-    private FirebaseData firebaseData ;
+    private FirebaseData firebaseData;
+    private DatabaseReference databaseReference;
     private RecyclerView recyclerView;
     private List<PostHistoryDateTempList> tempLists;
     private PostHistoryListAdapter postHistoryListAdapter;
@@ -34,11 +37,12 @@ public class PostHistoryListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_history_list);
+        databaseReference = FirebaseDatabase.getInstance().getReference("histories");
 //        firebaseData.setPostHistoryDataFromFirebase();
         TextView startDate = (TextView) findViewById(R.id.getStartDate);
         TextView endDate = (TextView) findViewById(R.id.getEndDate);
         Intent intent = getIntent();
-      ArrayList<String> date=(ArrayList<String>)getIntent().getSerializableExtra("date");
+        ArrayList<String> date = (ArrayList<String>) getIntent().getSerializableExtra("date");
         startYear = intent.getExtras().getInt("startYear", 0);
         startMonth = intent.getExtras().getInt("startMonth", 0);
         startDay = intent.getExtras().getInt("startDay", 0);

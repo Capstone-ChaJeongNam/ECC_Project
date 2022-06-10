@@ -116,6 +116,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:id="@+id/descriptionInputText"
                 android:gravity="center"
               android:hint="서술형 평가를 입력해 주세요"/>
 
