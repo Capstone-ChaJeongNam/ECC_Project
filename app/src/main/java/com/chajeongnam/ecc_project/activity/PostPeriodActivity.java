@@ -117,6 +117,11 @@ public class PostPeriodActivity extends AppCompatActivity {
                 intent.putExtra("endYear", endYear);
                 intent.putExtra("endMonth", endMonth);
                 intent.putExtra("endDay", endDay);
+//                StudentInfoHistoryAdapter에서 인텐트로 불러옴
+
+                intent.putExtra("student", (Bundle) intent.getParcelableExtra("student"));
+                intent.putExtra("category",intent.getStringExtra("category"));
+                intent.putExtra("area",intent.getStringExtra("area"));
                 startActivity(intent);
 
             }

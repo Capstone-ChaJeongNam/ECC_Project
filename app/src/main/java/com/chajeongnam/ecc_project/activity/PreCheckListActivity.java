@@ -89,8 +89,10 @@ public class PreCheckListActivity extends AppCompatActivity {
 
     //파이어베이스 데이터 로드//
     public void getPrechecklist() {
-        String category = getIntent().getStringExtra("category");
-        String area = getIntent().getStringExtra("area");
+//        String category = getIntent().getStringExtra("category");
+//        String area = getIntent().getStringExtra("area");
+        String category="바꿔야함";
+        String area="인텐트로 student 정보가 StudentInfoActivity에서 넘어옴";
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         DatabaseReference myRef = mDatabase.child("ECC");

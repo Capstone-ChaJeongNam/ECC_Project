@@ -14,7 +14,7 @@
             android:name=".activity.PostPeriodActivity"/>
 
 
-        <activity android:name=".activity.PreCheckListActivity"
+        <activity android:name=".activity.PostChecklistActivity"
             android:exported="true">
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
@@ -24,7 +24,7 @@
         </activity>
 
 
-        <activity android:name=".activity.PostChecklistActivity"/>
+<!--        <activity android:name=".activity.PostChecklistActivity"/>-->
         <!--ChoYeonJun add-->
         <activity android:name=".activity.MainActivity"/>
         <activity android:name=".activity.CategoryListActivity" />
