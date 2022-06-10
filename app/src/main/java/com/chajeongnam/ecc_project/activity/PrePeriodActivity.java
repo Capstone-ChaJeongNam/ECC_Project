@@ -43,19 +43,21 @@ public class PrePeriodActivity extends AppCompatActivity {
         Button toButton=(Button) findViewById(R.id.toButton);
 
         TextView sclass = (TextView) findViewById(R.id.studentclass);
-        TextView name = (TextView) findViewById(R.id.studentname);
+        TextView sname = (TextView) findViewById(R.id.studentname);
+        TextView sarea = (TextView) findViewById(R.id.studentarea);
 
         Intent intent = getIntent();
         Student student = (Student) intent.getParcelableExtra("student");
-        String studentclass= student.getAttrClass();
-
-        name.setText(getIntent().getStringExtra("name"));
-        sclass.setText(studentclass);
-
-
-
+        String studentclass = student.getAttrClass();
+        String studentgrade = student.getGrade();
+        String studenttotal = studentgrade+ "학년 " + studentclass+ "반";
+        String studentname = student.getName();
+        String studentarea = intent.getExtras().getString("area");
 
 
+        sname.setText(studentname);
+        sclass.setText(studenttotal);
+        sarea.setText(studentarea);
 
 
         editText1.setOnClickListener(new View.OnClickListener() {
@@ -119,7 +121,7 @@ public class PrePeriodActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-Intent intent=new Intent(PrePeriodActivity.this, PreHistoryListActivity.class);
+    Intent intent=new Intent(PrePeriodActivity.this, PreHistoryListActivity.class);
           intent.putExtra("startYear",startYear);
           intent.putExtra("startMonth",startMonth);
           intent.putExtra("startDay",startDay);
