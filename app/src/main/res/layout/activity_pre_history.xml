@@ -26,12 +26,14 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/prehistoryclass_grade"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="2학년A반"
                 android:textSize="15dp" />
 
             <TextView
+                android:id="@+id/prehistoryname"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="고길동"
@@ -48,6 +50,7 @@
 
 
             <TextView
+                android:id="@+id/prehistoryarea"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textSize="20dp"
@@ -55,6 +58,7 @@
 
 
             <TextView
+                android:id="@+id/prehistorydate"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="5dp"
@@ -74,7 +78,7 @@
         android:layout_weight="1">
 
         <ListView
-            android:id="@+id/prehistory1"
+            android:id="@+id/prehistoryView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:choiceMode="multipleChoice"

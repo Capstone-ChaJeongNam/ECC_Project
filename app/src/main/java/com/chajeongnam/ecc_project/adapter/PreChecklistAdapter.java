@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.chajeongnam.ecc_project.R;
@@ -54,8 +55,13 @@ public class PreChecklistAdapter extends BaseAdapter {
         TextView id = (TextView) view.findViewById(R.id.textView1);
         TextView content = (TextView) view.findViewById(R.id.textView2);
 
+        CheckBox cb =(CheckBox) view.findViewById(R.id.checkBox1);
+
         id.setText(String.valueOf(preChecklist.getId()+1)) ;
         content.setText(preChecklist.getContent());
+        if(preChecklist.isResult()==true){
+            cb.setChecked(true);
+        }
 
 
         return view;

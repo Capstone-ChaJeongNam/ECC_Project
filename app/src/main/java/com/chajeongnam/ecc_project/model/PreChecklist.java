@@ -4,6 +4,7 @@ public class PreChecklist {
     private int id;
     private String content;
     private String title_id;
+    private Boolean result;
 
     public PreChecklist() {}
 
@@ -35,4 +36,11 @@ public class PreChecklist {
 
     public void setTitle_id(String title_id) { this.title_id = title_id; }
 
+    public Boolean isResult() {
+        return result;
+    }
+
+    public void setResult(Boolean result) {
+        this.result = result;
+    }
 }
