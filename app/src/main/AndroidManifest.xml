@@ -9,22 +9,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ECC_Project">
-        <activity
-            android:name=".activity.SplashActivity"/>
+        <activity android:name=".activity.SplashActivity"
+            android:exported="true">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
 
-        <activity android:name=".activity.PreCheckListActivity"
-        android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
+        <activity
+            android:name=".activity.PostPeriodActivity"/>
 
 
+        <activity android:name=".activity.PreCheckListActivity"/>
 
 
+        <activity android:name=".activity.PostChecklistActivity"/>
         <!--ChoYeonJun add-->
         <activity android:name=".activity.MainActivity"/>
         <activity android:name=".activity.CategoryListActivity" />
@@ -56,12 +58,13 @@
             android:exported="false" />
 
         <activity android:name=".activity.EvaPreTestListActivity" />
-        <activity android:name=".activity.PostChecklistActivity" />
+
         <activity android:name=".activity.PostHistoryListActivity" />
         <activity android:name=".activity.PreHistoryListActivity" />
         <activity android:name=".activity.PrePeriodActivity" />
         <activity android:name=".activity.PreHistoryActivity" />
-        <activity android:name=".activity.PostPeriodActivity"/>
+        <activity android:name=".activity.PostHistoryActivity"/>
+<!--        <activity android:name=".activity.PostPeriodActivity"/>-->
     </application>
 
 </manifest>

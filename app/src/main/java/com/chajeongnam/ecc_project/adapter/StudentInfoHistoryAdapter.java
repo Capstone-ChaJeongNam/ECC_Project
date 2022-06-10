@@ -9,7 +9,11 @@ import android.widget.TextView;
 
 import com.chajeongnam.ecc_project.R;
 import com.chajeongnam.ecc_project.activity.PostChecklistActivity;
+import com.chajeongnam.ecc_project.activity.PostHistoryActivity;
+import com.chajeongnam.ecc_project.activity.PostPeriodActivity;
 import com.chajeongnam.ecc_project.activity.PreCheckListActivity;
+import com.chajeongnam.ecc_project.activity.PreHistoryActivity;
+import com.chajeongnam.ecc_project.activity.PrePeriodActivity;
 import com.chajeongnam.ecc_project.activity.StartActivity;
 import com.chajeongnam.ecc_project.model.Category;
 import com.chajeongnam.ecc_project.model.History;
@@ -63,9 +67,9 @@ public class StudentInfoHistoryAdapter extends RecyclerView.Adapter<StudentInfoH
                 public void onClick(View view) {
                     Intent intent;
                     if (!getIsPost()) {
-                        intent = new Intent(view.getContext(), PreCheckListActivity.class);
+                        intent = new Intent(view.getContext(), PrePeriodActivity.class);
                     } else {
-                        intent = new Intent(view.getContext(), PostChecklistActivity.class);
+                        intent = new Intent(view.getContext(), PostPeriodActivity.class);
                     }
                     intent.putExtra("student", student);
                     intent.putExtra("category", historyCategoryTextView.getText());

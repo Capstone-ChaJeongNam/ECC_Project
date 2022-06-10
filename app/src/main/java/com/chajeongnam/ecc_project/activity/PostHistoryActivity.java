@@ -1,5 +1,6 @@
 package com.chajeongnam.ecc_project.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
@@ -19,32 +20,41 @@ import java.util.HashMap;
 import java.util.List;
 
 public class PostHistoryActivity extends AppCompatActivity {
+    private int startYear;
+    private int startMonth;
+    private int startDay;
+    private int endYear;
+    private int endMonth;
+    private int endDay;
+
     private RecyclerView recyclerView;
     private List<TempList> tempLists;
     private PostHistoryAdapter postHistoryAdapter;
-    private ArrayList<HashMap> result=new ArrayList<>();
+    private ArrayList<HashMap> result = new ArrayList<>();
     private Button saveBtn;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_history);
+        Intent intent = getIntent();
+        startYear=intent.getExtras().getInt("startYear");
+        startMonth=intent.getExtras().getInt("startMonth");
+        startDay=intent.getExtras().getInt("startDay");
 
-        tempLists=new ArrayList<>();
+        endYear=intent.getExtras().getInt("endYear");
+        endMonth=intent.getExtras().getInt("endMonth");
+        endDay=intent.getExtras().getInt("endDay");
         tempLists = new ArrayList<>();
-        tempLists.add(new TempList("1.초성 자음자와 겹글자를 알고 읽고 쓴다."));
-        tempLists.add(new TempList("2. 기본 모음자를 알고 읽고 쓴다."));
-        tempLists.add(new TempList("3. 수표와 수를 알고 읽고 쓴다."));
-        tempLists.add(new TempList("4. 기본모음자 이외 모음자를 알고 읽고 쓴다. "));
-        tempLists.add(new TempList("5. 기본받침, 쌍받침, 겹받침을 알고 읽고 쓴다."));
-        tempLists.add(new TempList("6. 지팡이의 구조와 용도를 안다."));
+
+
+
         recyclerView = findViewById(R.id.postHistoryRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(PostHistoryActivity.this));
         SetItemDecoration itemDecoration = new SetItemDecoration(20);
         recyclerView.addItemDecoration(itemDecoration);
         postHistoryAdapter = new PostHistoryAdapter(tempLists);
         recyclerView.setAdapter(postHistoryAdapter);
-
 
     }
 }

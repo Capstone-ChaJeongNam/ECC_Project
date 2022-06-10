@@ -54,9 +54,9 @@ public class PreCheckListActivity extends AppCompatActivity {
 
         //파이어베이스 데이터 저장//
         saveBtn.setOnClickListener(new View.OnClickListener() {
-            String key = "-N3J6Cm3A_4feS07jZmi";
-            String category = "보조공학";
-            String area = "데이지플레이어";
+            String key = getIntent().getStringExtra("student");
+            String category = getIntent().getStringExtra("category");
+            String area = getIntent().getStringExtra("area");
 
             @Override
             public void onClick(View view) {
@@ -89,8 +89,9 @@ public class PreCheckListActivity extends AppCompatActivity {
 
     //파이어베이스 데이터 로드//
     public void getPrechecklist() {
-        String category = "보조공학";
-        String area = "OCR";
+
+        String category = getIntent().getStringExtra("category");
+        String area = getIntent().getStringExtra("area");
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         DatabaseReference myRef = mDatabase.child("ECC");

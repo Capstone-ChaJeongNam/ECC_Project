@@ -62,7 +62,7 @@ public class EvaPreTestAdapter extends RecyclerView.Adapter<EvaPreTestAdapter.Vi
         }
 
         private void bind(TempList tempList) {
-            content.setText(tempList.getTitle());
+            content.setText(tempList.getContent());
         }
     }
 

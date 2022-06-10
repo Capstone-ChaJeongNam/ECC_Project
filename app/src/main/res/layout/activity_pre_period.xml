@@ -27,12 +27,14 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/studentclass"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="2학년A반"
                 android:textSize="15dp" />
 
             <TextView
+                android:id="@+id/studentname"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="고길동"
@@ -59,11 +61,11 @@
                 >
 
                 <TextView
-                    android:id="@+id/info_text"
+                    android:id="@+id/studentcategory"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="사후 평가" />
+                    android:text="사전 평가" />
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
@@ -80,6 +82,7 @@
                 >
 
                 <TextView
+                    android:id="@+id/studentarea"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="한글점자와 입력" />

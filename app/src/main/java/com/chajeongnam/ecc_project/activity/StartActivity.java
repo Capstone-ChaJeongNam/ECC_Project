@@ -1,5 +1,6 @@
 package com.chajeongnam.ecc_project.activity;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.chajeongnam.ecc_project.R;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class StartActivity extends AppCompatActivity {
 
@@ -15,13 +17,20 @@ public class StartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
-
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
+        if(FirebaseAuth.getInstance().getCurrentUser()!= null){
+            Intent intent = new Intent(StartActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
         Button btn_signUp = findViewById(R.id.btn_signup);
         btn_signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(StartActivity.this, SignUpActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -31,6 +40,7 @@ public class StartActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(StartActivity.this, SignInActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
     }

@@ -16,6 +16,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.chajeongnam.ecc_project.R;
 import com.chajeongnam.ecc_project.model.Student;
 
+import java.util.Calendar;
+
+
 public class PrePeriodActivity extends AppCompatActivity {
     private int startYear;
     private int startMonth;
@@ -40,14 +43,23 @@ public class PrePeriodActivity extends AppCompatActivity {
         Button button = (Button) findViewById(R.id.dateBtn);
         Button toButton=(Button) findViewById(R.id.toButton);
 
-        TextView sclass = (TextView) findViewById();
-        TextView name = (TextView) findViewById();
 
+        TextView sclass = (TextView) findViewById(R.id.studentclass);
+        TextView sname = (TextView) findViewById(R.id.studentname);
+        TextView sarea = (TextView) findViewById(R.id.studentarea);
 
-        Student student = (Student) getIntent().getParcelableExtra("student");
+        Intent intent = getIntent();
+        Student student = (Student) intent.getParcelableExtra("student");
         String studentclass = student.getAttrClass();
+        String studentgrade = student.getGrade();
+        String studenttotal = studentgrade+ "학년 " + studentclass+ "반";
+        String studentname = student.getName();
+        String studentarea = intent.getExtras().getString("area");
 
 
+        sname.setText(studentname);
+        sclass.setText(studenttotal);
+        sarea.setText(studentarea);
 
         editText1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,6 +75,9 @@ public class PrePeriodActivity extends AppCompatActivity {
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        setStartYear(datePicker.getYear());
+                        setStartMonth(datePicker.getMonth() + 1);
+                        setStartDay(datePicker.getDayOfMonth());
                         editText1.setText(getStartYear() + "년" + getStartMonth() + "월" + getStartDay());
                         datePicker.setVisibility(View.INVISIBLE);
                         button.setVisibility(View.INVISIBLE);
@@ -90,7 +105,9 @@ public class PrePeriodActivity extends AppCompatActivity {
                     button.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-
+                            setEndYear(datePicker.getYear());
+                            setEndMonth(datePicker.getMonth() + 1);
+                            setEndDay(datePicker.getDayOfMonth());
                             editText2.setText(getEndYear() + "년" + getEndMonth() + "월" + getEndDay());
                             datePicker.setVisibility(View.INVISIBLE);
                             button.setVisibility(View.INVISIBLE);
@@ -105,7 +122,7 @@ public class PrePeriodActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-Intent intent=new Intent(PrePeriodActivity.this, PreHistoryListActivity.class);
+    Intent intent=new Intent(PrePeriodActivity.this, PreHistoryListActivity.class);
           intent.putExtra("startYear",startYear);
           intent.putExtra("startMonth",startMonth);
           intent.putExtra("startDay",startDay);

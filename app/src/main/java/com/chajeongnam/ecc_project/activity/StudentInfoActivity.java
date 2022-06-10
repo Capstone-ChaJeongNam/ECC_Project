@@ -3,6 +3,7 @@ package com.chajeongnam.ecc_project.activity;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -21,10 +22,17 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -39,6 +47,7 @@ public class StudentInfoActivity extends AppCompatActivity {
     RecyclerView recentHistoryRecyclerView;
     StudentInfoHistoryAdapter studentInfoHistoryAdapter;
     Student student;
+    Category category;
 //    boolean isPost;
     MaterialCardView viewPreTestButton, viewPostTestButton;
     TextView studentProfileClassTextView, studentProfileNameTextView, viewPreTestButtonText, viewPostTestButtonText;
@@ -85,7 +94,7 @@ public class StudentInfoActivity extends AppCompatActivity {
         startPreTestButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent =  new Intent(StudentInfoActivity.this, PrePeriodActivity.class);
+                Intent intent =  new Intent(StudentInfoActivity.this, PreCheckListActivity.class);
                 intent.putExtra("student", student);
                 startActivity(intent);
             }
@@ -95,7 +104,7 @@ public class StudentInfoActivity extends AppCompatActivity {
         startPostTestButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(StudentInfoActivity.this, PostPeriodActivity.class);
+                Intent intent = new Intent(StudentInfoActivity.this, PostChecklistActivity.class);
                 intent.putExtra("student", student);
                 startActivity(intent);
             }
@@ -189,20 +198,18 @@ public class StudentInfoActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
                     String category = dataSnapshot.getKey();
-                    Map<String, Object> areaMap = (Map<String, Object>) dataSnapshot.getValue();
-                    String area = (String) areaMap.keySet().toArray()[0];
-                    List<Object> history = new ArrayList<Object>(areaMap.values());
-                    Map<String, Object> historyMap = (Map<String, Object>) history.get(0);
-                    String date = (String) historyMap.keySet().toArray()[0];
-
-//                    List<Object> als = new ArrayList<Object>(maps.values());
-//                    Map<Object, Object> mapss = (Map<Object, Object>) als.get(0);
-//                    boolean result = (boolean) mapss.get("result");
-//                    int score;
-//                    if(result) score = 0;
-//                    else score = 4;
-//                    String content = (String) mapss.get("content");
-                    preHistoryList.add(new History(new Category(category, area), date));
+                    Object object = dataSnapshot.getValue(Object.class);
+                    String json = new Gson().toJson(object);
+                    JsonParser parser = new JsonParser();
+                    JsonObject root =  parser.parse(json).getAsJsonObject();
+                    for(Entry<String, JsonElement> entry : root.entrySet()){
+                        String area = entry.getKey();
+                        String recent = root.get(area).getAsJsonObject().get("recent").toString();
+                        //큰 따옴표 삭제
+                        String filteredRecent = recent.substring(1, recent.length() - 1);
+                        preHistoryList.add(new History(new Category(category, (String) area), filteredRecent));
+                        Log.d("pre history", category + area + filteredRecent);
+                    }
                 }
 //                setRecyclerView();
                 toPreRecyclerViewList();
@@ -225,14 +232,18 @@ public class StudentInfoActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
                     String category = dataSnapshot.getKey();
-                    Map<String, Object> areaMap = (Map<String, Object>) dataSnapshot.getValue();
-                    String area = (String) areaMap.keySet().toArray()[0];
-                    List<Object> history = new ArrayList<Object>(areaMap.values());
-                    Map<String, Object> historyMap = (Map<String, Object>) history.get(0);
-                    String date = (String) historyMap.keySet().toArray()[0];
-
-
-                    postHistoryList.add(new History(new Category(category, area), date));
+                    Object object = dataSnapshot.getValue(Object.class);
+                    String json = new Gson().toJson(object);
+                    JsonParser parser = new JsonParser();
+                    JsonObject root =  parser.parse(json).getAsJsonObject();
+                    for(Entry<String, JsonElement> entry : root.entrySet()){
+                        String area = entry.getKey();
+                        String recent = root.get(area).getAsJsonObject().get("recent").toString();
+                        //큰 따옴표 삭제
+                        String filteredRecent = recent.substring(1, recent.length() - 1);
+                        postHistoryList.add(new History(new Category(category, (String) area), filteredRecent));
+                        Log.d("postHistoryList", category + area + filteredRecent);
+                    }
                 }
             }
 
