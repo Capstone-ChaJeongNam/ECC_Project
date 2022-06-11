@@ -10,27 +10,28 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.chajeongnam.ecc_project.R;
 import com.chajeongnam.ecc_project.adapter.PreChecklistAdapter;
+import com.chajeongnam.ecc_project.model.PreChecklist;
+
+import java.util.ArrayList;
 
 public class PreHistoryActivity extends AppCompatActivity {
+    private ArrayList<PreChecklist> checklist;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pre_history);
         setActionbar();
+        checklist = new ArrayList<>();
 
         ListView listview;
         PreChecklistAdapter adapter;
 
-        adapter = new PreChecklistAdapter();
+        adapter = new PreChecklistAdapter(this,checklist);
 
         listview = (ListView) findViewById(R.id.prehistory1);
         listview.setAdapter(adapter);
-
-        adapter.addItem("1","초성의 자음자와 겹글자를 알고 읽고쓴다.");
-        adapter.addItem("2","기본 모음자를 알고 읽고 쓴다.");
-        adapter.addItem("3","수표와 수를 알고 읽고 쓴다.");
-        adapter.addItem("4","기본모음자 이외 모음자를 알고 읽고 쓴다.");
 
     }
     private void setActionbar() {

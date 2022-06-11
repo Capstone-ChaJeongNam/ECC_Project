@@ -9,19 +9,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ECC_Project">
+        <activity android:name=".activity.SplashActivity"/>
         <activity
-            android:name=".activity.PostPeriodActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:name=".activity.PostPeriodActivity"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
+        <activity android:name=".activity.PostChecklistActivity"
+            android:exported="true">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
         </activity>
 
+<<<<<<< HEAD
         <activity android:name=".activity.StudentInfoActivity" />
 
+=======
+>>>>>>> 19a76c56b338913a88cb18048c11608329e7c685
 
+<!--        <activity android:name=".activity.PostChecklistActivity"/>-->
         <!--ChoYeonJun add-->
         <activity android:name=".activity.MainActivity"/>
         <activity android:name=".activity.CategoryListActivity" />
@@ -58,6 +66,7 @@
         <activity android:name=".activity.PreHistoryListActivity" />
         <activity android:name=".activity.PrePeriodActivity" />
         <activity android:name=".activity.PreHistoryActivity" />
+        <activity android:name=".activity.PostHistoryActivity"/>
 <!--        <activity android:name=".activity.PostPeriodActivity"/>-->
     </application>
 

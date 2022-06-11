@@ -16,6 +16,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/choice1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -26,16 +27,18 @@
             android:textColor="@color/black" />
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/choice2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:layout_weight="2"
+            android:layout_weight="1"
             android:background="@drawable/radius"
             android:drawableRight="@drawable/ic_baseline_arrow_drop_down_24"
             android:text="선택"
             android:textColor="@color/black" />
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/choice3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -49,7 +52,7 @@
     <LinearLayout
         android:id="@+id/listviewgroup"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_weight="1"
 
@@ -60,8 +63,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:choiceMode="multipleChoice"
-            android:layout_weight="100"
-            tools:listitem="exam" />
+            android:layout_weight="100" />
 
         <Button
             android:id="@+id/savePreTestBtn"

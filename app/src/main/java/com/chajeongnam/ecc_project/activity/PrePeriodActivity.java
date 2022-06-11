@@ -14,6 +14,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.chajeongnam.ecc_project.R;
+import com.chajeongnam.ecc_project.model.Student;
+
+import java.util.Calendar;
 
 public class PrePeriodActivity extends AppCompatActivity {
     private int startYear;
@@ -39,6 +42,22 @@ public class PrePeriodActivity extends AppCompatActivity {
         Button button = (Button) findViewById(R.id.dateBtn);
         Button toButton=(Button) findViewById(R.id.toButton);
 
+        TextView sclass = (TextView) findViewById(R.id.studentclass);
+        TextView name = (TextView) findViewById(R.id.studentname);
+
+        Intent intent = getIntent();
+        Student student = (Student) intent.getParcelableExtra("student");
+        String studentclass= student.getAttrClass();
+
+        name.setText(getIntent().getStringExtra("name"));
+        sclass.setText(studentclass);
+
+
+
+
+
+
+
         editText1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -53,6 +72,9 @@ public class PrePeriodActivity extends AppCompatActivity {
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        setStartYear(datePicker.getYear());
+                        setStartMonth(datePicker.getMonth() + 1);
+                        setStartDay(datePicker.getDayOfMonth());
                         editText1.setText(getStartYear() + "년" + getStartMonth() + "월" + getStartDay());
                         datePicker.setVisibility(View.INVISIBLE);
                         button.setVisibility(View.INVISIBLE);
@@ -80,7 +102,9 @@ public class PrePeriodActivity extends AppCompatActivity {
                     button.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-
+                            setEndYear(datePicker.getYear());
+                            setEndMonth(datePicker.getMonth() + 1);
+                            setEndDay(datePicker.getDayOfMonth());
                             editText2.setText(getEndYear() + "년" + getEndMonth() + "월" + getEndDay());
                             datePicker.setVisibility(View.INVISIBLE);
                             button.setVisibility(View.INVISIBLE);

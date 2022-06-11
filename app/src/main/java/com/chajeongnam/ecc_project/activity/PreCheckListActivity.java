@@ -1,10 +1,12 @@
 package com.chajeongnam.ecc_project.activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -12,13 +14,30 @@ import android.widget.ListView;
 
 import com.chajeongnam.ecc_project.R;
 import com.chajeongnam.ecc_project.adapter.PreChecklistAdapter;
+import com.chajeongnam.ecc_project.model.Category;
+import com.chajeongnam.ecc_project.model.PreChecklist;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import androidx.appcompat.app.ActionBar;
+
 
 public class PreCheckListActivity extends AppCompatActivity {
     private Button saveBtn;
     private ListView listview;
     private PreChecklistAdapter adapter;
+    private DatabaseReference mDatabase;
+    private ArrayList<PreChecklist> checklist= new ArrayList<>();
+    private ArrayList<String> contentlist= new ArrayList<String>();
+
+
 
 
     @Override
@@ -27,28 +46,78 @@ public class PreCheckListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pre_checklist);
         setActionbar();
         saveBtn=findViewById(R.id.savePreTestBtn);
-
-
-        adapter = new PreChecklistAdapter();
-
         listview = (ListView) findViewById(R.id.listview1);
-        listview.setAdapter(adapter);
-
-        //파이어베이스 데이터 로딩//
-//        adapter.getItem();
 
 
+        getPrechecklist();
+        SparseBooleanArray checkedItems = listview.getCheckedItemPositions();
 
         //파이어베이스 데이터 저장//
         saveBtn.setOnClickListener(new View.OnClickListener() {
+            String key = getIntent().getStringExtra("student");
+            String category = getIntent().getStringExtra("category");
+            String area = getIntent().getStringExtra("area");
+
             @Override
             public void onClick(View view) {
-                adapter.addItem("4","기본모음자 이외 모음자를 알고 읽고 쓴다.");
+                mDatabase = FirebaseDatabase.getInstance().getReference();
+                DatabaseReference myRef = mDatabase.child("histories");
+                DatabaseReference ChecklistRef = myRef.child(key).child("pre").child(category).child(area);
+                ChecklistRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for(int i =0; i< adapter.getCount(); i++){
+                            ChecklistRef.child("2022-04-13").child(String.valueOf(i)).child("result").setValue(checkedItems.get(i));
+                            ChecklistRef.child("2022-04-13").child(String.valueOf(i)).child("content").setValue(contentlist.get(i));
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+
 
 
             }
         });
+    }
 
+
+
+    //파이어베이스 데이터 로드//
+    public void getPrechecklist() {
+//        String category = getIntent().getStringExtra("category");
+//        String area = getIntent().getStringExtra("area");
+        String category="바꿔야함";
+        String area="인텐트로 student 정보가 StudentInfoActivity에서 넘어옴";
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference myRef = mDatabase.child("ECC");
+        DatabaseReference ChecklistRef = myRef.child(category).child(area);
+        ChecklistRef.addListenerForSingleValueEvent (new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                checklist.clear();
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    PreChecklist pre = dataSnapshot.getValue(PreChecklist.class);
+                    checklist.add(pre);
+                    String content = pre.getContent();
+                    contentlist.add(content);
+                }
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+
+            }
+        });
+        adapter= new PreChecklistAdapter(this,checklist);
+        listview.setAdapter(adapter);
 
 
     }

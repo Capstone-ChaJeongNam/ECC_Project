@@ -3,8 +3,12 @@ package com.chajeongnam.ecc_project.activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,7 +17,7 @@ import com.chajeongnam.ecc_project.R;
 import com.chajeongnam.ecc_project.Util.FirebaseData;
 import com.chajeongnam.ecc_project.adapter.PostChecklistAdapter;
 import com.chajeongnam.ecc_project.decoration.SetItemDecoration;
-import com.chajeongnam.ecc_project.model.History;
+import com.chajeongnam.ecc_project.model.Result;
 import com.chajeongnam.ecc_project.model.Student;
 import com.chajeongnam.ecc_project.model.TempList;
 import com.google.firebase.database.DataSnapshot;
@@ -32,14 +36,15 @@ import java.util.Map;
 public class PostChecklistActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    private List<TempList> tempLists = new ArrayList<>();
     private PostChecklistAdapter evapostChecklistAdapter;
     private ArrayList<HashMap> result = new ArrayList<>();
-    private Button saveBtn, getBtn;
-    private History history;
+    private List<TempList> tempLists = new ArrayList<>();
+    private Button saveBtn;
+    private int bigId;
+    private Spinner spinner1, spinner2;
     private FirebaseData firebaseData = new FirebaseData();
-    DatabaseReference database = FirebaseDatabase.getInstance().getReference("ECC");
-    DatabaseReference myRef = database.child("보조공학");
+    private String selectedItem,bigCategoryChild,mediumCategoryChild;
+    private List<String> bigCategory, mediumCategory;
 
 
     @Override
@@ -47,25 +52,104 @@ public class PostChecklistActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_cheklist);
         saveBtn = findViewById(R.id.savePostTestBtn);
-        getBtn = findViewById(R.id.getListBtn);
 
-        firebaseData.setDAtaFromFirebase();
+        spinner1 = (Spinner) findViewById(R.id.bigCategory);
+        spinner2 = (Spinner) findViewById(R.id.mediumCategory);
 
-        getBtn.setOnClickListener(new View.OnClickListener() {
+        DatabaseReference database = FirebaseDatabase.getInstance().getReference("ECC");
+        ;
+        bigCategory = new ArrayList<>();
+        mediumCategory = new ArrayList<>();
+
+
+        database.addListenerForSingleValueEvent(new ValueEventListener() {
+            String tempBigCategory;
+
             @Override
-            public void onClick(View view) {
-                getBtn.setVisibility(View.GONE);
-                recyclerView = findViewById(R.id.evaluationPostRecyclerView);
-                recyclerView.setLayoutManager(new LinearLayoutManager(PostChecklistActivity.this));
-                SetItemDecoration itemDecoration = new SetItemDecoration(20);
-                recyclerView.addItemDecoration(itemDecoration);
-                evapostChecklistAdapter = new PostChecklistAdapter(firebaseData.getDatas());
-                recyclerView.setAdapter(evapostChecklistAdapter);
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    tempBigCategory = dataSnapshot.getKey();
+                    bigCategory.add(tempBigCategory);
+
+
+                }
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(PostChecklistActivity.this, android.R.layout.simple_spinner_item, bigCategory);
+                spinner1.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
+
+
+        spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                selectedItem = adapterView.getItemAtPosition(i).toString();
+                if (selectedItem.equals("보조공학")) {
+                    bigId = 0;
+                } else if (selectedItem.equals("점자")) {
+                    bigId = 1;
+                }
+                bigCategoryChild=selectedItem;
+
+                setSpinner(bigId);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+      spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+          @Override
+          public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+              selectedItem = adapterView.getItemAtPosition(i).toString();
+              tempLists.clear();
+              mediumCategoryChild=selectedItem;
+
+              database.child(bigCategoryChild).child(mediumCategoryChild).addListenerForSingleValueEvent(new ValueEventListener() {
+                  TempList getDataFromFireBasetempList;
+
+                  @Override
+                  public void onDataChange(DataSnapshot dataSnapshot) {
+                      for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                          getDataFromFireBasetempList = snapshot.getValue(TempList.class);
+                          tempLists.add(getDataFromFireBasetempList); //어레이리스트에 데이터 넣은 상태}
+
+                      }
+
+                      recyclerView = findViewById(R.id.evaluationPostRecyclerView);
+                      recyclerView.setLayoutManager(new LinearLayoutManager(PostChecklistActivity.this));
+                      SetItemDecoration itemDecoration = new SetItemDecoration(20);
+                      recyclerView.addItemDecoration(itemDecoration);
+                      evapostChecklistAdapter = new PostChecklistAdapter(tempLists);
+                      recyclerView.setAdapter(evapostChecklistAdapter);
+
+                  }
+
+                  @Override
+                  public void onCancelled(DatabaseError databaseError) {
+                  }
+
+              });
+          }
+
+          @Override
+          public void onNothingSelected(AdapterView<?> adapterView) {
+
+          }
+      });
+
+
+
 //        tempLists=(ArrayList<TempList>)getIntent().getSerializableExtra("tempLists");
 
+
+//        학생 저장
         saveBtn.setOnClickListener(new View.OnClickListener() {
 
             Student student = new Student();
@@ -97,17 +181,68 @@ public class PostChecklistActivity extends AppCompatActivity {
                 now = System.currentTimeMillis();
                 mdDate = new Date(now);
                 recent = mFormat.format(mdDate);
+//해쉬맵의 key를 child로 하고 그 값을 value로 지정하여 파베에 저장
 
-                FirebaseDatabase.getInstance().getReference("histories").child("-N3J6Cm3A_4feS07jZmi").child("post").child("보조공학").child("OCR").child("recent").child("date").setValue(recent);
-                FirebaseDatabase.getInstance().getReference("histories").child("-N3J6Cm3A_4feS07jZmi").child("post").child("보조공학").child("OCR").child("recent").child("resultData").setValue(evapostChecklistAdapter.getResult());
-
-
-//                for (Map.Entry<String, String> entrySet : evapostChecklistAdapter.getResult().entrySet()) {
-//                    Log.d("확인", entrySet.getKey() + " : " + entrySet.getValue());
-//                }
+                for (Map.Entry<Integer, Result> entrySet : evapostChecklistAdapter.getResult().entrySet()) {
+                    List<String> descriptionList = new ArrayList<>();
+                    FirebaseDatabase.getInstance().getReference("histories").child("-N3J6Cm3A_4feS07jZmi").child("post").child("보조공학").child("OCR").child(recent).child(String.valueOf(entrySet.getKey())).setValue(entrySet.getValue());
+                }
 
             }
         });
+
+    }
+
+    protected void setSpinner(int i) {
+        DatabaseReference database = FirebaseDatabase.getInstance().getReference("ECC");
+        mediumCategory=new ArrayList<>();
+
+        switch (i) {
+            case 0:
+                database.child("보조공학").addListenerForSingleValueEvent(new ValueEventListener() {
+
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                            mediumCategory.add(dataSnapshot.getKey());
+
+                        }
+                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(PostChecklistActivity.this, android.R.layout.simple_spinner_item, mediumCategory);
+                        spinner2.setAdapter(adapter);
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+                break;
+            case 1:
+                database.child("점자").addListenerForSingleValueEvent(new ValueEventListener() {
+
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                            mediumCategory.add(dataSnapshot.getKey());
+
+
+                        }
+                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(PostChecklistActivity.this, android.R.layout.simple_spinner_item, mediumCategory);
+                        spinner2.setAdapter(adapter);
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+
+        }
+
 
     }
 
