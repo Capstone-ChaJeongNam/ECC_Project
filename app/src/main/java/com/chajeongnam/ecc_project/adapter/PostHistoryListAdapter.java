@@ -16,7 +16,7 @@ import com.chajeongnam.ecc_project.model.PostHistoryDateTempList;
 import java.util.List;
 
 public class PostHistoryListAdapter extends RecyclerView.Adapter<PostHistoryListAdapter.ViewHolder> {
-    private List<PostHistoryDateTempList> tempLists;
+    private List<String> tempLists;
     private int selectedPosition = -1;
 
 
@@ -32,13 +32,13 @@ public class PostHistoryListAdapter extends RecyclerView.Adapter<PostHistoryList
     }
 
 
-    public PostHistoryListAdapter(List<PostHistoryDateTempList> tempLists) {
+    public PostHistoryListAdapter(List<String> tempLists) {
         this.tempLists = tempLists;
     }
 
     @Override
     public void onBindViewHolder(@NonNull PostHistoryListAdapter.ViewHolder holder, int position) {
-        PostHistoryDateTempList tempList = tempLists.get(position);
+        String tempList = tempLists.get(position);
         holder.bind(tempList);
 //        파베에서 갖고 온 날짜를 textview의 text와 비교하면 됨
         holder.cardView.setOnClickListener(new View.OnClickListener() {
@@ -73,8 +73,8 @@ public class PostHistoryListAdapter extends RecyclerView.Adapter<PostHistoryList
             return super.toString();
         }
 
-        private void bind(PostHistoryDateTempList tempList) {
-            textView.setText(tempList.getTextView());
+        private void bind(String tempList) {
+            textView.setText(tempList);
         }
     }
 }
