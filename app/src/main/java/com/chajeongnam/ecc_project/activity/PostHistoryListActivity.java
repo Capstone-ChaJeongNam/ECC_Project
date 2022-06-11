@@ -117,30 +117,7 @@ public class PostHistoryListActivity extends AppCompatActivity {
             }
         });
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("histories");
-//        firebaseData.setPostHistoryDataFromFirebase();
-        TextView startDate = (TextView) findViewById(R.id.getStartDate);
-        TextView endDate = (TextView) findViewById(R.id.getEndDate);
-        ArrayList<String> date = (ArrayList<String>) getIntent().getSerializableExtra("date");
-        startYear = intent.getExtras().getInt("startYear", 0);
-        startMonth = intent.getExtras().getInt("startMonth", 0);
-        startDay = intent.getExtras().getInt("startDay", 0);
-
-        endYear = intent.getExtras().getInt("endYear", 0);
-        endMonth = intent.getExtras().getInt("endMonth", 0);
-        endDay = intent.getExtras().getInt("endDay", 0);
-
-        startDate.setText(startYear + "/" + startMonth + "/" + startDay + "~");
-        endDate.setText("~" + endYear + "/" + endMonth + "/" + endDay);
-
-
-        recyclerView = findViewById(R.id.postHistoryListRecyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(PostHistoryListActivity.this));
-        SetItemDecoration itemDecoration = new SetItemDecoration(20);
-        recyclerView.addItemDecoration(itemDecoration);
-        postHistoryListAdapter = new PostHistoryListAdapter(date);
-        recyclerView.setAdapter(postHistoryListAdapter);
-
+        
 
     }
 }
