@@ -15,6 +15,8 @@ import com.chajeongnam.ecc_project.R;
 import com.chajeongnam.ecc_project.adapter.PreChecklistAdapter;
 import com.chajeongnam.ecc_project.model.PreChecklist;
 import com.chajeongnam.ecc_project.model.Student;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,9 +32,9 @@ public class PreHistoryActivity extends AppCompatActivity {
     private ArrayList<PreChecklist> checklist= new ArrayList<>();
     private ArrayList<String> contentlist= new ArrayList<String>();
     private String studentdate;
-    String category = getIntent().getStringExtra("category");
-    String area = getIntent().getStringExtra("area");
-    Student student = (Student) getIntent().getParcelableExtra("student");
+    String category, area;
+    Student student;
+
 
 
 
@@ -43,7 +45,11 @@ public class PreHistoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pre_history);
         setActionbar();
 
+        category = getIntent().getStringExtra("category");
+        area = getIntent().getStringExtra("area");
+        student = (Student) getIntent().getParcelableExtra("student");
         adapter = new PreChecklistAdapter(this,checklist);
+
 
         listview = (ListView) findViewById(R.id.prehistoryView);
         listview.setAdapter(adapter);
@@ -51,26 +57,32 @@ public class PreHistoryActivity extends AppCompatActivity {
         //날짜설정
         mDatabase = FirebaseDatabase.getInstance().getReference();
         DatabaseReference myRef = mDatabase.child("histories");
-        DatabaseReference ChecklistRef = myRef.child("pre").child(category).child(area).child("recent");
-        ChecklistRef.addListenerForSingleValueEvent (new ValueEventListener() {
+        DatabaseReference ChecklistRef = myRef.child(student.getUid()).child("pre").child(category).child(area).child("recent");
+        ChecklistRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    String date = dataSnapshot.getValue(String.class);
-                    studentdate = date;
-                }
-                adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                studentdate = task.getResult().getValue(String.class);
+                getPrehistory();
             }
         });
+//        ChecklistRef.addListenerForSingleValueEvent (new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                String date = snapshot.getValue(String.class);
+//                studentdate = date;
+//                getPrehistory();
+//                adapter.notifyDataSetChanged();
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//
+//            }
+//        });
 
         setDefaultUI();
-        getPrehistory();
+
 
 
     }
