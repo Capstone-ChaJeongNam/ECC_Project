@@ -23,11 +23,6 @@
         </intent-filter>
         </activity>
 
-<<<<<<< HEAD
-        <activity android:name=".activity.StudentInfoActivity" />
-
-=======
->>>>>>> 19a76c56b338913a88cb18048c11608329e7c685
 
 <!--        <activity android:name=".activity.PostChecklistActivity"/>-->
         <!--ChoYeonJun add-->
@@ -35,7 +30,7 @@
         <activity android:name=".activity.CategoryListActivity" />
         <activity android:name=".activity.FindStudentActivity" />
         <activity android:name=".activity.StudentListActivity" />
-<!--        <activity android:name=".activity.StudentInfoActivity" />-->
+        <activity android:name=".activity.StudentInfoActivity" />
         <activity
             android:name=".activity.CGraphActivity"
             android:screenOrientation="landscape" />
