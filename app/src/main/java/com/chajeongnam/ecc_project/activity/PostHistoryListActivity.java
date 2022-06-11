@@ -121,7 +121,6 @@ public class PostHistoryListActivity extends AppCompatActivity {
 //        firebaseData.setPostHistoryDataFromFirebase();
         TextView startDate = (TextView) findViewById(R.id.getStartDate);
         TextView endDate = (TextView) findViewById(R.id.getEndDate);
-        Intent intent = getIntent();
         ArrayList<String> date = (ArrayList<String>) getIntent().getSerializableExtra("date");
         startYear = intent.getExtras().getInt("startYear", 0);
         startMonth = intent.getExtras().getInt("startMonth", 0);

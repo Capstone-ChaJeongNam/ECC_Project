@@ -10,11 +10,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ECC_Project">
         <activity android:name=".activity.SplashActivity"/>
-        <activity
-            android:name=".activity.PostPeriodActivity"/>
+<!--        <activity-->
+<!--            android:name=".activity.PostPeriodActivity"/>-->
 
 
-        <activity android:name=".activity.PostChecklistActivity"
+        <activity android:name=".activity.PostPeriodActivity"
             android:exported="true">
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
