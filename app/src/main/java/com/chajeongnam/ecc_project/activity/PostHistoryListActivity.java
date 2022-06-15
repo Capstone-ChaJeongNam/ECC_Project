@@ -16,6 +16,9 @@ import com.chajeongnam.ecc_project.Util.FirebaseData;
 import com.chajeongnam.ecc_project.adapter.PostHistoryListAdapter;
 import com.chajeongnam.ecc_project.decoration.SetItemDecoration;
 import com.chajeongnam.ecc_project.model.PostHistoryDateTempList;
+import com.chajeongnam.ecc_project.model.Student;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -37,12 +40,15 @@ public class PostHistoryListActivity extends AppCompatActivity {
 
     private FirebaseData firebaseData;
     private DatabaseReference databaseReference;
+    private FirebaseAuth firebaseAuth;
     private RecyclerView recyclerView;
     private List<String> tempLists;
     private PostHistoryListAdapter postHistoryListAdapter;
-    private TextView start, end;
+    private TextView start, end,userName,infoTextHistoryCategory,infoTextHistoryArea;
     private Button goCGraph;
 
+//    인텐트로 학생정보 넘겨오면 삭제해야함
+    private Student student;
 
 
     @Override
@@ -53,6 +59,9 @@ public class PostHistoryListActivity extends AppCompatActivity {
         start = findViewById(R.id.getStartDate);
         end = findViewById(R.id.getEndDate);
         goCGraph = findViewById(R.id.goCGraph);
+        userName=findViewById(R.id.userName);
+        infoTextHistoryCategory=findViewById(R.id.info_text_history_category);
+        infoTextHistoryArea=findViewById(R.id.info_text_history_area);
         Intent intent = getIntent();
         startYear = intent.getExtras().getInt("startYear");
         startMonth = intent.getExtras().getInt("startMonth");
@@ -64,12 +73,27 @@ public class PostHistoryListActivity extends AppCompatActivity {
 
         start.setText(startYear + "/" + startMonth + "/" + startDay + "~~");
         end.setText(endYear + "/" + endMonth + "/" + endDay);
+        FirebaseDatabase.getInstance().getReference("students").child("-N3J6Cm3A_4feS07jZmi").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                student=snapshot.getValue(Student.class);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
 
         databaseReference = FirebaseDatabase.getInstance().getReference("histories").child("-N3J6Cm3A_4feS07jZmi").child("post").child("보조공학").child("OCR");
+
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
 
             String postHistoryDateTempList;
+
 
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -117,7 +141,7 @@ public class PostHistoryListActivity extends AppCompatActivity {
             }
         });
 
-        
+
 
     }
 }

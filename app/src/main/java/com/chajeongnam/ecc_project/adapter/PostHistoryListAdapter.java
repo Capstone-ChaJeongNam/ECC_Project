@@ -1,6 +1,7 @@
 package com.chajeongnam.ecc_project.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,8 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chajeongnam.ecc_project.R;
+import com.chajeongnam.ecc_project.activity.PostChecklistActivity;
+import com.chajeongnam.ecc_project.activity.PostHistoryActivity;
 import com.chajeongnam.ecc_project.model.PostHistoryDateTempList;
 
 import java.util.List;
@@ -41,10 +44,12 @@ public class PostHistoryListAdapter extends RecyclerView.Adapter<PostHistoryList
         String tempList = tempLists.get(position);
         holder.bind(tempList);
 //        파베에서 갖고 온 날짜를 textview의 text와 비교하면 됨
-        holder.cardView.setOnClickListener(new View.OnClickListener() {
+        holder.textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                
+                Intent intent = new Intent(view.getContext(), PostHistoryActivity.class);
+                intent.putExtra("date", tempList);
+                view.getContext().startActivity(intent);
             }
         });
 
