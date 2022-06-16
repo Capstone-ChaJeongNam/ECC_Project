@@ -16,6 +16,9 @@ import com.chajeongnam.ecc_project.Util.FirebaseData;
 import com.chajeongnam.ecc_project.adapter.PostHistoryListAdapter;
 import com.chajeongnam.ecc_project.decoration.SetItemDecoration;
 import com.chajeongnam.ecc_project.model.PostHistoryDateTempList;
+import com.chajeongnam.ecc_project.model.Student;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,14 +38,15 @@ public class PostHistoryListActivity extends AppCompatActivity {
     private int endMonth;
     private int endDay;
 
-    private FirebaseData firebaseData;
     private DatabaseReference databaseReference;
     private RecyclerView recyclerView;
     private List<String> tempLists;
     private PostHistoryListAdapter postHistoryListAdapter;
-    private TextView start, end;
+    private TextView start, end, userName, infoTextHistoryCategory, infoTextHistoryArea;
     private Button goCGraph;
-
+    //    인텐트로 학생정보 넘겨오면 삭제해야함
+    private Student student;
+    private String category, area;
 
 
     @Override
@@ -53,6 +57,9 @@ public class PostHistoryListActivity extends AppCompatActivity {
         start = findViewById(R.id.getStartDate);
         end = findViewById(R.id.getEndDate);
         goCGraph = findViewById(R.id.goCGraph);
+        userName = findViewById(R.id.userName);
+        infoTextHistoryCategory = findViewById(R.id.info_text_history_category);
+        infoTextHistoryArea = findViewById(R.id.info_text_history_area);
         Intent intent = getIntent();
         startYear = intent.getExtras().getInt("startYear");
         startMonth = intent.getExtras().getInt("startMonth");
@@ -61,15 +68,42 @@ public class PostHistoryListActivity extends AppCompatActivity {
         endYear = intent.getExtras().getInt("endYear");
         endMonth = intent.getExtras().getInt("endMonth");
         endDay = intent.getExtras().getInt("endDay");
+//인텐트 넘겨줌
+
+        student = intent.getParcelableExtra("student");
+
+        category = intent.getStringExtra("category");
+        area = intent.getStringExtra("area");
+        userName.setText(student.getName());
+        infoTextHistoryCategory.setText(category);
+        infoTextHistoryArea.setText(area);
 
         start.setText(startYear + "/" + startMonth + "/" + startDay + "~~");
         end.setText(endYear + "/" + endMonth + "/" + endDay);
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("histories").child("-N3J6Cm3A_4feS07jZmi").child("post").child("보조공학").child("OCR");
+//        학생정보 동적할당
+        FirebaseDatabase.getInstance().getReference("students").child(student.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                student = snapshot.getValue(Student.class);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+//        학생정보 동적할당
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("histories").child(student.getUid()).child("post").child(category).child(area);
+
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
 
             String postHistoryDateTempList;
+
 
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -81,18 +115,18 @@ public class PostHistoryListActivity extends AppCompatActivity {
                     }
 
                     String[] splitList = postHistoryDateTempList.split("-");
-                    if (Integer.parseInt(splitList[0]) > startYear || Integer.parseInt(splitList[0]) < endYear) {
+                    if (Integer.parseInt(splitList[0]) >= startYear || Integer.parseInt(splitList[0]) <= endYear) {
 
-                        if (Integer.parseInt(splitList[1]) > startMonth || Integer.parseInt(splitList[1]) < endMonth) {
+                        if (Integer.parseInt(splitList[1]) >= startMonth || Integer.parseInt(splitList[1]) <= endMonth) {
 
-                            if (Integer.parseInt(splitList[2]) > startDay || Integer.parseInt(splitList[2]) < endDay) {
+                            if (Integer.parseInt(splitList[2]) >= startDay || Integer.parseInt(splitList[2]) <= endDay) {
 
                                 tempLists.add(postHistoryDateTempList);
                                 recyclerView = findViewById(R.id.postHistoryListRecyclerView);
                                 recyclerView.setLayoutManager(new LinearLayoutManager(PostHistoryListActivity.this));
                                 SetItemDecoration itemDecoration = new SetItemDecoration(20);
                                 recyclerView.addItemDecoration(itemDecoration);
-                                postHistoryListAdapter = new PostHistoryListAdapter(tempLists);
+                                postHistoryListAdapter = new PostHistoryListAdapter(tempLists,student,category,area);
                                 recyclerView.setAdapter(postHistoryListAdapter);
                             }
                         }
@@ -116,30 +150,6 @@ public class PostHistoryListActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        databaseReference = FirebaseDatabase.getInstance().getReference("histories");
-//        firebaseData.setPostHistoryDataFromFirebase();
-        TextView startDate = (TextView) findViewById(R.id.getStartDate);
-        TextView endDate = (TextView) findViewById(R.id.getEndDate);
-        ArrayList<String> date = (ArrayList<String>) getIntent().getSerializableExtra("date");
-        startYear = intent.getExtras().getInt("startYear", 0);
-        startMonth = intent.getExtras().getInt("startMonth", 0);
-        startDay = intent.getExtras().getInt("startDay", 0);
-
-        endYear = intent.getExtras().getInt("endYear", 0);
-        endMonth = intent.getExtras().getInt("endMonth", 0);
-        endDay = intent.getExtras().getInt("endDay", 0);
-
-        startDate.setText(startYear + "/" + startMonth + "/" + startDay + "~");
-        endDate.setText("~" + endYear + "/" + endMonth + "/" + endDay);
-
-
-        recyclerView = findViewById(R.id.postHistoryListRecyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(PostHistoryListActivity.this));
-        SetItemDecoration itemDecoration = new SetItemDecoration(20);
-        recyclerView.addItemDecoration(itemDecoration);
-        postHistoryListAdapter = new PostHistoryListAdapter(date);
-        recyclerView.setAdapter(postHistoryListAdapter);
 
 
     }

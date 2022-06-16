@@ -35,6 +35,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:id="@+id/studentName"
                 android:text="고길동"
                 android:textSize="20dp"
                 android:textStyle="bold" />
@@ -59,7 +60,7 @@
                 >
 
                 <TextView
-                    android:id="@+id/info_text"
+                    android:id="@+id/info_text_history_category"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
@@ -82,6 +83,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:id="@+id/info_text_history_area"
                     android:text="한글점자와 입력" />
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>

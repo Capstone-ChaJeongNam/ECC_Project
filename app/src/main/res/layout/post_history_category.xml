@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -15,6 +16,49 @@
             android:layout_height="wrap_content"
             android:text="번호와 내용"
             android:textSize="20dp" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardD"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="10dp"
+            app:cardCornerRadius="4dp"
+            app:cardUseCompatPadding="true"
+            app:strokeColor="@color/black"
+            app:strokeWidth="3dp"
+            android:layout_gravity="right"
+            >
+
+            <TextView
+                android:id="@+id/D"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="D" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardG"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="10dp"
+            app:cardCornerRadius="4dp"
+            app:cardUseCompatPadding="true"
+            app:strokeColor="@color/black"
+            app:strokeWidth="3dp"
+            android:layout_gravity="right"
+            >
+
+            <TextView
+                android:id="@+id/G"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="G" />
+
+        </com.google.android.material.card.MaterialCardView>
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -33,7 +77,6 @@
                     android:id="@+id/historyOne"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:checked="true"
                     android:clickable="false"
                     android:text="1" />
 
@@ -59,15 +102,16 @@
                     android:text="C" />
             </RadioGroup>
         </LinearLayout>
+
         <EditText
+            android:id="@+id/historyDescriptionEditText"
             android:layout_width="300dp"
             android:layout_height="100dp"
-            android:id="@+id/historyDescriptionEditText"
+            android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:background="#EAEAEA"
             android:hint="서술형 평가를 입력해 주세요"
-            android:visibility="gone"
-            android:layout_gravity="center"/>
+            android:visibility="gone" />
     </LinearLayout>
 
 </LinearLayout>

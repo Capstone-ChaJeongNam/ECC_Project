@@ -34,6 +34,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:id="@+id/userName"
                 android:text="고길동"
                 android:textSize="20dp"
                 android:textStyle="bold" />
@@ -50,6 +51,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:id="@+id/info_text_history_area"
                 android:textSize="20dp"
                 android:text="한글 점자 영역" />
 
@@ -57,6 +59,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:id="@+id/postHistoryDate"
                 android:layout_marginTop="5dp"
                 android:textSize="20dp"
                 android:text="2022년3월20일"

@@ -21,7 +21,10 @@ import com.chajeongnam.ecc_project.R;
 import com.chajeongnam.ecc_project.Util.FirebaseData;
 import com.chajeongnam.ecc_project.adapter.PostChecklistAdapter;
 import com.chajeongnam.ecc_project.decoration.SetItemDecoration;
+import com.chajeongnam.ecc_project.model.Student;
 import com.chajeongnam.ecc_project.model.TempList;
+
+import org.w3c.dom.Text;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -37,6 +40,9 @@ public class PostPeriodActivity extends AppCompatActivity {
 
     private int endMonth;
     private int endDay;
+    private TextView infoTextHistoryCategory, infoTextHistoryArea,studentName;
+    private Student student;
+    private String category, area;
     private FirebaseData firebaseData = new FirebaseData();
 
 
@@ -44,10 +50,24 @@ public class PostPeriodActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_period);
+        studentName = findViewById(R.id.studentName);
+        infoTextHistoryCategory = findViewById(R.id.info_text_history_category);
+        infoTextHistoryArea = findViewById(R.id.info_text_history_area);
+
 
         final InputMethodManager manager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         TextView editText1 = (TextView) findViewById(R.id.setStartDate);
         TextView editText2 = (TextView) findViewById(R.id.setEndDate);
+        Intent intent=getIntent();
+        student=intent.getParcelableExtra("student");
+        category=intent.getStringExtra("category");
+        area=intent.getStringExtra("area");
+
+//        ui 동적 할당
+        studentName.setText(student.getName());
+        infoTextHistoryCategory.setText(category);
+        infoTextHistoryArea.setText(area);
+
         DatePicker datePicker = (DatePicker) findViewById(R.id.dataPicker);
         Button button = (Button) findViewById(R.id.dateBtn);
         Button toButton = (Button) findViewById(R.id.toButton);
@@ -110,7 +130,7 @@ public class PostPeriodActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 Intent intent = new Intent(PostPeriodActivity.this, PostHistoryListActivity.class);
-               intent.putExtra("date", (Serializable) firebaseData.getEvaluationDate());
+                intent.putExtra("date", (Serializable) firebaseData.getEvaluationDate());
                 intent.putExtra("startYear", startYear);
                 intent.putExtra("startMonth", startMonth);
                 intent.putExtra("startDay", startDay);
@@ -118,10 +138,10 @@ public class PostPeriodActivity extends AppCompatActivity {
                 intent.putExtra("endMonth", endMonth);
                 intent.putExtra("endDay", endDay);
 //                StudentInfoHistoryAdapter에서 인텐트로 불러옴
+                intent.putExtra("student", student);
+                intent.putExtra("category", category);
+                intent.putExtra("area", area);
 
-                intent.putExtra("student", (Bundle) intent.getParcelableExtra("student"));
-                intent.putExtra("category",intent.getStringExtra("category"));
-                intent.putExtra("area",intent.getStringExtra("area"));
                 startActivity(intent);
 
             }
