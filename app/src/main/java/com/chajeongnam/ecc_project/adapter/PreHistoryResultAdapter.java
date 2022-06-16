@@ -1,6 +1,5 @@
 package com.chajeongnam.ecc_project.adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,15 +11,14 @@ import android.widget.TextView;
 import com.chajeongnam.ecc_project.R;
 import com.chajeongnam.ecc_project.model.PreChecklist;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class PreChecklistAdapter extends BaseAdapter {
+public class PreHistoryResultAdapter extends BaseAdapter {
 
     private  Context context;
     private List<PreChecklist> checklistItem;
 
-    public PreChecklistAdapter(List<PreChecklist> checklistItem){
+    public PreHistoryResultAdapter(List<PreChecklist> checklistItem){
         this.checklistItem = checklistItem;
     }
 
@@ -55,14 +53,16 @@ public class PreChecklistAdapter extends BaseAdapter {
         TextView id = (TextView) view.findViewById(R.id.textView1);
         TextView content = (TextView) view.findViewById(R.id.textView2);
 
-//        CheckBox cb =(CheckBox) view.findViewById(R.id.checkBox1);
+        CheckBox cb =(CheckBox) view.findViewById(R.id.checkBox1);
 
         id.setText(String.valueOf(preChecklist.getId()+1)) ;
         content.setText(preChecklist.getContent());
 
-//        if(preChecklist.isResult()==true){
-//            cb.setChecked(true);
-//        }
+        if(preChecklist.isResult()){
+            cb.setChecked(true);
+        }
+        else{cb.setChecked(false);}
+
         return view;
     }
 
