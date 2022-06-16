@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class PostHistoryResult implements Serializable {
     private String content;
+    private String description;
     private int id;
     private int score;
 
@@ -19,10 +20,19 @@ public class PostHistoryResult implements Serializable {
         this.score = score;
     }
 
-    public PostHistoryResult(String content, int id, String title_id, int score) {
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public PostHistoryResult(String content, int id, String title_id, int score, String description) {
         this.content = content;
         this.id = id;
         this.score = score;
+        this.description=description;
     }
 
     public String getContent() {

@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chajeongnam.ecc_project.R;
+import com.chajeongnam.ecc_project.activity.AdvanceGraphActivity;
 import com.chajeongnam.ecc_project.activity.PostHistoryActivity;
 import com.chajeongnam.ecc_project.decoration.SetItemDecoration;
 import com.chajeongnam.ecc_project.model.PostHistoryResult;
@@ -37,9 +38,9 @@ public class PostHistoryAdapter extends RecyclerView.Adapter<PostHistoryAdapter.
     private int selectedPosition = -1;
     private String date;
 
-    public PostHistoryAdapter(List<PostHistoryResult> postHistoryResults,String date) {
+    public PostHistoryAdapter(List<PostHistoryResult> postHistoryResults, String date) {
         this.postHistoryResults = postHistoryResults;
-        this.date=date;
+        this.date = date;
     }
 
     @NonNull
@@ -58,8 +59,26 @@ public class PostHistoryAdapter extends RecyclerView.Adapter<PostHistoryAdapter.
         PostHistoryResult postHistoryTempList = postHistoryResults.get(position);
         holder.bind(postHistoryTempList);
 
+        holder.dKey.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (holder.editText.getVisibility() == View.GONE) {
+                    holder.editText.setVisibility(View.VISIBLE);
+                } else {
+                    holder.editText.setVisibility(View.GONE);
+                }
 
 
+            }
+        });
+
+        holder.gKey.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), AdvanceGraphActivity.class);
+                view.getContext().startActivity(intent);
+            }
+        });
 
     }
 
@@ -69,9 +88,9 @@ public class PostHistoryAdapter extends RecyclerView.Adapter<PostHistoryAdapter.
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView content;
+        private TextView content, dKey, gKey;
         private RadioGroup radioGroup;
-        private RadioButton score1,score2,score3,scoreC;
+        private RadioButton score1, score2, score3, scoreC;
         private EditText editText;
 
 
@@ -81,16 +100,19 @@ public class PostHistoryAdapter extends RecyclerView.Adapter<PostHistoryAdapter.
             content = itemView.findViewById(R.id.historyContent);
             radioGroup = itemView.findViewById(R.id.historyEvaGroup);
             editText = itemView.findViewById(R.id.historyDescriptionEditText);
-            score1=itemView.findViewById(R.id.historyOne);
-            score2=itemView.findViewById(R.id.historyTwo);
-            score3=itemView.findViewById(R.id.historyThree);
-            scoreC=itemView.findViewById(R.id.historyC);
+            dKey = itemView.findViewById(R.id.D);
+            gKey = itemView.findViewById(R.id.G);
+            score1 = itemView.findViewById(R.id.historyOne);
+            score2 = itemView.findViewById(R.id.historyTwo);
+            score3 = itemView.findViewById(R.id.historyThree);
+            scoreC = itemView.findViewById(R.id.historyC);
 
         }
 
         private void bind(PostHistoryResult postHistoryResults) {
             content.setText(postHistoryResults.getContent());
-            switch (postHistoryResults.getScore()){
+            editText.setText(postHistoryResults.getDescription());
+            switch (postHistoryResults.getScore()) {
                 case 1:
                     score1.setChecked(true);
                     break;
