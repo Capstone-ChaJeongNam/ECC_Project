@@ -69,16 +69,11 @@ public class PostHistoryListActivity extends AppCompatActivity {
         endMonth = intent.getExtras().getInt("endMonth");
         endDay = intent.getExtras().getInt("endDay");
 //인텐트 넘겨줌
-        Intent putPostHistoryActivityIntent = new Intent(PostHistoryListActivity.this, PostHistoryActivity.class);
 
         student = intent.getParcelableExtra("student");
-        putPostHistoryActivityIntent.putExtra("student", student);
 
         category = intent.getStringExtra("category");
-        putPostHistoryActivityIntent.putExtra("category", category);
-
         area = intent.getStringExtra("area");
-        putPostHistoryActivityIntent.putExtra("area", area);
         userName.setText(student.getName());
         infoTextHistoryCategory.setText(category);
         infoTextHistoryArea.setText(area);
@@ -102,7 +97,7 @@ public class PostHistoryListActivity extends AppCompatActivity {
 
 //        학생정보 동적할당
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("histories").child(student.getUid()).child("post").child("보조공학").child("OCR");
+        databaseReference = FirebaseDatabase.getInstance().getReference("histories").child(student.getUid()).child("post").child(category).child(area);
 
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -120,18 +115,18 @@ public class PostHistoryListActivity extends AppCompatActivity {
                     }
 
                     String[] splitList = postHistoryDateTempList.split("-");
-                    if (Integer.parseInt(splitList[0]) > startYear || Integer.parseInt(splitList[0]) < endYear) {
+                    if (Integer.parseInt(splitList[0]) >= startYear || Integer.parseInt(splitList[0]) <= endYear) {
 
-                        if (Integer.parseInt(splitList[1]) > startMonth || Integer.parseInt(splitList[1]) < endMonth) {
+                        if (Integer.parseInt(splitList[1]) >= startMonth || Integer.parseInt(splitList[1]) <= endMonth) {
 
-                            if (Integer.parseInt(splitList[2]) > startDay || Integer.parseInt(splitList[2]) < endDay) {
+                            if (Integer.parseInt(splitList[2]) >= startDay || Integer.parseInt(splitList[2]) <= endDay) {
 
                                 tempLists.add(postHistoryDateTempList);
                                 recyclerView = findViewById(R.id.postHistoryListRecyclerView);
                                 recyclerView.setLayoutManager(new LinearLayoutManager(PostHistoryListActivity.this));
                                 SetItemDecoration itemDecoration = new SetItemDecoration(20);
                                 recyclerView.addItemDecoration(itemDecoration);
-                                postHistoryListAdapter = new PostHistoryListAdapter(tempLists);
+                                postHistoryListAdapter = new PostHistoryListAdapter(tempLists,student,category,area);
                                 recyclerView.setAdapter(postHistoryListAdapter);
                             }
                         }

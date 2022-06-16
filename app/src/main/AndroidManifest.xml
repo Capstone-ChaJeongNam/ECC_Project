@@ -38,7 +38,9 @@
             android:name=".activity.AdvanceGraphActivity"
             android:screenOrientation="landscape" />
         <!--ChoYeonJun add end-->
-        <activity android:name=".activity.AddStudentActivity" />
+            <activity android:name=".activity.PostPeriodActivity" />
+
+            <activity android:name=".activity.AddStudentActivity" />
         <activity
             android:name=".activity.FindPasswordActivity"
             android:exported="false" />

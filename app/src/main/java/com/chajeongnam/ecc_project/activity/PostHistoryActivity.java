@@ -80,7 +80,7 @@ public class PostHistoryActivity extends AppCompatActivity {
         postHistoryResults = new ArrayList<>();
 
 //        인텐트에서 넘겨준 값으로 바꿔야함
-        databaseReference = FirebaseDatabase.getInstance().getReference("histories").child(student.getUid()).child("post").child("보조공학").child("OCR").
+        databaseReference = FirebaseDatabase.getInstance().getReference("histories").child(student.getUid()).child("post").child(category).child(area).
                 child(date);
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {

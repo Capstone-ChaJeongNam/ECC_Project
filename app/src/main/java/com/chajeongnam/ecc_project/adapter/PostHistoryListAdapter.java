@@ -15,13 +15,23 @@ import com.chajeongnam.ecc_project.R;
 import com.chajeongnam.ecc_project.activity.PostChecklistActivity;
 import com.chajeongnam.ecc_project.activity.PostHistoryActivity;
 import com.chajeongnam.ecc_project.model.PostHistoryDateTempList;
+import com.chajeongnam.ecc_project.model.Student;
 
 import java.util.List;
 
 public class PostHistoryListAdapter extends RecyclerView.Adapter<PostHistoryListAdapter.ViewHolder> {
     private List<String> tempLists;
+    private Student student;
+    private String category,area;
     private int selectedPosition = -1;
 
+
+    public PostHistoryListAdapter(List<String> tempLists, Student student, String category, String area) {
+        this.tempLists = tempLists;
+        this.student = student;
+        this.category = category;
+        this.area = area;
+    }
 
     @NonNull
     @Override
@@ -35,9 +45,6 @@ public class PostHistoryListAdapter extends RecyclerView.Adapter<PostHistoryList
     }
 
 
-    public PostHistoryListAdapter(List<String> tempLists) {
-        this.tempLists = tempLists;
-    }
 
     @Override
     public void onBindViewHolder(@NonNull PostHistoryListAdapter.ViewHolder holder, int position) {
@@ -49,6 +56,9 @@ public class PostHistoryListAdapter extends RecyclerView.Adapter<PostHistoryList
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), PostHistoryActivity.class);
                 intent.putExtra("date", tempList);
+                intent.putExtra("student", student);
+                intent.putExtra("category", category);
+                intent.putExtra("area", area);
                 view.getContext().startActivity(intent);
             }
         });
