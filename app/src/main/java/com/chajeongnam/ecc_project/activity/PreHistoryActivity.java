@@ -1,6 +1,5 @@
 package com.chajeongnam.ecc_project.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -12,7 +11,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.chajeongnam.ecc_project.R;
-import com.chajeongnam.ecc_project.adapter.PreChecklistAdapter;
+import com.chajeongnam.ecc_project.adapter.PreHistoryResultAdapter;
 import com.chajeongnam.ecc_project.model.PreChecklist;
 import com.chajeongnam.ecc_project.model.Student;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -27,16 +26,13 @@ import java.util.ArrayList;
 
 public class PreHistoryActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
-    private PreChecklistAdapter adapter;
+    private PreHistoryResultAdapter adapter;
     private ListView listview;
     private ArrayList<PreChecklist> checklist= new ArrayList<>();
     private ArrayList<String> contentlist= new ArrayList<String>();
     private String studentdate;
     String category, area;
     Student student;
-
-
-
 
 
     @Override
@@ -48,7 +44,7 @@ public class PreHistoryActivity extends AppCompatActivity {
         category = getIntent().getStringExtra("category");
         area = getIntent().getStringExtra("area");
         student = (Student) getIntent().getParcelableExtra("student");
-        adapter = new PreChecklistAdapter(this,checklist);
+        adapter = new PreHistoryResultAdapter(checklist);
 
 
         listview = (ListView) findViewById(R.id.prehistoryView);
@@ -132,7 +128,7 @@ public class PreHistoryActivity extends AppCompatActivity {
 
             }
         });
-        adapter= new PreChecklistAdapter(this,checklist);
+        adapter = new PreHistoryResultAdapter(checklist);
         listview.setAdapter(adapter);
 
 
