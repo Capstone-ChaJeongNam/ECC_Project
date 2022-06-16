@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,6 +17,7 @@ import com.chajeongnam.ecc_project.adapter.PostChecklistAdapter;
 import com.chajeongnam.ecc_project.adapter.PostHistoryAdapter;
 import com.chajeongnam.ecc_project.decoration.SetItemDecoration;
 import com.chajeongnam.ecc_project.model.PostHistoryResult;
+import com.chajeongnam.ecc_project.model.Student;
 import com.chajeongnam.ecc_project.model.TempList;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -41,6 +43,9 @@ public class PostHistoryActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private List<PostHistoryResult> postHistoryResults;
     private PostHistoryAdapter postHistoryAdapter;
+    private TextView  userName, infoTextHistoryArea,postHistoryDate;
+    private Student student;
+    private String category, area;
     private ArrayList<HashMap> result = new ArrayList<>();
     private Button saveBtn;
 
@@ -50,7 +55,9 @@ public class PostHistoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_post_history);
         Intent intent = getIntent();
         Intent putDatePostHistoryAdapter = new Intent(PostHistoryActivity.this, PostHistoryAdapter.class);
-
+        userName = findViewById(R.id.userName);
+        infoTextHistoryArea = findViewById(R.id.info_text_history_area);
+        postHistoryDate=findViewById(R.id.postHistoryDate);
         startYear = intent.getExtras().getInt("startYear");
         startMonth = intent.getExtras().getInt("startMonth");
         startDay = intent.getExtras().getInt("startDay");
@@ -59,12 +66,21 @@ public class PostHistoryActivity extends AppCompatActivity {
         endMonth = intent.getExtras().getInt("endMonth");
         endDay = intent.getExtras().getInt("endDay");
         date = intent.getExtras().getString("date");
+
+        student = intent.getParcelableExtra("student");
+        category = intent.getStringExtra("category");
+        area = intent.getStringExtra("area");
+
+        userName.setText(student.getName());
+        infoTextHistoryArea.setText(area);
+        postHistoryDate.setText(date);
         putDatePostHistoryAdapter.putExtra("date", date);
+
         Log.d("날짜", date);
         postHistoryResults = new ArrayList<>();
 
 //        인텐트에서 넘겨준 값으로 바꿔야함
-        databaseReference = FirebaseDatabase.getInstance().getReference("histories").child("-N3J6Cm3A_4feS07jZmi").child("post").child("보조공학").child("OCR").
+        databaseReference = FirebaseDatabase.getInstance().getReference("histories").child(student.getUid()).child("post").child("보조공학").child("OCR").
                 child(date);
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {

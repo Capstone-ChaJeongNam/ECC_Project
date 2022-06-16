@@ -43,7 +43,7 @@ public class SignInActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 String strEmail = mEtEmail.getText().toString().trim();
-                String strPwd = mEtPwd.getText().toString().trim();
+                String strPwd = mEtPwd.getText().toString();
 
                 mFirebaseAuth.signInWithEmailAndPassword(strEmail, strPwd).addOnCompleteListener(SignInActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override

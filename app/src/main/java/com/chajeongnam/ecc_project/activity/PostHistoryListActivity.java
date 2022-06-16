@@ -38,17 +38,15 @@ public class PostHistoryListActivity extends AppCompatActivity {
     private int endMonth;
     private int endDay;
 
-    private FirebaseData firebaseData;
     private DatabaseReference databaseReference;
-    private FirebaseAuth firebaseAuth;
     private RecyclerView recyclerView;
     private List<String> tempLists;
     private PostHistoryListAdapter postHistoryListAdapter;
-    private TextView start, end,userName,infoTextHistoryCategory,infoTextHistoryArea;
+    private TextView start, end, userName, infoTextHistoryCategory, infoTextHistoryArea;
     private Button goCGraph;
-
-//    인텐트로 학생정보 넘겨오면 삭제해야함
+    //    인텐트로 학생정보 넘겨오면 삭제해야함
     private Student student;
+    private String category, area;
 
 
     @Override
@@ -59,9 +57,9 @@ public class PostHistoryListActivity extends AppCompatActivity {
         start = findViewById(R.id.getStartDate);
         end = findViewById(R.id.getEndDate);
         goCGraph = findViewById(R.id.goCGraph);
-        userName=findViewById(R.id.userName);
-        infoTextHistoryCategory=findViewById(R.id.info_text_history_category);
-        infoTextHistoryArea=findViewById(R.id.info_text_history_area);
+        userName = findViewById(R.id.userName);
+        infoTextHistoryCategory = findViewById(R.id.info_text_history_category);
+        infoTextHistoryArea = findViewById(R.id.info_text_history_area);
         Intent intent = getIntent();
         startYear = intent.getExtras().getInt("startYear");
         startMonth = intent.getExtras().getInt("startMonth");
@@ -70,13 +68,29 @@ public class PostHistoryListActivity extends AppCompatActivity {
         endYear = intent.getExtras().getInt("endYear");
         endMonth = intent.getExtras().getInt("endMonth");
         endDay = intent.getExtras().getInt("endDay");
+//인텐트 넘겨줌
+        Intent putPostHistoryActivityIntent = new Intent(PostHistoryListActivity.this, PostHistoryActivity.class);
+
+        student = intent.getParcelableExtra("student");
+        putPostHistoryActivityIntent.putExtra("student", student);
+
+        category = intent.getStringExtra("category");
+        putPostHistoryActivityIntent.putExtra("category", category);
+
+        area = intent.getStringExtra("area");
+        putPostHistoryActivityIntent.putExtra("area", area);
+        userName.setText(student.getName());
+        infoTextHistoryCategory.setText(category);
+        infoTextHistoryArea.setText(area);
 
         start.setText(startYear + "/" + startMonth + "/" + startDay + "~~");
         end.setText(endYear + "/" + endMonth + "/" + endDay);
-        FirebaseDatabase.getInstance().getReference("students").child("-N3J6Cm3A_4feS07jZmi").addListenerForSingleValueEvent(new ValueEventListener() {
+
+//        학생정보 동적할당
+        FirebaseDatabase.getInstance().getReference("students").child(student.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                student=snapshot.getValue(Student.class);
+                student = snapshot.getValue(Student.class);
 
             }
 
@@ -86,8 +100,9 @@ public class PostHistoryListActivity extends AppCompatActivity {
             }
         });
 
+//        학생정보 동적할당
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("histories").child("-N3J6Cm3A_4feS07jZmi").child("post").child("보조공학").child("OCR");
+        databaseReference = FirebaseDatabase.getInstance().getReference("histories").child(student.getUid()).child("post").child("보조공학").child("OCR");
 
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -140,7 +155,6 @@ public class PostHistoryListActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
 
 
     }
