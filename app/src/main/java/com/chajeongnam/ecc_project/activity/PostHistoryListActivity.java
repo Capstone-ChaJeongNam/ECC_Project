@@ -75,7 +75,7 @@ public class PostHistoryListActivity extends AppCompatActivity {
         category = intent.getStringExtra("category");
         area = intent.getStringExtra("area");
         userName.setText(student.getName());
-        infoTextHistoryCategory.setText(category);
+//        infoTextHistoryCategory.setText(category);
         infoTextHistoryArea.setText(area);
 
         start.setText(startYear + "/" + startMonth + "/" + startDay + "~~");
