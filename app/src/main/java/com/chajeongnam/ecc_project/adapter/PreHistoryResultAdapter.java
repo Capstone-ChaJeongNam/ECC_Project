@@ -6,7 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.ImageView;
+import android.widget.RadioGroup;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.chajeongnam.ecc_project.R;
 import com.chajeongnam.ecc_project.model.PreChecklist;
@@ -45,7 +49,8 @@ public class PreHistoryResultAdapter extends BaseAdapter {
 
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.checklist_item, viewGroup, false);
+            view = inflater.inflate(R.layout.checkedklist_item, viewGroup, false);
+
         }
         PreChecklist preChecklist = checklistItem.get(i);
 
@@ -53,15 +58,14 @@ public class PreHistoryResultAdapter extends BaseAdapter {
         TextView id = (TextView) view.findViewById(R.id.textView1);
         TextView content = (TextView) view.findViewById(R.id.textView2);
 
-        CheckBox cb =(CheckBox) view.findViewById(R.id.checkBox1);
+        ImageView cb =(ImageView) view.findViewById(R.id.checkedBox);
 
         id.setText(String.valueOf(preChecklist.getId()+1)) ;
         content.setText(preChecklist.getContent());
 
-        if(preChecklist.isResult()){
-            cb.setChecked(true);
+        if(preChecklist.isResult()) {
+            cb.setImageResource(R.drawable.letter_c);
         }
-        else{cb.setChecked(false);}
 
         return view;
     }

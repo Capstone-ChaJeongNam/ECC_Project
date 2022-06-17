@@ -2,6 +2,7 @@ package com.chajeongnam.ecc_project.activity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -88,6 +89,7 @@ public class PreHistoryActivity extends AppCompatActivity {
         TextView sname = (TextView) findViewById(R.id.prehistoryname);
         TextView sarea = (TextView) findViewById(R.id.prehistoryarea);
         TextView sdate = (TextView) findViewById(R.id.prehistorydate);
+        CheckBox cb = (CheckBox) findViewById(R.id.checkBox1);
 
         String studentclass = student.getAttrClass();
         String studentgrade = student.getGrade();
@@ -101,6 +103,7 @@ public class PreHistoryActivity extends AppCompatActivity {
 
 
         sdate.setText(studentdate);
+
 
 
 
