@@ -34,6 +34,7 @@ import com.google.firebase.database.core.utilities.Tree;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -48,7 +49,7 @@ public class CGraphActivity extends AppCompatActivity implements View.OnClickLis
     private LineChart chart;
     List<Integer> results;
     List<String> dates;
-
+    Student student;
     List<Integer> monthResults;
     List<String> monthLabels;
 
@@ -84,15 +85,16 @@ public class CGraphActivity extends AppCompatActivity implements View.OnClickLis
         /**
          * TODO 인텐트 데이터 키 값 협의
          */
-
+        dates = getIntent().getStringArrayListExtra("dates");
+        student = getIntent().getParcelableExtra("student");
 //         List<String> dates = getIntent().getStringArrayListExtra("dates");
-        dates = new ArrayList<>();
-//        dates.add("0");
-        dates.add("2022-04-30");
-//        dates.add("2021-04-26");
-        dates.add("2022-05-03");
-        dates.add("2022-05-08");
-        dates.add("2022-05-15");
+//        dates = new ArrayList<>();
+////        dates.add("0");
+//        dates.add("2022-04-30");
+////        dates.add("2021-04-26");
+//        dates.add("2022-05-03");
+//        dates.add("2022-05-08");
+//        dates.add("2022-05-15");
 //        dates.add("2021-05-23");
 //        histories.put("2022-04-30", 0);
 //        histories.put("2022-05-03", 0);
@@ -139,8 +141,8 @@ public class CGraphActivity extends AppCompatActivity implements View.OnClickLis
             monthMax = Math.max(monthMax, count);
 //            labels.add(dates.get(dates.size()-1).split("-")[1]);
         }
-        Log.d("month", monthResults.get(0).toString());
-        Log.d("month", monthResults.get(1).toString());
+//        Log.d("month", monthResults.get(0).toString());
+//        Log.d("month", monthResults.get(1).toString());
 
 
     }
@@ -207,18 +209,17 @@ public class CGraphActivity extends AppCompatActivity implements View.OnClickLis
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 //        String uid = user.getUid();
-//        String category = getIntent().getStringExtra("category");
-//        String area = getIntent().getStringExtra("area");
-//        String uid = getIntent().getStringExtra("uid");
+        String category = getIntent().getStringExtra("category");
+        String area = getIntent().getStringExtra("area");
 
-        String uid = "BN34s1_MlC5";
-        String category = "점자";
-        String area = "한글 점자";
+//        String uid = "BN34s1_MlC5";
+//        String category = "점자";
+//        String area = "한글 점자";
 
         results = new ArrayList<>();
 
         HashMap<String, Integer> histories = new HashMap<>();
-        DatabaseReference historyRef = myRef.child(uid).child("post").child(category).child(area);
+        DatabaseReference historyRef = myRef.child(student.getUid()).child("post").child(category).child(area);
         for(int i = 0; i < dates.size(); i++){
             String date = dates.get(i);
             DatabaseReference datesRef = historyRef.child(dates.get(i));
@@ -254,7 +255,7 @@ public class CGraphActivity extends AppCompatActivity implements View.OnClickLis
 
                         setValueMonth();
                         setValueYear();
-                        Log.d("history", sortedHistories.get("2022-04-30").toString());
+//                        Log.d("history", sortedHistories.get("2022-04-30").toString());
                     }
                 }
 
@@ -273,7 +274,7 @@ public class CGraphActivity extends AppCompatActivity implements View.OnClickLis
 
     public void setData(List<Entry> entries) {
 
-        LineDataSet dataSet = new LineDataSet(entries, "홍길동"); // add entries to dataset
+        LineDataSet dataSet = new LineDataSet(entries, student.getName()); // add entries to dataset
         dataSet.setColor(R.color.blue_500);
         dataSet.setCircleRadius(4f);
         dataSet.setCircleHoleRadius(3f);
@@ -296,22 +297,23 @@ public class CGraphActivity extends AppCompatActivity implements View.OnClickLis
         x.setLabelCount((int) labels.size(), false);
         x.setXOffset(0.5f);
 
-        x.setValueFormatter(new IndexAxisValueFormatter() {
-            @Override
-            public String getFormattedValue(float value) {
-                if (value < labels.size()) {
-                    return labels.get((int) value);
-                } else
-                    return "";
-            }
-        });
+        x.setValueFormatter(new IndexAxisValueFormatter(labels));
+//        {
+//            @Override
+//            public String getFormattedValue(float value) {
+//                if (value < labels.size()) {
+//                    return labels.get((int) value);
+//                } else
+//                    return "";
+//            }
+//        });
     }
 
     private void setYAxis(List<Integer> values, int min, int max) {
         YAxis left = chart.getAxisLeft();
         left.setDrawAxisLine(false);
 
-        left.setLabelCount(max, true);
+        left.setLabelCount(max - min + 1, true);
         left.setAxisMinimum(min);
         left.setAxisMaximum(max);
         left.setDrawZeroLine(false);

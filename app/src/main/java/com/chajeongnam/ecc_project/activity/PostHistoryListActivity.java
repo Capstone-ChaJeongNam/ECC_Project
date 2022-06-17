@@ -2,11 +2,14 @@ package com.chajeongnam.ecc_project.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -77,7 +80,7 @@ public class PostHistoryListActivity extends AppCompatActivity {
         userName.setText(student.getName());
 //        infoTextHistoryCategory.setText(category);
         infoTextHistoryArea.setText(area);
-
+        setActionbar();
         start.setText(startYear + "/" + startMonth + "/" + startDay + "~~");
         end.setText(endYear + "/" + endMonth + "/" + endDay);
 
@@ -147,10 +150,33 @@ public class PostHistoryListActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(PostHistoryListActivity.this, CGraphActivity.class);
+                intent.putStringArrayListExtra("dates", (ArrayList<String>)tempLists);
+                intent.putExtra("student", student);
+                intent.putExtra("category", category);
+                intent.putExtra("area", area);
                 startActivity(intent);
             }
         });
 
 
+    }
+
+    private void setActionbar() {
+        // calling the action bar
+        ActionBar actionBar = getSupportActionBar();
+        // showing the back button in action bar
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        actionBar.setCustomView(R.layout.layout_actionbar);
+        TextView textView = findViewById(R.id.titleTextView);
+        textView.setText("사후 평가 기록");
+        ImageButton imageButton = findViewById(R.id.backImageButton);
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
     }
 }

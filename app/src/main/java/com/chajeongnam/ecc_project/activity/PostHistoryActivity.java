@@ -3,11 +3,14 @@ package com.chajeongnam.ecc_project.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -47,6 +50,7 @@ public class PostHistoryActivity extends AppCompatActivity {
     private Student student;
     private String category, area;
     private ArrayList<HashMap> result = new ArrayList<>();
+    private List<String> dates;
     private Button saveBtn;
 
     @Override
@@ -66,7 +70,8 @@ public class PostHistoryActivity extends AppCompatActivity {
         endMonth = intent.getExtras().getInt("endMonth");
         endDay = intent.getExtras().getInt("endDay");
         date = intent.getExtras().getString("date");
-
+//        dates = new ArrayList<>();
+        dates = intent.getStringArrayListExtra("dates");
         student = intent.getParcelableExtra("student");
         category = intent.getStringExtra("category");
         area = intent.getStringExtra("area");
@@ -76,7 +81,8 @@ public class PostHistoryActivity extends AppCompatActivity {
         postHistoryDate.setText(date);
         putDatePostHistoryAdapter.putExtra("date", date);
 
-        Log.d("날짜", date);
+        setActionbar();
+//        Log.d("날짜", date);
         postHistoryResults = new ArrayList<>();
 
 //        인텐트에서 넘겨준 값으로 바꿔야함
@@ -93,7 +99,7 @@ public class PostHistoryActivity extends AppCompatActivity {
                 recyclerView.setLayoutManager(new LinearLayoutManager(PostHistoryActivity.this));
                 SetItemDecoration itemDecoration = new SetItemDecoration(20);
                 recyclerView.addItemDecoration(itemDecoration);
-                postHistoryAdapter = new PostHistoryAdapter(postHistoryResults,date);
+                postHistoryAdapter = new PostHistoryAdapter(postHistoryResults, date, dates,student, category, area);
                 recyclerView.setAdapter(postHistoryAdapter);
             }
 
@@ -106,5 +112,24 @@ public class PostHistoryActivity extends AppCompatActivity {
 
 
 
+    }
+
+    private void setActionbar() {
+        // calling the action bar
+        ActionBar actionBar = getSupportActionBar();
+        // showing the back button in action bar
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        actionBar.setCustomView(R.layout.layout_actionbar);
+        TextView textView = findViewById(R.id.titleTextView);
+        textView.setText("사후 평가 기록");
+        ImageButton imageButton = findViewById(R.id.backImageButton);
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
     }
 }

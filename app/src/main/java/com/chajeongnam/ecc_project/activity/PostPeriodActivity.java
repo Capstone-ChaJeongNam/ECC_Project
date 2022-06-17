@@ -10,9 +10,11 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -62,10 +64,10 @@ public class PostPeriodActivity extends AppCompatActivity {
         student=intent.getParcelableExtra("student");
         category=intent.getStringExtra("category");
         area=intent.getStringExtra("area");
-
+        setActionbar();
 //        ui 동적 할당
         studentName.setText(student.getName());
-        infoTextHistoryCategory.setText(category);
+//        infoTextHistoryCategory.setText(category);
         infoTextHistoryArea.setText(area);
 
         DatePicker datePicker = (DatePicker) findViewById(R.id.dataPicker);
@@ -148,7 +150,24 @@ public class PostPeriodActivity extends AppCompatActivity {
         });
 
     }
-
+    private void setActionbar() {
+        // calling the action bar
+        ActionBar actionBar = getSupportActionBar();
+        // showing the back button in action bar
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        actionBar.setCustomView(R.layout.layout_actionbar);
+        TextView textView = findViewById(R.id.titleTextView);
+        textView.setText("사후 평가 기록");
+        ImageButton imageButton = findViewById(R.id.backImageButton);
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+    }
     public int getStartYear() {
         return startYear;
     }

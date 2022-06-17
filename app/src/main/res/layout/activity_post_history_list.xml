@@ -14,7 +14,7 @@
             android:id="@+id/profileImageViewHistory"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginLeft="40dp"
+            android:layout_marginLeft="60dp"
             android:src="@drawable/ic_ellipse"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -7,43 +8,67 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/content"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="번호와 내용"
-            android:textSize="20dp" />
+            >
+
+            <ImageButton
+                android:id="@+id/openScriptButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#00000000"
+                android:src="@drawable/ic_pngwing_7"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/content"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:gravity="start"
+                android:text="번호와 내용"
+                android:textSize="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/openScriptButton"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+
             >
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="110dp"
-                android:textSize="30dp"
+                android:textSize="20dp"
                 android:text="1"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="35dp"
+                android:layout_marginLeft="37dp"
 
-                android:textSize="30dp"
+                android:textSize="20dp"
                 android:text="2"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="30dp"
-                android:textSize="30dp"
+                android:layout_marginLeft="37dp"
+                android:textSize="20dp"
                 android:text="3"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="30dp"
-                android:textSize="30dp"
+                android:layout_marginLeft="37dp"
+                android:textSize="20dp"
                 android:textColor="@android:color/holo_red_dark"
                 android:text="C"/>
 
@@ -61,17 +86,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:orientation="horizontal"
-
->
+                android:layout_marginStart="15dp"
+                android:orientation="horizontal">
 
                 <RadioButton
                     android:id="@+id/one"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:buttonTint="@android:color/background_dark"
-                    android:scaleX="1.5"
-                    android:scaleY="1.5"
+                    android:scaleX="1.2"
+                    android:scaleY="1.2"
 
                     />
 
@@ -80,8 +104,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:buttonTint="@android:color/background_dark"
-                    android:scaleX="1.5"
-                    android:scaleY="1.5"
+                    android:scaleX="1.2"
+                    android:scaleY="1.2"
                     />
 
                 <RadioButton
@@ -89,8 +113,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:buttonTint="@android:color/background_dark"
-                    android:scaleX="1.5"
-                    android:scaleY="1.5"
+                    android:scaleX="1.2"
+                    android:scaleY="1.2"
                     />
 
                 <RadioButton
@@ -98,8 +122,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:buttonTint="@android:color/background_dark"
-                    android:scaleX="1.5"
-                    android:scaleY="1.5"
+                    android:scaleX="1.2"
+                    android:scaleY="1.2"
                     />
             </RadioGroup>
         </LinearLayout>
@@ -118,6 +142,7 @@
                 android:layout_height="match_parent"
                 android:id="@+id/descriptionInputText"
                 android:gravity="center"
+                android:background="@drawable/post_history_description_bg"
               android:hint="서술형 평가를 입력해 주세요"/>
 
         </com.google.android.material.textfield.TextInputLayout>

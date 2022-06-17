@@ -22,6 +22,7 @@ import com.chajeongnam.ecc_project.activity.AdvanceGraphActivity;
 import com.chajeongnam.ecc_project.activity.PostHistoryActivity;
 import com.chajeongnam.ecc_project.decoration.SetItemDecoration;
 import com.chajeongnam.ecc_project.model.PostHistoryResult;
+import com.chajeongnam.ecc_project.model.Student;
 import com.chajeongnam.ecc_project.model.TempList;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,17 +31,26 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PostHistoryAdapter extends RecyclerView.Adapter<PostHistoryAdapter.ViewHolder> {
     private List<PostHistoryResult> postHistoryResults;
+    private List<String> dates;
     private Context context;
     private int selectedPosition = -1;
     private String date;
+    Student student;
+    String category, area;
 
-    public PostHistoryAdapter(List<PostHistoryResult> postHistoryResults, String date) {
+    public PostHistoryAdapter(List<PostHistoryResult> postHistoryResults,String date, List<String> dates,Student student
+            ,  String category,String area) {
         this.postHistoryResults = postHistoryResults;
+        this.dates = dates;
         this.date = date;
+        this.area = area;
+        this.category = category;
+        this.student = student;
     }
 
     @NonNull
@@ -62,12 +72,13 @@ public class PostHistoryAdapter extends RecyclerView.Adapter<PostHistoryAdapter.
         holder.dKey.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Transition transition = new Fade();
+                transition.setDuration(600);
+                transition.addTarget(holder.editText);
+                TransitionManager.beginDelayedTransition(holder.radioGroup, transition);
                 if (holder.editText.getVisibility() == View.GONE) {
                     holder.editText.setVisibility(View.VISIBLE);
-                } else {
-                    holder.editText.setVisibility(View.GONE);
-                }
-
+                } else holder.editText.setVisibility(View.GONE);
 
             }
         });
@@ -76,6 +87,11 @@ public class PostHistoryAdapter extends RecyclerView.Adapter<PostHistoryAdapter.
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), AdvanceGraphActivity.class);
+                intent.putStringArrayListExtra("dates",(ArrayList<String>)dates);
+                intent.putExtra("item", holder.content.getText().toString());
+                intent.putExtra("student", student);
+                intent.putExtra("category", category);
+                intent.putExtra("area", area);
                 view.getContext().startActivity(intent);
             }
         });

@@ -65,13 +65,10 @@ public class StudentListActivity extends AppCompatActivity {
             }
         });
     }
-
     private void setTextView() {
-        String category = getIntent().getStringExtra("category");
-        String area = getIntent().getStringExtra("area");
 
         areaTextView = findViewById(R.id.areaTextView);
-
+        String area = getIntent().getStringExtra("area");
         areaTextView.setText(area);
     }
 
@@ -121,7 +118,7 @@ public class StudentListActivity extends AppCompatActivity {
     private void getStudentsUid() {
         studentUids = new ArrayList<>();
         String category = getIntent().getStringExtra("category").trim();
-        String area = getIntent().getStringExtra("area").replace(" ", "");
+        String area = getIntent().getStringExtra("area");
 //        area = area.trim();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         DatabaseReference Ref = mDatabase.child("category").child(category).child(area);

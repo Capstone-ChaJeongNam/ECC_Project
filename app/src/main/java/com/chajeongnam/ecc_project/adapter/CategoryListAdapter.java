@@ -35,7 +35,8 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
                     Context context = view.getContext();
                     Intent intent = new Intent(context , StudentListActivity.class);
                     intent.putExtra("category", categoryTextView.getText());
-                    intent.putExtra("area", areaTextView.getText());
+                    intent.putExtra("area", areaTextView.getText().toString().replace("\n", " "));
+
                     context.startActivity(intent);
                 }
             });

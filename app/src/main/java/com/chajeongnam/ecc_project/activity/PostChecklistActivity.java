@@ -7,10 +7,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -48,7 +51,7 @@ public class PostChecklistActivity extends AppCompatActivity {
     private FirebaseData firebaseData = new FirebaseData();
     private String selectedItem, bigCategoryChild, mediumCategoryChild;
     private List<String> bigCategory, mediumCategory;
-
+    String category, area;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +59,8 @@ public class PostChecklistActivity extends AppCompatActivity {
         setContentView(R.layout.activity_post_cheklist);
         Intent intent = getIntent();
         student = intent.getParcelableExtra("student");
+//        category = intent.getStringExtra("category");
+//        area = intent.getStringExtra("area");
         saveBtn = findViewById(R.id.savePostTestBtn);
 
         spinner1 = (Spinner) findViewById(R.id.bigCategory);
@@ -66,6 +71,7 @@ public class PostChecklistActivity extends AppCompatActivity {
         bigCategory = new ArrayList<>();
         mediumCategory = new ArrayList<>();
 
+        setActionbar();
 
         database.addListenerForSingleValueEvent(new ValueEventListener() {
             String tempBigCategory;
@@ -93,6 +99,7 @@ public class PostChecklistActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 selectedItem = adapterView.getItemAtPosition(i).toString();
+                category = selectedItem;
                 if (selectedItem.equals("보조공학")) {
                     bigId = 0;
                 } else if (selectedItem.equals("점자")) {
@@ -115,7 +122,7 @@ public class PostChecklistActivity extends AppCompatActivity {
                 selectedItem = adapterView.getItemAtPosition(i).toString();
                 tempLists.clear();
                 mediumCategoryChild = selectedItem;
-
+                area = selectedItem;
                 database.child(bigCategoryChild).child(mediumCategoryChild).addListenerForSingleValueEvent(new ValueEventListener() {
                     TempList getDataFromFireBasetempList;
 
@@ -185,10 +192,14 @@ public class PostChecklistActivity extends AppCompatActivity {
                 mdDate = new Date(now);
                 recent = mFormat.format(mdDate);
 //해쉬맵의 key를 child로 하고 그 값을 value로 지정하여 파베에 저장
-
+                FirebaseDatabase.getInstance().getReference("histories").child(student.getUid()).child("post").child(category).child(area).child("recent").setValue(recent);
                 for (Map.Entry<Integer, Result> entrySet : evapostChecklistAdapter.getResult().entrySet()) {
-                    FirebaseDatabase.getInstance().getReference("histories").child(student.getUid()).child("post").child("보조공학").child("OCR").child(recent).child(String.valueOf(entrySet.getKey())).setValue(entrySet.getValue());
+                    FirebaseDatabase.getInstance().getReference("histories").child(student.getUid()).child("post").child(category).child(area).child(recent).child(String.valueOf(entrySet.getKey())).setValue(entrySet.getValue());
                 }
+
+                FirebaseDatabase.getInstance().getReference("category").child(category).child(area).child(student.getUid()).child("key").setValue(student.getUid());
+                FirebaseDatabase.getInstance().getReference("category").child(category).child(area).child(student.getUid()).child("recent").setValue(recent);
+
                 Toast.makeText(getApplicationContext(), "성공적으로 저장 되었습니다!", Toast.LENGTH_SHORT).show();
                 onBackPressed();
             }
@@ -247,6 +258,24 @@ public class PostChecklistActivity extends AppCompatActivity {
         }
 
 
+    }
+    private void setActionbar() {
+        // calling the action bar
+        ActionBar actionBar = getSupportActionBar();
+        // showing the back button in action bar
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        actionBar.setCustomView(R.layout.layout_actionbar);
+        TextView textView = findViewById(R.id.titleTextView);
+        textView.setText("ECC 평가 실시");
+        ImageButton imageButton = findViewById(R.id.backImageButton);
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
     }
 
 

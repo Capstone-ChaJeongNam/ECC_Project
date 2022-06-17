@@ -2,6 +2,7 @@ package com.chajeongnam.ecc_project.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import com.chajeongnam.ecc_project.activity.PostHistoryActivity;
 import com.chajeongnam.ecc_project.model.PostHistoryDateTempList;
 import com.chajeongnam.ecc_project.model.Student;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PostHistoryListAdapter extends RecyclerView.Adapter<PostHistoryListAdapter.ViewHolder> {
@@ -55,13 +57,15 @@ public class PostHistoryListAdapter extends RecyclerView.Adapter<PostHistoryList
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), PostHistoryActivity.class);
-                intent.putExtra("date", tempList);
+                intent.putStringArrayListExtra("dates", (ArrayList<String>)tempLists);
+                intent.putExtra("date", holder.textView.getText().toString());
                 intent.putExtra("student", student);
                 intent.putExtra("category", category);
                 intent.putExtra("area", area);
                 view.getContext().startActivity(intent);
             }
         });
+
 
     }
 

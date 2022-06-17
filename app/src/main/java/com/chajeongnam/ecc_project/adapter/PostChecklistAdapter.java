@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -88,6 +89,24 @@ public class PostChecklistAdapter extends RecyclerView.Adapter<PostChecklistAdap
 
             }
         });
+
+        holder.openScriptButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (result.get(holder.getAdapterPosition()+1) == null) {
+                    Toast.makeText(holder.content.getContext(), "먼저 객관식 평가를 진행하여 주세요!", Toast.LENGTH_LONG).show();
+
+                } else {
+                    Transition transition = new Fade();
+                    transition.setDuration(600);
+                    transition.addTarget(holder.editText);
+                    TransitionManager.beginDelayedTransition(holder.radioGroup, transition);
+                    if (holder.editText.getVisibility() == View.GONE) {
+                        holder.editText.setVisibility(View.VISIBLE);
+                    } else holder.editText.setVisibility(View.GONE);
+                }
+            }
+        });
         holder.radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             String firebaseEccKey = String.valueOf(holder.content.getText());
 
@@ -145,14 +164,14 @@ public class PostChecklistAdapter extends RecyclerView.Adapter<PostChecklistAdap
         private RadioGroup radioGroup;
         private TextInputLayout editText;
         private TextInputEditText descriptionInputText;
-
+        private ImageButton openScriptButton;
         private ViewHolder(@NonNull View itemView) {
             super(itemView);
             content = itemView.findViewById(R.id.content);
             radioGroup = itemView.findViewById(R.id.evaGroup);
             editText = itemView.findViewById(R.id.descriptionEditText);
             descriptionInputText = itemView.findViewById(R.id.descriptionInputText);
-
+            openScriptButton = itemView.findViewById(R.id.openScriptButton);
 
         }
 

@@ -5,12 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.CheckBox;
 import android.widget.ImageView;
-import android.widget.RadioGroup;
 import android.widget.TextView;
-
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.chajeongnam.ecc_project.R;
 import com.chajeongnam.ecc_project.model.PreChecklist;
@@ -49,7 +45,7 @@ public class PreHistoryResultAdapter extends BaseAdapter {
 
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.checkedklist_item, viewGroup, false);
+            view = inflater.inflate(R.layout.checkedlist_item, viewGroup, false);
 
         }
         PreChecklist preChecklist = checklistItem.get(i);
