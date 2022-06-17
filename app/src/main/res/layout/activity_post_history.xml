@@ -76,7 +76,6 @@
         android:layout_weight="10"
         android:scrollbarFadeDuration="0"
         android:scrollbarSize="5dp"
-        android:scrollbarThumbVertical="@color/purple_500"
         android:scrollbars="vertical" />
 
 

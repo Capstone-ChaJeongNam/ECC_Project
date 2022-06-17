@@ -14,64 +14,26 @@
             android:id="@+id/historyContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
             android:text="번호와 내용"
             android:textSize="20dp" />
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardD"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginRight="10dp"
-            app:cardCornerRadius="4dp"
-            app:cardUseCompatPadding="true"
-            app:strokeColor="@color/black"
-            app:strokeWidth="3dp"
-            android:layout_gravity="right"
-            >
-
-            <TextView
-                android:id="@+id/D"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="D" />
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardG"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginRight="10dp"
-            app:cardCornerRadius="4dp"
-            app:cardUseCompatPadding="true"
-            app:strokeColor="@color/black"
-            app:strokeWidth="3dp"
-            android:layout_gravity="right"
-            >
-
-            <TextView
-                android:id="@+id/G"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="G" />
-
-        </com.google.android.material.card.MaterialCardView>
 
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:layout_height="match_parent">
 
             <RadioGroup
                 android:id="@+id/historyEvaGroup"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <RadioButton
                     android:id="@+id/historyOne"
@@ -101,7 +63,54 @@
                     android:clickable="false"
                     android:text="C" />
             </RadioGroup>
-        </LinearLayout>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardD"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="right"
+                android:layout_marginEnd="8dp"
+                app:cardCornerRadius="4dp"
+                app:cardUseCompatPadding="true"
+                app:layout_constraintBottom_toTopOf="@+id/cardG"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:strokeColor="@color/black"
+                app:strokeWidth="3dp">
+
+                <TextView
+                    android:id="@+id/D"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="D" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardG"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="right"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                app:cardCornerRadius="4dp"
+                app:cardUseCompatPadding="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:strokeColor="@color/black"
+                app:strokeWidth="3dp">
+
+                <TextView
+                    android:id="@+id/G"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="G" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <EditText
             android:id="@+id/historyDescriptionEditText"
@@ -110,6 +119,9 @@
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:background="#EAEAEA"
+            android:focusable="false"
+            android:clickable="false"
+            android:cursorVisible="false"
             android:hint="서술형 평가를 입력해 주세요"
             android:visibility="gone" />
     </LinearLayout>
