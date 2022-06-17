@@ -1,5 +1,6 @@
 package com.chajeongnam.ecc_project.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -7,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -40,10 +42,11 @@ public class PostChecklistActivity extends AppCompatActivity {
     private ArrayList<HashMap> result = new ArrayList<>();
     private List<TempList> tempLists = new ArrayList<>();
     private Button saveBtn;
+    private Student student;
     private int bigId;
     private Spinner spinner1, spinner2;
     private FirebaseData firebaseData = new FirebaseData();
-    private String selectedItem,bigCategoryChild,mediumCategoryChild;
+    private String selectedItem, bigCategoryChild, mediumCategoryChild;
     private List<String> bigCategory, mediumCategory;
 
 
@@ -51,6 +54,8 @@ public class PostChecklistActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_cheklist);
+        Intent intent = getIntent();
+        student = intent.getParcelableExtra("student");
         saveBtn = findViewById(R.id.savePostTestBtn);
 
         spinner1 = (Spinner) findViewById(R.id.bigCategory);
@@ -93,7 +98,7 @@ public class PostChecklistActivity extends AppCompatActivity {
                 } else if (selectedItem.equals("점자")) {
                     bigId = 1;
                 }
-                bigCategoryChild=selectedItem;
+                bigCategoryChild = selectedItem;
 
                 setSpinner(bigId);
             }
@@ -104,46 +109,45 @@ public class PostChecklistActivity extends AppCompatActivity {
             }
         });
 
-      spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-          @Override
-          public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-              selectedItem = adapterView.getItemAtPosition(i).toString();
-              tempLists.clear();
-              mediumCategoryChild=selectedItem;
+        spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                selectedItem = adapterView.getItemAtPosition(i).toString();
+                tempLists.clear();
+                mediumCategoryChild = selectedItem;
 
-              database.child(bigCategoryChild).child(mediumCategoryChild).addListenerForSingleValueEvent(new ValueEventListener() {
-                  TempList getDataFromFireBasetempList;
+                database.child(bigCategoryChild).child(mediumCategoryChild).addListenerForSingleValueEvent(new ValueEventListener() {
+                    TempList getDataFromFireBasetempList;
 
-                  @Override
-                  public void onDataChange(DataSnapshot dataSnapshot) {
-                      for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                          getDataFromFireBasetempList = snapshot.getValue(TempList.class);
-                          tempLists.add(getDataFromFireBasetempList); //어레이리스트에 데이터 넣은 상태}
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            getDataFromFireBasetempList = snapshot.getValue(TempList.class);
+                            tempLists.add(getDataFromFireBasetempList); //어레이리스트에 데이터 넣은 상태}
 
-                      }
+                        }
 
-                      recyclerView = findViewById(R.id.evaluationPostRecyclerView);
-                      recyclerView.setLayoutManager(new LinearLayoutManager(PostChecklistActivity.this));
-                      SetItemDecoration itemDecoration = new SetItemDecoration(20);
-                      recyclerView.addItemDecoration(itemDecoration);
-                      evapostChecklistAdapter = new PostChecklistAdapter(tempLists);
-                      recyclerView.setAdapter(evapostChecklistAdapter);
+                        recyclerView = findViewById(R.id.evaluationPostRecyclerView);
+                        recyclerView.setLayoutManager(new LinearLayoutManager(PostChecklistActivity.this));
+                        SetItemDecoration itemDecoration = new SetItemDecoration(20);
+                        recyclerView.addItemDecoration(itemDecoration);
+                        evapostChecklistAdapter = new PostChecklistAdapter(tempLists);
+                        recyclerView.setAdapter(evapostChecklistAdapter);
 
-                  }
+                    }
 
-                  @Override
-                  public void onCancelled(DatabaseError databaseError) {
-                  }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
 
-              });
-          }
+                });
+            }
 
-          @Override
-          public void onNothingSelected(AdapterView<?> adapterView) {
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
 
-          }
-      });
-
+            }
+        });
 
 
 //        tempLists=(ArrayList<TempList>)getIntent().getSerializableExtra("tempLists");
@@ -152,12 +156,11 @@ public class PostChecklistActivity extends AppCompatActivity {
 //        학생 저장
         saveBtn.setOnClickListener(new View.OnClickListener() {
 
-            Student student = new Student();
 
             @Override
             public void onClick(View view) {
                 result.add(evapostChecklistAdapter.getResult());
-                DatabaseReference getTempleStudent = FirebaseDatabase.getInstance().getReference("students").child("-N3J6Cm3A_4feS07jZmi");
+                DatabaseReference getTempleStudent = FirebaseDatabase.getInstance().getReference("students").child(student.getUid());
                 getTempleStudent.addListenerForSingleValueEvent(new ValueEventListener() {
 
 
@@ -184,10 +187,10 @@ public class PostChecklistActivity extends AppCompatActivity {
 //해쉬맵의 key를 child로 하고 그 값을 value로 지정하여 파베에 저장
 
                 for (Map.Entry<Integer, Result> entrySet : evapostChecklistAdapter.getResult().entrySet()) {
-                    List<String> descriptionList = new ArrayList<>();
-                    FirebaseDatabase.getInstance().getReference("histories").child("-N3J6Cm3A_4feS07jZmi").child("post").child("보조공학").child("OCR").child(recent).child(String.valueOf(entrySet.getKey())).setValue(entrySet.getValue());
+                    FirebaseDatabase.getInstance().getReference("histories").child(student.getUid()).child("post").child("보조공학").child("OCR").child(recent).child(String.valueOf(entrySet.getKey())).setValue(entrySet.getValue());
                 }
-
+                Toast.makeText(getApplicationContext(), "성공적으로 저장 되었습니다!", Toast.LENGTH_SHORT).show();
+                onBackPressed();
             }
         });
 
@@ -195,7 +198,7 @@ public class PostChecklistActivity extends AppCompatActivity {
 
     protected void setSpinner(int i) {
         DatabaseReference database = FirebaseDatabase.getInstance().getReference("ECC");
-        mediumCategory=new ArrayList<>();
+        mediumCategory = new ArrayList<>();
 
         switch (i) {
             case 0:
