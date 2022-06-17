@@ -72,8 +72,8 @@ public class StudentInfoHistoryAdapter extends RecyclerView.Adapter<StudentInfoH
                         intent = new Intent(view.getContext(), PostPeriodActivity.class);
                     }
                     intent.putExtra("student", student);
-                    intent.putExtra("category", historyCategoryTextView.getText().toString());
-                    intent.putExtra("area", historyAreaTextView.getText().toString() );
+                    intent.putExtra("category", historyCategoryTextView.getText().toString().replace("\n", " "));
+                    intent.putExtra("area", historyAreaTextView.getText().toString().replace("\n", " ") );
                     view.getContext().startActivity(intent);
                 }
             });

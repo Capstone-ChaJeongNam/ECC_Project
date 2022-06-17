@@ -117,6 +117,7 @@ public class StudentInfoActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 student = task.getResult().getValue(Student.class);
+
                 getPreHistories();
                 getPostHistories();
             }
@@ -196,6 +197,8 @@ public class StudentInfoActivity extends AppCompatActivity {
         studentPreRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                preHistoryList.clear();
+
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
                     String category = dataSnapshot.getKey();
                     Object object = dataSnapshot.getValue(Object.class);
@@ -230,6 +233,7 @@ public class StudentInfoActivity extends AppCompatActivity {
         studentPostRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                postHistoryList.clear();
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
                     String category = dataSnapshot.getKey();
                     Object object = dataSnapshot.getValue(Object.class);

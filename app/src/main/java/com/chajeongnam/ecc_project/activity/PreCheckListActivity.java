@@ -5,7 +5,6 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,13 +15,10 @@ import android.widget.ListView;
 import android.widget.Spinner;
 
 import com.chajeongnam.ecc_project.R;
-import com.chajeongnam.ecc_project.adapter.PostChecklistAdapter;
 import com.chajeongnam.ecc_project.adapter.PreChecklistAdapter;
-import com.chajeongnam.ecc_project.decoration.SetItemDecoration;
-import com.chajeongnam.ecc_project.model.Category;
 import com.chajeongnam.ecc_project.model.PreChecklist;
 import com.chajeongnam.ecc_project.model.Student;
-import com.chajeongnam.ecc_project.model.TempList;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,11 +28,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import androidx.appcompat.app.ActionBar;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 
 public class PreCheckListActivity extends AppCompatActivity {
@@ -52,7 +44,7 @@ public class PreCheckListActivity extends AppCompatActivity {
     private List<String> bigCategory, mediumCategory;
     private String selectedItem,bigCategoryChild,mediumCategoryChild;
 
-
+    private View container;
     String category, area;
     Student student;
 
@@ -69,6 +61,7 @@ public class PreCheckListActivity extends AppCompatActivity {
         listview = (ListView) findViewById(R.id.listview1);
         spinner1 = (Spinner) findViewById(R.id.bigCategory);
         spinner2 = (Spinner) findViewById(R.id.mediumCategory);
+        container = findViewById(R.id.container);
 
         category = getIntent().getStringExtra("category");
         area = getIntent().getStringExtra("area");
@@ -177,12 +170,24 @@ public class PreCheckListActivity extends AppCompatActivity {
                 myRef.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for(int i =0; i< idlist.size(); i++){
-                            myRef.child(bigCategoryChild).child(mediumCategoryChild).child(recent).child(String.valueOf(i)).child("result").setValue(checkedItems.get(i));
-                            myRef.child(bigCategoryChild).child(mediumCategoryChild).child(recent).child(String.valueOf(i)).child("content").setValue(contentlist.get(i));
-                            myRef.child(bigCategoryChild).child(mediumCategoryChild).child(recent).child(String.valueOf(i)).child("id").setValue(idlist.get(i));
-                        }
                         myRef.child(bigCategoryChild).child(mediumCategoryChild).child("recent").setValue(recent);
+
+                        for(int i =0; i< idlist.size(); i++){
+                            if(checkedItems.get(i)){
+                                myRef.child(bigCategoryChild).child(mediumCategoryChild).child(recent).child(String.valueOf(i)).child("result").setValue(checkedItems.get(i));
+                                myRef.child(bigCategoryChild).child(mediumCategoryChild).child(recent).child(String.valueOf(i)).child("content").setValue(contentlist.get(i));
+                                myRef.child(bigCategoryChild).child(mediumCategoryChild).child(recent).child(String.valueOf(i)).child("id").setValue(idlist.get(i));
+                            }
+                        }
+                        Snackbar snackbar = Snackbar.make(container, "저장이 완료되었습니다.", 800);
+                        snackbar.show();
+
+                        snackbar.addCallback(new Snackbar.Callback(){
+                            @Override
+                            public void onDismissed(Snackbar transientBottomBar, int event) {
+                                finish();
+                            }
+                        });
                     }
 
                     @Override
