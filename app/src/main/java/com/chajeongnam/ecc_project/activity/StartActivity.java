@@ -34,6 +34,12 @@ public class StartActivity extends AppCompatActivity {
             }
         });
 
+        btn_signUp.setOnClickListener(view -> {
+            Intent intent = new Intent(StartActivity.this, SignUpActivity.class);
+            startActivity(intent);
+            finish();
+        });
+
         Button btn_signIn = findViewById(R.id.btn_signIn);
         btn_signIn.setOnClickListener(new View.OnClickListener() {
             @Override

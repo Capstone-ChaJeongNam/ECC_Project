@@ -67,10 +67,10 @@ public class AddStudentActivity extends AppCompatActivity {
         EditText gradeEditText = findViewById(R.id.gradeEditText);
         EditText classEditText = findViewById(R.id.classEditText);
 
-        String nameStr = nameEditText.getText().toString();
-        String birthStr = birthEditText.getText().toString();
-        String gradeStr = gradeEditText.getText().toString();
-        String classStr = classEditText.getText().toString();
+        String nameStr = nameEditText.getText().toString().trim();
+        String birthStr = birthEditText.getText().toString().trim();
+        String gradeStr = gradeEditText.getText().toString().trim();
+        String classStr = classEditText.getText().toString().trim();
         databaseRef = FirebaseDatabase.getInstance().getReference();
         DatabaseReference ref = databaseRef.child("students").push();
         String uid = ref.getKey();

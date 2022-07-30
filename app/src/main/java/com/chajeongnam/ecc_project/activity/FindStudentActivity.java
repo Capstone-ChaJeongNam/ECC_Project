@@ -86,7 +86,7 @@ public class FindStudentActivity extends AppCompatActivity {
     private void search(List<Student> studentList, EditText studentSearchEditText){
         List<Student> resultList =new ArrayList<>();
         for(Student student : studentList){
-            if (student.getName().equals(studentSearchEditText.getText().toString().trim())){
+            if (student.getName().trim().contains(studentSearchEditText.getText().toString().trim())){
                 Log.d("student: ", student.getName());
                 resultList.add(student);
             }
@@ -159,13 +159,14 @@ public class FindStudentActivity extends AppCompatActivity {
 //    }
 
     private void getStudents() {
-        studentList = new ArrayList<>();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         DatabaseReference studentRef = mDatabase.child("students");
 
         studentRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                studentList = new ArrayList<>();
+
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
                     studentList.add(dataSnapshot.getValue(Student.class));
                 }

@@ -142,8 +142,7 @@
                 android:layout_height="match_parent"
                 android:id="@+id/descriptionInputText"
                 android:gravity="center"
-                android:background="@drawable/post_history_description_bg"
-              android:hint="서술형 평가를 입력해 주세요"/>
+                android:hint="서술형 평가를 입력해 주세요"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 

@@ -217,7 +217,7 @@
             android:layout_height="100dp"
             android:layout_gravity="center"
             android:layout_marginBottom="30dp"
-            android:background="@drawable/button_round_background"
+            android:background="@drawable/post_history_description_bg"
             android:clickable="false"
             android:cursorVisible="false"
             android:elevation="10dp"
