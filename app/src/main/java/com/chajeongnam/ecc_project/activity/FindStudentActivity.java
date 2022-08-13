@@ -38,7 +38,7 @@ public class FindStudentActivity extends AppCompatActivity {
     FloatingActionButton addStudentButton;
     private DatabaseReference mDatabase;
     List<Student> studentList;
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,7 +78,7 @@ public class FindStudentActivity extends AppCompatActivity {
         });
     }
 
-    private void search(EditText studentSearchEditText){
+    private void search(String searchString){
         mDatabase = FirebaseDatabase.getInstance().getReference();
         DatabaseReference studentRef = mDatabase.child("students");
         studentList = new ArrayList<>();
@@ -86,14 +86,12 @@ public class FindStudentActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
                     Student student = dataSnapshot.getValue(Student.class);
                     assert student != null;
-                    if(student.getName().equals(studentSearchEditText.getText().toString()))
+                    if(student.getName().equals(searchString))
                         studentList.add(student);
                 }
-                studentSearchEditText.setText("");
                 setRecyclerView(studentList);
             }
             @Override
@@ -101,17 +99,20 @@ public class FindStudentActivity extends AppCompatActivity {
 
             }
         });
-
     }
 
     private void setSearchButton(){
         EditText studentSearchEditText = findViewById(R.id.studentSearchEditText);
         ImageButton searchStudentButton = findViewById(R.id.searchStudentButton);
 
+
+
         searchStudentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                search(studentSearchEditText);
+                String searchText = studentSearchEditText.getText().toString().replaceAll(System.lineSeparator(),",");
+                search(searchText);
+                studentSearchEditText.setText("");
             }
         });
 
@@ -121,8 +122,11 @@ public class FindStudentActivity extends AppCompatActivity {
                 List<Student> resultList =new ArrayList<>();
                 switch (keyCode){
                 case KeyEvent.KEYCODE_ENTER:
+                    String searchText = studentSearchEditText.getText().toString().replaceAll(System.lineSeparator(),",");
                     // Perform action on key press
-                    search(studentSearchEditText);
+                    search(searchText);
+                    studentSearchEditText.setText("");
+
                     return true;
                 }
 
