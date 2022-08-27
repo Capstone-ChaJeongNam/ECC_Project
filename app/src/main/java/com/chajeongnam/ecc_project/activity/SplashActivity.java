@@ -37,26 +37,6 @@ public class SplashActivity extends AppCompatActivity {
 
     }
 
-    public void onStart() {
-        super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    Intent intent = new Intent(getApplicationContext(),StartActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
-            },3000);
-        } else {
-            Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-            startActivity(intent);
-        }
-    }
 
     @Override
     protected void onPause() {
