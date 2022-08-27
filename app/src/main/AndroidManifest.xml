@@ -42,7 +42,7 @@
         <!--ChoYeonJun add end-->
         <activity android:name=".activity.AddStudentActivity" />
         <activity
-            android:name=".activity.FindPasswordActivity"
+            android:name=".activity.ResetPasswordActivity"
             android:exported="false" />
         <activity
             android:name=".activity.StartActivity"
