@@ -35,14 +35,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class FindStudentActivity extends AppCompatActivity {
-    private RecyclerView recyclerView;
     FloatingActionButton addStudentButton;
     private DatabaseReference mDatabase;
     List<Student> studentList;
-    List<String> studentUids;
 
-
-    private StudentSearchResultAdapter studentSearchResultAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,8 +56,7 @@ public class FindStudentActivity extends AppCompatActivity {
             }
         });
         setActionbar();
-        getStudents();
-//        getStudentList();
+        setSearchButton();
     }
 
     private void setActionbar(){
@@ -83,26 +78,41 @@ public class FindStudentActivity extends AppCompatActivity {
         });
     }
 
-    private void search(List<Student> studentList, EditText studentSearchEditText){
-        List<Student> resultList =new ArrayList<>();
-        for(Student student : studentList){
-            if (student.getName().trim().contains(studentSearchEditText.getText().toString().trim())){
-                Log.d("student: ", student.getName());
-                resultList.add(student);
+    private void search(String searchString){
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference studentRef = mDatabase.child("students");
+        studentList = new ArrayList<>();
+        studentRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    Student student = dataSnapshot.getValue(Student.class);
+                    assert student != null;
+                    if(student.getName().equals(searchString))
+                        studentList.add(student);
+                }
+                setRecyclerView(studentList);
             }
-        }
-        studentSearchEditText.setText("");
-        setRecyclerView(resultList);
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
-    private void setSearchButton(List<Student> studentList){
+    private void setSearchButton(){
         EditText studentSearchEditText = findViewById(R.id.studentSearchEditText);
         ImageButton searchStudentButton = findViewById(R.id.searchStudentButton);
+
+
 
         searchStudentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                search(studentList, studentSearchEditText);
+                String searchText = studentSearchEditText.getText().toString().replaceAll(System.lineSeparator(),",");
+                search(searchText);
+                studentSearchEditText.setText("");
             }
         });
 
@@ -112,8 +122,11 @@ public class FindStudentActivity extends AppCompatActivity {
                 List<Student> resultList =new ArrayList<>();
                 switch (keyCode){
                 case KeyEvent.KEYCODE_ENTER:
+                    String searchText = studentSearchEditText.getText().toString().replaceAll(System.lineSeparator(),",");
                     // Perform action on key press
-                    search(studentList, studentSearchEditText);
+                    search(searchText);
+                    studentSearchEditText.setText("");
+
                     return true;
                 }
 
@@ -122,16 +135,6 @@ public class FindStudentActivity extends AppCompatActivity {
         });
     }
 
-//    private void getStudentList(){
-//        List<Student> studentList = new ArrayList<>();
-////        studentList.add(new Student("홍길동", "3학년", "A반", "2022-04-20"));
-////        studentList.add(new Student("고길동", "1학년", "B반", "2022-04-22"));
-////        studentList.add(new Student("노길동", "2학년", "C반", "2022-04-30"));
-////        studentList.add(new Student("도길동", "3학년", "A반", "2022-04-11"));
-////        studentList.add(new Student("로길동", "1학년", "E반", "2022-04-13"));
-//
-//        setSearchButton(studentList);
-//    }
 
     private void setRecyclerView(List<Student> studentList) {
         RecyclerView recyclerView = findViewById(R.id.studentSearchResults);
@@ -140,43 +143,4 @@ public class FindStudentActivity extends AppCompatActivity {
         recyclerView.setAdapter(studentSearchResultAdapter);
     }
 
-//    private void getStudent(){
-//        mDatabase = FirebaseDatabase.getInstance().getReference();
-//        DatabaseReference Ref = mDatabase.child("students");
-//        Ref.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-//                    studentList.add(dataSnapshot.getValue(Student.class));
-//                    Log.d("Student", dataSnapshot.getValue(Student.class).getName());
-//                }
-//            }
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-//    }
-
-    private void getStudents() {
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference studentRef = mDatabase.child("students");
-
-        studentRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                studentList = new ArrayList<>();
-
-                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    studentList.add(dataSnapshot.getValue(Student.class));
-                }
-
-                setSearchButton(studentList);
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
 }

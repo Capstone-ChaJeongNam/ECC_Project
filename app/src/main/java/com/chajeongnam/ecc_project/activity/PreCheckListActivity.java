@@ -93,16 +93,40 @@ public class PreCheckListActivity extends AppCompatActivity {
         });
 
 
+//        spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//                selectedItem = adapterView.getItemAtPosition(i).toString();
+//                if (selectedItem.equals("보조공학")) {
+//                    bigId = 0;
+//                } else if (selectedItem.equals("점자")) {
+//                    bigId = 1;
+//                }
+//                bigCategoryChild=selectedItem;
+//
+//                setSpinner(bigId);
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) {
+//
+//            }
+//        });
         spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 selectedItem = adapterView.getItemAtPosition(i).toString();
+                category = selectedItem;
                 if (selectedItem.equals("보조공학")) {
                     bigId = 0;
-                } else if (selectedItem.equals("점자")) {
+                } else if (selectedItem.equals("보행")) {
                     bigId = 1;
+                } else if (selectedItem.equals("일상생활기술")) {
+                    bigId = 2;
+                } else if (selectedItem.equals("점자")) {
+                    bigId = 3;
                 }
-                bigCategoryChild=selectedItem;
+                bigCategoryChild = selectedItem;
 
                 setSpinner(bigId);
             }
@@ -112,7 +136,6 @@ public class PreCheckListActivity extends AppCompatActivity {
 
             }
         });
-
         spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -237,59 +260,98 @@ public class PreCheckListActivity extends AppCompatActivity {
 //
 //
 //    }
-
     protected void setSpinner(int i) {
-        DatabaseReference database = FirebaseDatabase.getInstance().getReference("ECC");
-        mediumCategory=new ArrayList<>();
+
+        mediumCategory = new ArrayList<>();
 
         switch (i) {
             case 0:
-                database.child("보조공학").addListenerForSingleValueEvent(new ValueEventListener() {
-
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                            mediumCategory.add(dataSnapshot.getKey());
-
-                        }
-                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(PreCheckListActivity.this, android.R.layout.simple_spinner_item, mediumCategory);
-                        spinner2.setAdapter(adapter);
-
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
+                setSpinnerFirebaseRoute("보조공학");
                 break;
             case 1:
-                database.child("점자").addListenerForSingleValueEvent(new ValueEventListener() {
-
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                            mediumCategory.add(dataSnapshot.getKey());
-
-
-                        }
-                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(PreCheckListActivity.this, android.R.layout.simple_spinner_item, mediumCategory);
-                        spinner2.setAdapter(adapter);
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-
-
+                setSpinnerFirebaseRoute("보행");
+                break;
+            case 2:
+                setSpinnerFirebaseRoute("일상생활기술");
+                break;
+            case 3:
+                setSpinnerFirebaseRoute("점자");
+                break;
         }
 
 
     }
+
+    private void setSpinnerFirebaseRoute(String category) {
+        DatabaseReference database = FirebaseDatabase.getInstance().getReference("ECC");
+        database.child(category).addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    mediumCategory.add(dataSnapshot.getKey());
+                }
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(PreCheckListActivity.this, android.R.layout.simple_spinner_item, mediumCategory);
+                spinner2.setAdapter(adapter);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+//    protected void setSpinner(int i) {
+//        DatabaseReference database = FirebaseDatabase.getInstance().getReference("ECC");
+//        mediumCategory=new ArrayList<>();
+//
+//        switch (i) {
+//            case 0:
+//                database.child("보조공학").addListenerForSingleValueEvent(new ValueEventListener() {
+//
+//                    @Override
+//                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+//                            mediumCategory.add(dataSnapshot.getKey());
+//
+//                        }
+//                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(PreCheckListActivity.this, android.R.layout.simple_spinner_item, mediumCategory);
+//                        spinner2.setAdapter(adapter);
+//
+//
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError error) {
+//
+//                    }
+//                });
+//                break;
+//            case 1:
+//                database.child("점자").addListenerForSingleValueEvent(new ValueEventListener() {
+//
+//                    @Override
+//                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+//                            mediumCategory.add(dataSnapshot.getKey());
+//                        }
+//                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(PreCheckListActivity.this, android.R.layout.simple_spinner_item, mediumCategory);
+//                        spinner2.setAdapter(adapter);
+//
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError error) {
+//
+//                    }
+//                });
+//
+//
+//        }
+//
+//
+//    }
     private void setActionbar() {
         // calling the action bar
         ActionBar actionBar = getSupportActionBar();
